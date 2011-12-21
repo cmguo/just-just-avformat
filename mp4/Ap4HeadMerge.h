@@ -35,6 +35,13 @@ namespace ppbox
 {
     namespace avformat
     {
+        struct SegmentInfo
+        {
+            boost::uint32_t head_length;
+            boost::uint32_t file_length;
+            boost::uint32_t duration;
+        };
+
         class Ap4HeadMerge
         {
         public:
@@ -69,6 +76,13 @@ namespace ppbox
             void SetContentLength(AP4_Size content_length);
             void SetMemStreamEndPosition(AP4_Position pos);
 
+            boost::system::error_code FindMinOffset(
+                boost::uint64_t duration, 
+                boost::uint32_t & diff_offset,
+                boost::uint32_t index,
+                std::vector<SegmentInfo> const & segs,
+                boost::system::error_code & ec);
+
         public:
             AP4_File       * file_;
             AP4_Movie      * movie_;
@@ -84,6 +98,10 @@ namespace ppbox
             boost::uint64_t content_length_;
             boost::uint64_t content_size_;
             AP4_Position    end_;
+
+            // Download
+            boost::uint32_t audio_sample_count_;
+            boost::uint32_t video_sample_count_;
 
         public:
             void Clean();

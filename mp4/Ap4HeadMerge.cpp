@@ -27,6 +27,9 @@ namespace ppbox
             content_size_ = 0;
             mdat_head_size_ = 0;
             end_ = 0;
+
+            audio_sample_count_ = 0;
+            video_sample_count_ = 0;
         }
 
         Ap4HeadMerge::~Ap4HeadMerge()
@@ -502,6 +505,103 @@ namespace ppbox
 
             content_length_ = content_size_ + mp4_head.content_length_ - mp4_head.head_size_ + head_size_;
 
+            return ec;
+        }
+
+        error_code Ap4HeadMerge::FindMinOffset(
+            boost::uint64_t duration, 
+            boost::uint32_t & diff_offset,
+            boost::uint32_t index,
+            std::vector<SegmentInfo> const & segs,
+            error_code & ec)
+        {
+            std::vector<AP4_StcoAtom*> StcoAtomVec;
+            AP4_StcoAtom *pCurStco = NULL;
+            int nSize = 0;
+
+            AP4_MvhdAtom *pCurMvhd = NULL;
+            AP4_MvhdAtom *pSourceMvhd = NULL;
+            char *strMvhdPath = "moov/mvhd";
+            pCurMvhd =(AP4_MvhdAtom*)FindChild(strMvhdPath);
+            if (pCurMvhd == NULL) {
+                ec = error::invalid_mp4_truck;
+                return ec;
+            }
+            AP4_Result result;
+
+            AP4_List<AP4_Track>::Item *item = movie_->GetTracks().FirstItem();
+            boost::uint64_t cur_segment_max_offset = 0;
+            //boost::uint64_t cur_segment_min_offset = boost::uint64_t(-1);
+            boost::uint64_t next_segment_max_offset = 0;
+            boost::uint64_t next_segment_min_offset = boost::uint64_t(-1);
+
+            while (item != NULL) {
+                AP4_Track *pCurTrack = item->GetData();
+                boost::uint32_t time_scale = pCurTrack->GetMediaTimeScale();
+                AP4_Ordinal sample_index;
+                result = pCurTrack->GetSampleIndexForTimeStampMs(duration, sample_index);
+                if (AP4_SUCCESS != result) {
+                    ec = error::invalid_mp4_truck;
+                    break;
+                }
+                AP4_Sample sample;
+                result = pCurTrack->GetSample(sample_index, sample);
+                if (AP4_SUCCESS != result) {
+                    ec = error::invalid_mp4_truck;
+                    break;
+                } else {
+                    if (sample.IsSync()) {
+                        if (next_segment_min_offset > sample.GetOffset()) {
+                            next_segment_min_offset = sample.GetOffset();
+                        }
+                        if (next_segment_max_offset < sample.GetOffset()) {
+                            next_segment_max_offset = sample.GetOffset();
+                        }
+                    } else {
+                        result = pCurTrack->GetSample(sample_index+1, sample);
+                        if (AP4_SUCCESS != result) {
+                            ec = error::invalid_mp4_truck;
+                            break;
+                        } else {
+                            if (sample.IsSync()) {
+                                if (next_segment_min_offset > sample.GetOffset()) {
+                                    next_segment_min_offset = sample.GetOffset();
+                                }
+                                if (next_segment_max_offset < sample.GetOffset()) {
+                                    next_segment_max_offset = sample.GetOffset();
+                                }
+                            } else {
+                                result = pCurTrack->GetSample(sample_index-1, sample);
+                                if (AP4_SUCCESS != result) {
+                                    ec = error::invalid_mp4_truck;
+                                    break;
+                                } else {
+                                    if (sample.IsSync()) {
+                                        if (next_segment_min_offset > sample.GetOffset()) {
+                                            next_segment_min_offset = sample.GetOffset();
+                                        }
+                                        if (next_segment_max_offset < sample.GetOffset()) {
+                                            next_segment_max_offset = sample.GetOffset();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } // if (AP4_SUCCESS != result)
+                    duration = sample.GetDts() * 1000 / time_scale;
+                }
+                item=item->GetNext();
+            }
+            if (!ec) {
+                boost::uint64_t total_down_load_size = 0;
+                for(boost::uint32_t i = 0; i < index; ++i) {
+                    total_down_load_size += (segs[i].file_length - segs[i].head_length);
+                }
+                diff_offset = next_segment_max_offset - next_segment_min_offset;
+                total_down_load_size += (segs[index].file_length - segs[index].head_length - diff_offset);
+                total_down_load_size += head_size_;
+                assert(total_down_load_size == next_segment_min_offset);
+            }
             return ec;
         }
 
