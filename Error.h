@@ -12,7 +12,8 @@ namespace ppbox
 
             enum errors
             {
-                invalid_mp4_head, 
+                avformat_success =0,
+                invalid_mp4_head , 
                 invalid_mp4_truck,
             };
 
@@ -29,7 +30,10 @@ namespace ppbox
 
                     std::string message(int value) const
                     {
-                        switch (value) {
+                        switch (value) 
+                        {
+                        case avformat_success:
+                            return "operator success";
                             case invalid_mp4_head:
                                 return "invalid mp4 head";
                             case invalid_mp4_truck:
