@@ -1,7 +1,7 @@
 // AvcDecode.h
 
-#ifndef   _PPBOX_AVFORMAT_AVC_CODEC_
-#define   _PPBOX_AVFORMAT_AVC_CODEC_
+#ifndef _PPBOX_AVFORMAT_AVC_CODEC_
+#define _PPBOX_AVFORMAT_AVC_CODEC_
 
 #include "ppbox/avformat/codec/Codec.h"
 #include "ppbox/avformat/codec/AvcConfig.h"
