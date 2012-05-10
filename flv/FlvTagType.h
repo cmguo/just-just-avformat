@@ -248,6 +248,7 @@ namespace ppbox
                     is_sync = false;
                     cts_delta = 0;
                 } else {
+                    // assert(0);
                     is_sample = false;
                     is_sync = false;
                     cts_delta = 0;
