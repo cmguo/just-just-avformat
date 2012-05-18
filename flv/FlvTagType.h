@@ -201,6 +201,8 @@ namespace ppbox
             }
         };
 
+        static bool skip_metadata = false;
+
         struct FlvTag
             : FlvTagHeader
         {
@@ -243,7 +245,11 @@ namespace ppbox
                     is_sync = VideoHeader.FrameType == FrameType::FLV_FRAME_KEY;
                     cts_delta = VideoHeader.CompositionTime;
                 } else if (Type == TagType::FLV_TAG_TYPE_META) {
-                    ar & DataTag;
+                    if (skip_metadata) {
+                    } else {
+                        ar & DataTag;
+                        skip_metadata = true;
+                    }
                     is_sample = false;
                     is_sync = false;
                     cts_delta = 0;
