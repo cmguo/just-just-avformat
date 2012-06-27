@@ -5,6 +5,7 @@
 
 #include <bento4/Core/Ap4Atom.h>
 #include <bento4/Core/Ap4TkhdAtom.h>
+#include <bento4/Core/Ap4MdhdAtom.h>
 #include <bento4/Core/Ap4SttsAtom.h>
 #include <bento4/Core/Ap4CttsAtom.h>
 #include <bento4/Core/Ap4StscAtom.h>

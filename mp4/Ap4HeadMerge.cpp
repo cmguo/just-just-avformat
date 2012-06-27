@@ -250,6 +250,8 @@ namespace ppbox
             error_code   ec;
             AP4_TkhdAtom *pCurTkhd=NULL;
             AP4_TkhdAtom *pSourceTkhd=NULL;
+            AP4_MdhdAtom *pCurMdhd=NULL;
+            AP4_MdhdAtom *pSourceMdhd=NULL;
             AP4_SttsAtom *pCurStts=NULL;
             AP4_SttsAtom *pSourceStts=NULL;
             AP4_CttsAtom *pCurCtts=NULL;
@@ -263,6 +265,7 @@ namespace ppbox
             AP4_StssAtom *pCurStss=NULL;
             AP4_StssAtom *pSourceStss=NULL;
             char *strTkhdPath="tkhd";
+            char *strMdhdPath="mdia/mdhd";
             char *strSttsPath="mdia/minf/stbl/stts";
             char *strCttsPath="mdia/minf/stbl/ctts";
             char *strStscPath="mdia/minf/stbl/stsc";
@@ -292,6 +295,22 @@ namespace ppbox
 
             pCurTkhd->SetDuration(pCurTkhd->GetDuration()+pSourceTkhd->GetDuration());
             pCurTkhd->GetParent()->OnChildChanged(pCurTkhd);
+
+            //合并mdhd
+            pCurMdhd = (AP4_MdhdAtom *)FindTrackChild(cur_track, strMdhdPath);
+            if (pCurMdhd == NULL)
+            {
+                ec = error::invalid_mp4_truck;
+                return ec;
+            }
+            pSourceMdhd = (AP4_MdhdAtom *)FindTrackChild(source_track, strMdhdPath);
+            if (pSourceMdhd == NULL)
+            {
+                ec = error::invalid_mp4_truck;
+                return ec;
+            }
+            pCurMdhd->SetDuration(pCurMdhd->GetDuration()+pSourceMdhd->GetDuration());
+            pCurMdhd->GetParent()->OnChildChanged(pCurMdhd);
 
             //合并stts
             pCurStts = (AP4_SttsAtom *)FindTrackChild(cur_track, strSttsPath);

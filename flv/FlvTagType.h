@@ -201,8 +201,6 @@ namespace ppbox
             }
         };
 
-        static bool skip_metadata = false;
-
         struct FlvTag
             : FlvTagHeader
         {
@@ -216,12 +214,15 @@ namespace ppbox
             bool is_sync;
             boost::uint32_t cts_delta;
 
+            bool skip_metadata;
+
             FlvTag()
                 : PreTagSize(0)
                 , data_offset(0)
                 , is_sample(false)
                 , is_sync(false)
                 , cts_delta(0)
+                , skip_metadata(false)
             {
             }
 
