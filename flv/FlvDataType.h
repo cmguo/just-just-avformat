@@ -114,7 +114,7 @@ namespace ppbox
             boost::uint8_t Type;
             union {
                 double Double;
-                //boost::uint64_t Double;
+                boost::uint64_t _Double;
                 boost::uint8_t Bool;
                 boost::uint16_t MovieClip;
                 boost::uint16_t Null;
@@ -136,7 +136,7 @@ namespace ppbox
                 ar & Type;
                 switch (Type) {
                     case AMFDataType::AMF_DATA_TYPE_NUMBER:
-                        ar & Double;
+                        ar & _Double;
                         break;
                     case AMFDataType::AMF_DATA_TYPE_BOOL:
                         ar & Bool;
