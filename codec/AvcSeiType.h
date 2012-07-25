@@ -46,6 +46,8 @@ namespace ppbox
             SeiContext & context_;
         
         public:
+            static int const type = 0;
+
             typedef UV<Minus<DirectValue<U<5> > > > MyUV;
         
             UE seq_parameter_set_id;
@@ -124,6 +126,8 @@ namespace ppbox
             SeiContext const & context_;
         
         public:
+            static int const type = 1;
+
             struct clock_timestamp
             {
                 clock_timestamp(
@@ -289,6 +293,8 @@ namespace ppbox
 
         struct PanScanRect
         {
+            static int const type = 2;
+
             UE pan_scan_rect_id;
             U<1> pan_scan_rect_cancel_flag;
             // if( !pan_scan_rect_cancel_flag ) {
@@ -338,6 +344,8 @@ namespace ppbox
             SeiContext const & context_;
 
         public:
+            static int const type = 3;
+
             // for( k = 0; k < payload_size; k++)
                 U<8> ff_byte; /* equal to 0xFF */
 
@@ -366,6 +374,8 @@ namespace ppbox
             SeiContext const & context_;
 
         public:
+            static int const type = 4;
+
             U<8> itu_t_t35_country_code;
             // if( itu_t_t35_country_code != 0xFF )
                 // i = 1
@@ -409,6 +419,8 @@ namespace ppbox
             SeiContext const & context_;
 
         public:
+            static int const type = 5;
+
             U<8> uuid_iso_iec_11578[16];
             // for( i = 16; i < payloadSize; i++ )
                 std::vector<U<8> > user_data_payload_byte;
@@ -437,6 +449,8 @@ namespace ppbox
 
         struct RecoveryPoint
         {
+            static int const type = 6;
+
             UE recovery_frame_cnt;
             U<1> exact_match_flag;
             U<1> broken_link_flag;
@@ -466,6 +480,8 @@ namespace ppbox
             SeiContext const & context_;
         
         public:
+            static int const type = 7;
+
             U<1> original_idr_flag;
             UE original_frame_num;
             // if( !frame_mbs_only_flag ) {
@@ -504,6 +520,8 @@ namespace ppbox
 
         struct SparePic
         {
+            static int const type = 8;
+
             UE target_frame_num;
             U<1> spare_field_flag;
             // if( spare_field_flag )
@@ -570,6 +588,8 @@ namespace ppbox
 
         struct SceneInfo
         {
+            static int const type = 9;
+
             U<1> scene_info_present_flag;
             // if( scene_info_present_flag ) {
                 UE scene_id;
@@ -601,6 +621,8 @@ namespace ppbox
 
         struct SubSeqInfo
         {
+            static int const type = 10;
+
             UE sub_seq_layer_num;
             UE sub_seq_id;
             U<1> first_ref_pic_flag;
@@ -634,6 +656,8 @@ namespace ppbox
 
         struct SubSeqLayerCharacteristics
         {
+            static int const type = 11;
+
             UE num_sub_seq_layers_minus1;
             // for( layer = 0; layer <= num_sub_seq_layers_minus1; layer++ ) {
                 std::vector<U<1> > accurate_statistics_flag;
@@ -666,6 +690,8 @@ namespace ppbox
 
         struct SubSeqCharacteristics
         {
+            static int const type = 12;
+
             UE sub_seq_layer_num;
             UE sub_seq_id;
             U<1> duration_flag;
@@ -720,6 +746,8 @@ namespace ppbox
 
         struct FullFrameFreeze
         {
+            static int const type = 13;
+
             UE full_frame_freeze_repetition_period;
 
             FullFrameFreeze(
@@ -739,6 +767,8 @@ namespace ppbox
 
         struct FullFrameFreezeRelease
         {
+            static int const type = 14;
+
             FullFrameFreezeRelease(
                 SeiContext & context)
             {
@@ -755,6 +785,8 @@ namespace ppbox
 
         struct FullFrameSnapShot
         {
+            static int const type = 15;
+
             UE snapshot_id;
 
             FullFrameSnapShot(
@@ -774,6 +806,8 @@ namespace ppbox
 
         struct ProgressiveRefinementSegmentStart
         {
+            static int const type = 16;
+
             UE progressive_refinement_id;
             UE num_refinement_steps_minus1;
 
@@ -795,6 +829,8 @@ namespace ppbox
 
         struct ProgressiveRefinementSegmentEnd
         {
+            static int const type = 17;
+
             UE progressive_refinement_id;
 
             ProgressiveRefinementSegmentEnd(
@@ -814,6 +850,8 @@ namespace ppbox
 
         struct MotionConstrainedSliceGroupSet
         {
+            static int const type = 18;
+
             UE num_slice_groups_in_set_minus1;
             // for( i = 0; i <= num_slice_groups_in_set_minus1; i++)
                 std::vector<UV<PowerMinus<DirectValue<UE> > > > slice_group_id;
@@ -851,6 +889,8 @@ namespace ppbox
             SeiContext & context_;
 
         public:
+            static int const type = 19;
+
             // for( i = 0; i < payloadSize; i++ )
                 std::vector<U<8> > reserved_sei_message_payload_byte;
 
@@ -915,12 +955,13 @@ namespace ppbox
             void save(
                 Archive & ar) const
             {
+                boost::uint32_t u(n_);
                 U<8> u8(0xff);
-                while (n_ > 0xff) {
+                while (u > 0xff) {
                     ar & u8;
-                    n_ -= u8;
+                    u -= u8;
                 };
-                u8 = n_;
+                u8 = u;
                 ar & u8;
             }
         };
@@ -970,6 +1011,46 @@ namespace ppbox
             }
         };
 
+        struct RawSeiMessage
+        {
+            SeiUint payload_type;
+            SeiUint payload_size;
+            std::vector<U<8> > payload_data;
+
+            RawSeiMessage(
+                SeiContext & context)
+                : context_(&context)
+            {
+            }
+
+            template <
+                typename Archive
+            >
+            void serialize(
+                Archive & ar)
+            {
+                ar & payload_type
+                    & payload_size;
+
+                std::cout << "payload_type: " << (boost::uint32_t)payload_type << " payload_size: " << (boost::uint32_t)payload_size << std::endl;
+                payload_data.resize(payload_size);
+                for (size_t i = 0; i < payload_size; ++i) {
+                    ar & payload_data[i];
+                }
+                //if (!ar.byte_aligned()) {
+                    U<1> bit_equal_to_one(1);
+                    ar & bit_equal_to_one;
+                    while (!ar.byte_aligned()) {
+                        U<1> bit_equal_to_zero;
+                        ar & bit_equal_to_zero;
+                    }
+                //}
+            }
+
+        private:
+            SeiContext * context_;
+        };
+
         struct SeiMessage
         {
             SeiUint payload_type;
@@ -980,6 +1061,13 @@ namespace ppbox
                 : context_(&context)
                 , payload_(NULL)
             {
+            }
+
+            template <typename Payload>
+            Payload & payload()
+            {
+                assert(payload_type == Payload::type);
+                return *(Payload *)payload_;
             }
 
             template <
@@ -1063,19 +1151,96 @@ namespace ppbox
                         t.template invoke<ReservedSeiMessage>(ar, payload_);
                         break;
                 }
-                if (!ar.byte_aligned()) {
+                //if (!ar.byte_aligned()) {
                     U<1> bit_equal_to_one(1);
                     ar & bit_equal_to_one;
                     while (!ar.byte_aligned()) {
                         U<1> bit_equal_to_zero;
                         ar & bit_equal_to_zero;
                     }
-                }
+                //}
             }
 
         private:
             SeiContext * context_;
             void * payload_;
+        };
+
+        struct RawSeiRbsp
+            : NaluHeader
+        {
+            RawSeiRbsp(
+                std::map<boost::uint32_t, SeqParameterSetRbsp> const & spss, 
+                std::map<boost::uint32_t, PicParameterSetRbsp> const & ppss)
+                : context_(spss, ppss)
+            {
+            }
+
+            SERIALIZATION_SPLIT_MEMBER()
+
+            template <
+                typename Archive
+            >
+            void load(
+                Archive & ar)
+            {
+                NaluHeader::serialize(ar);
+
+                do {
+                    RawSeiMessage sei_message(context_);
+                    ar >> sei_message;
+                    sei_messages_.push_back(sei_message);
+                } while (ar.more());
+            }
+
+            template <
+                typename Archive
+            >
+            void save(
+                Archive & ar) const
+            {
+                //NaluHeader::serialize(ar);
+                ar << (NaluHeader const &)(*this);
+
+                for (size_t i = 0; i < sei_messages_.size(); ++i) {
+                    ar << sei_messages_[i];
+                }
+            }
+
+            size_t remove_type(
+                int type)
+            {
+                size_t n = sei_messages_.size();
+                sei_messages_.erase(std::remove_if(sei_messages_.begin(), sei_messages_.end(), remove_type_op(type)), 
+                    sei_messages_.end());
+                return n - sei_messages_.size();
+            }
+
+            void modify()
+            {
+                 sei_messages_[0].payload_size = 914;
+            }
+
+        private:
+            struct remove_type_op
+            {
+                remove_type_op(int type)
+                    : type(type)
+                {
+                }
+
+                bool operator()(
+                    RawSeiMessage const & msg)
+                {
+                    return msg.payload_type == type;
+                }
+            private:
+                SeiUint type;
+            };
+
+        private:
+            SeiContext context_;
+            std::vector<RawSeiMessage> sei_messages_;
         };
 
         struct SeiRbsp
@@ -1096,7 +1261,7 @@ namespace ppbox
             void load(
                 Archive & ar)
             {
-               NaluHeader::serialize(ar);
+                NaluHeader::serialize(ar);
 
                 do {
                     SeiMessage sei_message(context_);
@@ -1111,12 +1276,44 @@ namespace ppbox
             void save(
                 Archive & ar) const
             {
-               NaluHeader::serialize(ar);
+                //NaluHeader::serialize(ar);
+                ar << (NaluHeader const &)(*this);
 
                 for (size_t i = 0; i < sei_messages_.size(); ++i) {
                     ar << sei_messages_[i];
                 }
             }
+
+            size_t remove_type(
+                int type)
+            {
+                size_t n = sei_messages_.size();
+                sei_messages_.erase(std::remove_if(sei_messages_.begin(), sei_messages_.end(), remove_type_op(type)), 
+                    sei_messages_.end());
+                return n - sei_messages_.size();
+            }
+
+            void modify()
+            {
+                 sei_messages_[0].payload_size = 914;
+            }
+
+        private:
+            struct remove_type_op
+            {
+                remove_type_op(int type)
+                    : type(type)
+                {
+                }
+
+                bool operator()(
+                    SeiMessage const & msg)
+                {
+                    return msg.payload_type == type;
+                }
+            private:
+                SeiUint type;
+            };
 
         private:
             SeiContext context_;

@@ -146,6 +146,9 @@ namespace ppbox
                     case AMFDataType::AMF_DATA_TYPE_STRING:
                         ar & String;
                         break;
+                    case AMFDataType::AMF_DATA_TYPE_OBJECT:
+                        ar & Object;
+                        break;
                     case AMFDataType::AMF_DATA_TYPE_MOVIECLIP:
                         ar.fail();
                         break;

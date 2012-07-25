@@ -3,6 +3,9 @@
 #ifndef _PPBOX_AVFORMAT_BITS_TYPE_
 #define _PPBOX_AVFORMAT_BITS_TYPE_
 
+#include <util/serialization/Serialization.h>
+#include <util/serialization/SplitMember.h>
+
 namespace ppbox
 {
     namespace avformat
@@ -333,5 +336,63 @@ namespace ppbox
 
     } // namespace avformat
 } // namespace ppbox
+
+namespace util
+{
+    namespace serialization
+    {
+
+        template<
+            size_t n
+        >
+        struct is_primitive<ppbox::avformat::I<n> >
+            : boost::true_type
+        {
+        };
+
+        template<
+            size_t n
+        >
+        struct is_primitive<ppbox::avformat::U<n> >
+            : boost::true_type
+        {
+        };
+
+        template<
+            typename V
+        >
+        struct is_primitive<ppbox::avformat::IV<V> >
+            : boost::true_type
+        {
+        };
+
+        template<
+            typename V
+        >
+        struct is_primitive<ppbox::avformat::UV<V> >
+            : boost::true_type
+        {
+        };
+
+        template<>
+        struct is_primitive<ppbox::avformat::SE>
+            : boost::true_type
+        {
+        };
+
+        template<>
+        struct is_primitive<ppbox::avformat::UE>
+            : boost::true_type
+        {
+        };
+
+        template<>
+        struct is_primitive<ppbox::avformat::P>
+            : boost::true_type
+        {
+        };
+
+    } // namespace serialization
+} // namespace util
 
 #endif // _PPBOX_AVFORMAT_BITS_TYPE_

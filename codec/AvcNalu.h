@@ -3,8 +3,7 @@
 #ifndef _PPBOX_AVFORMAT_AVC_NALU_
 #define _PPBOX_AVFORMAT_AVC_NALU_
 
-#include "ppbox/avformat/BitsIStream.h"
-#include "ppbox/avformat/BitsOStream.h"
+#include "ppbox/avformat/BitsType.h"
 
 namespace ppbox
 {
@@ -13,6 +12,25 @@ namespace ppbox
 
         struct NaluHeader
         {
+            enum NaluTypeEnum
+            {
+                undefine = 0,
+                UNIDR,
+                DATABLOCK_A,
+                DATABLOCK_B,
+                DATABLOCK_C,
+                IDR,
+                SEI,
+                SPS,
+                PPS,
+                AccessUnitDelimiter,
+                EndOfSeq,
+                EndOfStream,
+                FillerData,
+                SPSExtension,
+                Other,
+            };
+
             U<1> forbidden_zero_bit;
             U<2> nal_ref_idc;
             U<5> nal_unit_type;
@@ -21,6 +39,18 @@ namespace ppbox
                 U<5> const & nal_unit_type = 0)
                 : nal_unit_type(nal_unit_type)
             {
+            }
+
+            NaluHeader(
+                boost::uint8_t b)
+            {
+                nal_ref_idc = b & 0x60;
+                nal_unit_type = b & 0x1f;
+            }
+
+            boost::uint8_t byte() const
+            {
+                return (boost::uint8_t)nal_ref_idc << 5 | (boost::uint8_t)nal_unit_type;
             }
 
             template <
@@ -33,6 +63,8 @@ namespace ppbox
                     & nal_ref_idc
                     & nal_unit_type;
             }
+
+            static char const * const nalu_type_str[];
         };
 
        template <

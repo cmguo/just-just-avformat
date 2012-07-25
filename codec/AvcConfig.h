@@ -1,9 +1,7 @@
 // AvcConfig.h
 
-#ifndef      _PPBOX_AVFORMAT_AVC_CONFIG_
-#define      _PPBOX_AVFORMAT_AVC_CONFIG_
-
-#include <vector>
+#ifndef      _PPBOX_AVFORMAT_CODEC_AVC_CONFIG_
+#define      _PPBOX_AVFORMAT_CODEC_AVC_CONFIG_
 
 namespace ppbox
 {
@@ -258,4 +256,5 @@ namespace ppbox
         };
     }
 }
-#endif // End _PPBOX_AVFORMAT_AVC_CONFIG_
+
+#endif // _PPBOX_AVFORMAT_CODEC_AVC_CONFIG_

@@ -7,69 +7,6 @@
 
 #include <util/archive/StreamOArchive.h>
 
-namespace util
-{
-    namespace serialization
-    {
-
-#ifndef _PPBOX_AVFORMAT_BITS_STREAM_H_PRIMITIVE_DECLARE_
-#define _PPBOX_AVFORMAT_BITS_STREAM_H_PRIMITIVE_DECLARE_
-
-        template<
-            size_t n
-        >
-        struct is_primitive<ppbox::avformat::I<n> >
-            : boost::true_type
-        {
-        };
-
-        template<
-            size_t n
-        >
-        struct is_primitive<ppbox::avformat::U<n> >
-            : boost::true_type
-        {
-        };
-
-        template<
-            typename V
-        >
-        struct is_primitive<ppbox::avformat::IV<V> >
-            : boost::true_type
-        {
-        };
-
-        template<
-            typename V
-        >
-        struct is_primitive<ppbox::avformat::UV<V> >
-            : boost::true_type
-        {
-        };
-
-        template<>
-        struct is_primitive<ppbox::avformat::SE>
-            : boost::true_type
-        {
-        };
-
-        template<>
-        struct is_primitive<ppbox::avformat::UE>
-            : boost::true_type
-        {
-        };
-
-        template<>
-        struct is_primitive<ppbox::avformat::P>
-            : boost::true_type
-        {
-        };
-
-#endif
-
-    } // namespace serialization
-} // namespace util
-
 namespace ppbox
 {
     namespace avformat
@@ -180,7 +117,7 @@ namespace ppbox
 
             bool byte_aligned()
             {
-                return size_this_byte_ == 0;
+                return size_this_byte_ == 8;
             }
 
         private:
