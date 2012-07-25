@@ -66,6 +66,7 @@ namespace ppbox
                 Archive & ar)
             {
                 FlvDataObjectProperty Property;
+                ObjectProperties.clear();
                 while (ar & Property) {
                     ObjectProperties.push_back(Property);
                     if (FLV_Property_End(Property))
@@ -85,6 +86,7 @@ namespace ppbox
             {
                 ar & ECMAArrayLength;
                 FlvDataObjectProperty Property;
+                Variables.clear();
                 while (ar & Property) {
                     Variables.push_back(Property);
                     if (FLV_Property_End(Property))
