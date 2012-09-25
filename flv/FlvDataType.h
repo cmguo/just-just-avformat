@@ -137,40 +137,40 @@ namespace ppbox
             {
                 ar & Type;
                 switch (Type) {
-                    case AMFDataType::AMF_DATA_TYPE_NUMBER:
+                    case AMFDataType::NUMBER:
                         ar & _Double;
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_BOOL:
+                    case AMFDataType::BOOL:
                         ar & Bool;
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_STRING:
+                    case AMFDataType::STRING:
                         ar & String;
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_OBJECT:
+                    case AMFDataType::OBJECT:
                         ar & Object;
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_MOVIECLIP:
+                    case AMFDataType::MOVIECLIP:
                         ar.fail();
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_NULL:
+                    case AMFDataType::_NULL:
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_UNDEFINED:
+                    case AMFDataType::UNDEFINED:
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_REFERENCE:
+                    case AMFDataType::REFERENCE:
                         ar & Reference;
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_MIXEDARRAY:
+                    case AMFDataType::MIXEDARRAY:
                         ar & ECMAArray;
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_OBJECT_END:
+                    case AMFDataType::OBJECT_END:
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_ARRAY:
+                    case AMFDataType::ARRAY:
                         ar & StrictArray;
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_DATE:
+                    case AMFDataType::DATE:
                         ar & Date;
                         break;
-                    case AMFDataType::AMF_DATA_TYPE_LONG_STRING:
+                    case AMFDataType::LONG_STRING:
                         ar & LongString;
                         break;
                     default:
@@ -197,7 +197,7 @@ namespace ppbox
         static inline bool FLV_Property_End(
             FlvDataObjectProperty const & Property)
         {
-            return Property.PropertyData.Type == AMFDataType::AMF_DATA_TYPE_OBJECT_END;
+            return Property.PropertyData.Type == AMFDataType::OBJECT_END;
         }
 
     }

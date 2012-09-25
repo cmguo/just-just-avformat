@@ -10,24 +10,25 @@ namespace ppbox
 {
     namespace avformat
     {
-        struct FlagType
+
+        struct FlvFlagType
         {
             enum Enum {
-                FLV_HEADER_FLAG_HASVIDEO = 1,
-                FLV_HEADER_FLAG_HASAUDIO = 4,
+                HASVIDEO = 1,
+                HASAUDIO = 4,
             };
         };
 
-        struct TagType
+        struct FlvTagType
         {
             enum Enum {
-                FLV_TAG_TYPE_AUDIO = 0x08,
-                FLV_TAG_TYPE_VIDEO = 0x09,
-                FLV_TAG_TYPE_META  = 0x12,
+                AUDIO = 0x08,
+                VIDEO = 0x09,
+                META  = 0x12,
             };
         };
 
-        struct SoundType
+        struct FlvSoundType
         {
             enum Enum {
                 FLV_MONO   = 0,
@@ -38,74 +39,74 @@ namespace ppbox
         struct SoundSizeType
         {
             enum Enum {
-                FLV_SAMPLESSIZE_8BIT  = 0,
-                FLV_SAMPLESSIZE_16BIT = 1,
+                _8BIT  = 0,
+                _16BIT = 1,
             };
         };
 
-        struct SoundSampleRateType
+        struct FlvSoundSampleRateType
         {
             enum Enum {
-                FLV_SAMPLERATE_SPECIAL = 0, 
-                FLV_SAMPLERATE_11025HZ = 1,
-                FLV_SAMPLERATE_22050HZ = 2,
-                FLV_SAMPLERATE_44100HZ = 3,
+                _SPECIAL = 0, 
+                _11025HZ = 1,
+                _22050HZ = 2,
+                _44100HZ = 3,
             };
         };
 
-        struct SoundCodec
+        struct FlvSoundCodec
         {
             enum Enum {
-                FLV_CODECID_PCM                  = 0,
-                FLV_CODECID_ADPCM                = 1,
-                FLV_CODECID_MP3                  = 2,
-                FLV_CODECID_PCM_LE               = 3,
-                FLV_CODECID_NELLYMOSER_16KHZ_MONO = 4,
-                FLV_CODECID_NELLYMOSER_8KHZ_MONO = 5,
-                FLV_CODECID_NELLYMOSER           = 6,
-                FLV_CODECID_AAC                  = 10,
-                FLV_CODECID_SPEEX                = 11,
+                PCM                  = 0,
+                ADPCM                = 1,
+                MP3                  = 2,
+                PCM_LE               = 3,
+                NELLYMOSER_16KHZ_MONO = 4,
+                NELLYMOSER_8KHZ_MONO = 5,
+                NELLYMOSER           = 6,
+                AAC                  = 10,
+                SPEEX                = 11,
             };
         };
 
-        struct VideoCodec
+        struct FlvVideoCodec
         {
             enum Enum {
-                FLV_CODECID_H263    = 2,
-                FLV_CODECID_SCREEN  = 3,
-                FLV_CODECID_VP6     = 4,
-                FLV_CODECID_VP6A    = 5,
-                FLV_CODECID_SCREEN2 = 6,
-                FLV_CODECID_H264    = 7,
+                H263    = 2,
+                SCREEN  = 3,
+                VP6     = 4,
+                VP6A    = 5,
+                SCREEN2 = 6,
+                H264    = 7,
             };
         };
 
-        struct FrameType
+        struct FlvFrameType
         {
             enum Enum {
-                FLV_FRAME_KEY        = 1,
-                FLV_FRAME_INTER      = 2,
-                FLV_FRAME_DISP_INTER = 3,
+                KEY        = 1,
+                INTER      = 2,
+                DISP_INTER = 3,
             };
         };
 
         struct AMFDataType
         {
             enum Enum {
-                AMF_DATA_TYPE_NUMBER      = 0x00,
-                AMF_DATA_TYPE_BOOL        = 0x01,
-                AMF_DATA_TYPE_STRING      = 0x02,
-                AMF_DATA_TYPE_OBJECT      = 0x03,
-                AMF_DATA_TYPE_MOVIECLIP   = 0x04,
-                AMF_DATA_TYPE_NULL        = 0x05,
-                AMF_DATA_TYPE_UNDEFINED   = 0x06,
-                AMF_DATA_TYPE_REFERENCE   = 0x07,
-                AMF_DATA_TYPE_MIXEDARRAY  = 0x08,
-                AMF_DATA_TYPE_OBJECT_END  = 0x09,
-                AMF_DATA_TYPE_ARRAY       = 0x0a,
-                AMF_DATA_TYPE_DATE        = 0x0b,
-                AMF_DATA_TYPE_LONG_STRING = 0x0c,
-                AMF_DATA_TYPE_UNSUPPORTED = 0x0d,
+                NUMBER      = 0x00,
+                BOOL        = 0x01,
+                STRING      = 0x02,
+                OBJECT      = 0x03,
+                MOVIECLIP   = 0x04,
+                _NULL       = 0x05,
+                UNDEFINED   = 0x06,
+                REFERENCE   = 0x07,
+                MIXEDARRAY  = 0x08,
+                OBJECT_END  = 0x09,
+                ARRAY       = 0x0a,
+                DATE        = 0x0b,
+                LONG_STRING = 0x0c,
+                UNSUPPORTED = 0x0d,
             };
         };
 

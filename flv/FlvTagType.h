@@ -1,7 +1,7 @@
 // FlvTagType.h
 
-#ifndef _PPBOX_AVFORMAT_FLV_FLV_TAG_TYPE_H_
-#define _PPBOX_AVFORMAT_FLV_FLV_TAG_TYPE_H_
+#ifndef _PPBOX_AVFORMAT_FLV_H_
+#define _PPBOX_AVFORMAT_FLV_H_
 
 #include "ppbox/avformat/flv/FlvFormat.h"
 #include "ppbox/avformat/flv/FlvDataType.h"
@@ -97,7 +97,7 @@ namespace ppbox
                 Archive & ar)
             {
                 ar & flag;
-                if (SoundFormat == SoundCodec::FLV_CODECID_AAC)
+                if (SoundFormat == FlvSoundCodec::AAC)
                     ar & AACPacketType;
                 else
                     AACPacketType = 1;
@@ -133,7 +133,7 @@ namespace ppbox
                 Archive & ar)
             {
                 ar & flag;
-                if (CodecID == VideoCodec::FLV_CODECID_H264) {
+                if (CodecID == FlvVideoCodec::H264) {
                     ar & AVCPacketType;
                     ar & CompositionTime;
                 } else {
@@ -235,17 +235,17 @@ namespace ppbox
                 FlvTagHeader::serialize(ar);
 
                 data_offset = ar.tellg();
-                if (Type == TagType::FLV_TAG_TYPE_AUDIO) {
+                if (Type == FlvTagType::AUDIO) {
                     ar & AudioHeader;
                     is_sample = AudioHeader.AACPacketType == 1;
                     is_sync = true;
                     cts_delta = 0;
-                } else if (Type == TagType::FLV_TAG_TYPE_VIDEO) {
+                } else if (Type == FlvTagType::VIDEO) {
                     ar & VideoHeader;
                     is_sample = VideoHeader.AVCPacketType == 1;
-                    is_sync = VideoHeader.FrameType == FrameType::FLV_FRAME_KEY;
+                    is_sync = VideoHeader.FrameType == FlvFrameType::KEY;
                     cts_delta = VideoHeader.CompositionTime;
-                } else if (Type == TagType::FLV_TAG_TYPE_META) {
+                } else if (Type == FlvTagType::META) {
                     if (skip_metadata) {
                     } else {
                         ar & DataTag;
@@ -277,4 +277,4 @@ namespace ppbox
     }
 }
 
-#endif // _PPBOX_AVFORMAT_FLV_FLV_TAG_TYPE_H_
+#endif // _PPBOX_AVFORMAT_FLV_H_

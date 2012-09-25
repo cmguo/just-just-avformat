@@ -1032,19 +1032,11 @@ namespace ppbox
                 ar & payload_type
                     & payload_size;
 
-                std::cout << "payload_type: " << (boost::uint32_t)payload_type << " payload_size: " << (boost::uint32_t)payload_size << std::endl;
+                std::cout << (Archive::is_saving::value ? "save" : "load") << " payload_type: " << (boost::uint32_t)payload_type << " payload_size: " << (boost::uint32_t)payload_size << std::endl;
                 payload_data.resize(payload_size);
                 for (size_t i = 0; i < payload_size; ++i) {
                     ar & payload_data[i];
                 }
-                //if (!ar.byte_aligned()) {
-                    U<1> bit_equal_to_one(1);
-                    ar & bit_equal_to_one;
-                    while (!ar.byte_aligned()) {
-                        U<1> bit_equal_to_zero;
-                        ar & bit_equal_to_zero;
-                    }
-                //}
             }
 
         private:
