@@ -62,7 +62,10 @@ namespace ppbox
         typedef framework::string::UUID ASFUUID;
 
         template <typename Archive>
-        void serialize_length(Archive & ar, boost::uint32_t & t, size_t m)
+        void serialize_length(
+            Archive & ar, 
+            boost::uint32_t & t, 
+            size_t m)
         {
             switch (m) {
                 case 0:
@@ -70,14 +73,14 @@ namespace ppbox
                     break;
                 case 1:
                     {
-                        boost::uint8_t tt = t;
+                        boost::uint8_t tt = (boost::uint8_t)t;
                         ar & tt;
                         t = tt;
                     }
                     break;
                 case 2:
                     {
-                        boost::uint16_t tt = t;
+                        boost::uint16_t tt = (boost::uint16_t)t;
                         ar & tt;
                         t = tt;
                     }

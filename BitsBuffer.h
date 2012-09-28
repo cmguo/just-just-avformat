@@ -48,7 +48,7 @@ namespace ppbox
                     num_zero_in_ = 0;
                 }
                 if (c != traits_type::eof()) {
-                    byte_in_ = c;
+                    byte_in_ = traits_type::to_char_type(c);
                     this->setg(&byte_in_, &byte_in_, &byte_in_ + 1);
                 }
                 return c;
@@ -58,7 +58,7 @@ namespace ppbox
             {
                 if (num_zero_out_ == 2 && 0 == (traits_type::to_char_type(c) >> 2)) {
                     num_zero_out_ = 0;
-                    int_type three = next_layer_.sputc(traits_type::to_int_type(3));
+                    int_type three = next_layer_.sputc(traits_type::to_char_type(3));
                     if (three == traits_type::eof())
                         return three;
                 }
@@ -67,7 +67,7 @@ namespace ppbox
                 } else {
                     num_zero_out_ = 0;
                 }
-                return next_layer_.sputc(c);
+                return next_layer_.sputc(traits_type::to_char_type(c));
             }
 
         private:
