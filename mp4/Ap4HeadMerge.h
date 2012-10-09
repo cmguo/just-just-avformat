@@ -108,7 +108,8 @@ namespace ppbox
             void Clean();
 
         };
-    }
-}
+
+    } // namespace avformat
+} // namespace ppbox
 
 #endif /* _PPBOX_DOWNLAOD_MP4HEADER_ */

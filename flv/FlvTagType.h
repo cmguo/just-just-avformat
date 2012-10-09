@@ -1,7 +1,7 @@
 // FlvTagType.h
 
-#ifndef _PPBOX_AVFORMAT_FLV_H_
-#define _PPBOX_AVFORMAT_FLV_H_
+#ifndef _PPBOX_AVFORMAT_FLV_FLV_TAG_TYPE_H_
+#define _PPBOX_AVFORMAT_FLV_FLV_TAG_TYPE_H_
 
 #include "ppbox/avformat/flv/FlvFormat.h"
 #include "ppbox/avformat/flv/FlvDataType.h"
@@ -274,7 +274,7 @@ namespace ppbox
             }
         };
 
-    }
-}
+    } // namespace avformat
+} // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_FLV_H_
+#endif // _PPBOX_AVFORMAT_FLV_FLV_TAG_TYPE_H_

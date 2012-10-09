@@ -861,9 +861,8 @@ namespace ppbox
             ASF_Packet const * packet_;
         };
 
+    } // namespace avformat
+} // namespace ppbox
 
-    }
-}
-
-#endif // _PPBOX_DEMUX_ASF_ASF_OBJECT_TYPE_H_
+#endif // _PPBOX_AVFORMAT_ASF_ASF_OBJECT_TYPE_H_
  

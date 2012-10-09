@@ -645,10 +645,8 @@ namespace ppbox
             }
         };
 
-    }//avformat
-}//ppbox
-
-
+    } // namespace avformat
+} // namespace ppbox
 
 #endif
 

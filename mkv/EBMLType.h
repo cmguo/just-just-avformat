@@ -1,4 +1,4 @@
-//EBMLType.h
+// EBMLType.h
 
 #ifndef _PPBOX_AVFORMAT_MKV_EBML_TYPE_H_
 #define _PPBOX_AVFORMAT_MKV_EBML_TYPE_H_
@@ -377,8 +377,8 @@ namespace ppbox
             }
         };
 
-    }//avformat
-}//ppbox
+    } // namespace avformat
+} // namespace ppbox
 
 #endif
 

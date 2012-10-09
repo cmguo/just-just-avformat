@@ -155,8 +155,8 @@ namespace ppbox
             boost::uint32_t filesize;
             std::vector<boost::uint8_t> BinaryData;
         };
-    }
-}
 
+    } // namespace avformat
+} // namespace ppbox
 
-#endif // End _PPBOX_AVFORMAT_FLV_FLV_FORMAT_H_
+#endif // _PPBOX_AVFORMAT_FLV_FLV_FORMAT_H_

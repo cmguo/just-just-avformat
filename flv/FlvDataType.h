@@ -200,7 +200,7 @@ namespace ppbox
             return Property.PropertyData.Type == AMFDataType::OBJECT_END;
         }
 
-    }
-}
+    } // namespace avformat
+} // namespace ppbox
 
 #endif // _PPBOX_AVFORMAT_FLV_FLV_DATA_TYPE_H_

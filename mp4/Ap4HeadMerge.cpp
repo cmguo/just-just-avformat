@@ -13,6 +13,7 @@ namespace ppbox
 {
     namespace avformat
     {
+
         Ap4HeadMerge::Ap4HeadMerge()
         {
             file_ = NULL;
