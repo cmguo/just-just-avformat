@@ -1,7 +1,7 @@
 // Mp4Algorithm.cpp
 
 #include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/Mp4Algorithm.h"
+#include "ppbox/avformat/mp4/Mp4Algorithm.h"
 
 #include <framework/system/BytesOrder.h>
 
