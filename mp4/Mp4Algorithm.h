@@ -10,8 +10,9 @@ namespace ppbox
     namespace avformat
     {
 
-        size_t mp4_head_size(
-            std::istream & is);
+        boost::uint64_t mp4_head_size(
+            std::basic_istream<boost::uint8_t> & is, 
+            boost::system::error_code & ec);
 
     } // namespace avformat
 } // namespace ppbox
