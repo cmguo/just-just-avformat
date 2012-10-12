@@ -72,6 +72,7 @@ namespace ppbox
             };
             boost::uint32_t index;
             boost::uint32_t time_scale;
+            boost::uint64_t start_time;
             boost::uint64_t duration;
         };
 
