@@ -1,7 +1,7 @@
 // Codec.h
 
-#ifndef   _PPBOX_AVFORMAT_CODEC_
-#define   _PPBOX_AVFORMAT_CODEC_
+#ifndef _PPBOX_AVFORMAT_CODEC_H_
+#define _PPBOX_AVFORMAT_CODEC_H_
 
 #include <boost/asio/buffer.hpp>
 
@@ -9,6 +9,7 @@ namespace ppbox
 {
     namespace avformat
     {
+
         class Codec
         {
         public:
@@ -19,13 +20,9 @@ namespace ppbox
             virtual ~Codec()
             {
             }
-
-            virtual void config(
-                std::vector<boost::uint8_t> & data,
-                void *& config) = 0;
-
         };
-    }
-}
 
-#endif // _PPBOX_AVFORMAT_CODEC_
+    } // namespace avformat
+} // namespace ppbox
+
+#endif // _PPBOX_AVFORMAT_CODEC_H_

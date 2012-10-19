@@ -76,16 +76,26 @@ namespace ppbox
             boost::uint64_t duration;
         };
 
+        class Codec;
+
         struct StreamInfo
             : StreamInfoBase
         {
             enum FormatTypeEnum
             {
+                none, 
                 video_avc_packet = 1, 
                 video_avc_byte_stream = 2, 
                 audio_microsoft_wave = 3, 
                 audio_iso_mp4 = 4, 
             };
+
+            StreamInfo()
+                : format_type(none)
+                , codec(NULL)
+                , attachment(NULL)
+            {
+            }
 
             boost::uint32_t format_type;             // 格式说明的类型
             union {
@@ -93,6 +103,7 @@ namespace ppbox
                 AudioInfo audio_format;
             };
             std::vector<boost::uint8_t> format_data; // 格式说明的内容
+            Codec * codec;
             void * attachment; // 附件信息
         };
 

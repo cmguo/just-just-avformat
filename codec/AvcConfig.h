@@ -1,7 +1,7 @@
 // AvcConfig.h
 
-#ifndef _PPBOX_AVFORMAT_CODEC_AVC_CONFIG_
-#define _PPBOX_AVFORMAT_CODEC_AVC_CONFIG_
+#ifndef _PPBOX_AVFORMAT_CODEC_AVC_CONFIG_H_
+#define _PPBOX_AVFORMAT_CODEC_AVC_CONFIG_H_
 
 namespace ppbox
 {
@@ -254,7 +254,8 @@ namespace ppbox
             Buffer_Array        sequence_parameters_;
             Buffer_Array        picture_parameters_;
         };
-    }
-}
 
-#endif // _PPBOX_AVFORMAT_CODEC_AVC_CONFIG_
+    } // namespace avformat
+} // namespace ppbox
+
+#endif // _PPBOX_AVFORMAT_CODEC_AVC_CONFIG_H_

@@ -1,7 +1,7 @@
 // BitsType.h
 
-#ifndef _PPBOX_AVFORMAT_BITS_TYPE_
-#define _PPBOX_AVFORMAT_BITS_TYPE_
+#ifndef _PPBOX_AVFORMAT_BITS_TYPE_H_
+#define _PPBOX_AVFORMAT_BITS_TYPE_H_
 
 #include <util/serialization/Serialization.h>
 #include <util/serialization/SplitMember.h>
@@ -395,4 +395,4 @@ namespace util
     } // namespace serialization
 } // namespace util
 
-#endif // _PPBOX_AVFORMAT_BITS_TYPE_
+#endif // _PPBOX_AVFORMAT_BITS_TYPE_H_

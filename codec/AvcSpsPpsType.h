@@ -1,7 +1,7 @@
 // AvcSpsPpsType.h
 
-#ifndef _PPBOX_AVFORMAT_AVC_SPS_PPS_TYPE_
-#define _PPBOX_AVFORMAT_AVC_SPS_PPS_TYPE_
+#ifndef _PPBOX_AVFORMAT_AVC_SPS_PPS_TYPE_H_
+#define _PPBOX_AVFORMAT_AVC_SPS_PPS_TYPE_H_
 
 #include "ppbox/avformat/codec/AvcNalu.h"
 #include "ppbox/avformat/codec/AvcVuiType.h"
@@ -340,4 +340,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_AVC_SPS_PPS_TYPE_
+#endif // _PPBOX_AVFORMAT_AVC_SPS_PPS_TYPE_H_
