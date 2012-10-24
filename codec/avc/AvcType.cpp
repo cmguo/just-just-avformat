@@ -1,7 +1,7 @@
 // AvcType.cpp
 
 #include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/codec/AvcType.h"
+#include "ppbox/avformat/codec/avc/AvcType.h"
 
 namespace ppbox
 {

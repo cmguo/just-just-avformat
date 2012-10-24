@@ -1,10 +1,10 @@
 // AvcCodec.h
 
-#ifndef _PPBOX_AVFORMAT_AVC_CODEC_H_
-#define _PPBOX_AVFORMAT_AVC_CODEC_H_
+#ifndef _PPBOX_AVFORMAT_AVC_AVC_CODEC_H_
+#define _PPBOX_AVFORMAT_AVC_AVC_CODEC_H_
 
 #include "ppbox/avformat/codec/Codec.h"
-#include "ppbox/avformat/codec/AvcConfig.h"
+#include "ppbox/avformat/codec/avc/AvcConfig.h"
 
 namespace ppbox
 {
@@ -14,12 +14,10 @@ namespace ppbox
             : public Codec
         {
         public:
+            AvcCodec();
+
             AvcCodec(
-                std::vector<boost::uint8_t> & config)
-            {
-                config_.set_buffer(&config.at(0), config.size());
-                config_.creat();
-            }
+                std::vector<boost::uint8_t> & config);
 
         public:
             AvcConfig const & config() const
@@ -34,4 +32,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_AVC_CODEC_H_
+#endif // _PPBOX_AVFORMAT_AVC_AVC_CODEC_H_

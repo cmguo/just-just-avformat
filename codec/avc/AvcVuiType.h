@@ -1,7 +1,7 @@
 // AvcVuiType.h
 
-#ifndef _PPBOX_AVFORMAT_AVC_VUI_TYPE_
-#define _PPBOX_AVFORMAT_AVC_VUI_TYPE_
+#ifndef _PPBOX_AVFORMAT_AVC_AVC_VUI_TYPE_H_
+#define _PPBOX_AVFORMAT_AVC_AVC_VUI_TYPE_H_
 
 namespace ppbox
 {
@@ -170,4 +170,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_AVC_VUI_TYPE_
+#endif // _PPBOX_AVFORMAT_AVC_AVC_VUI_TYPE_H_

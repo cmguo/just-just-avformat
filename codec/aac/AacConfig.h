@@ -1,7 +1,7 @@
 // AacConfig.h
 
-#ifndef _PPBOX_AVFORMAT_CODEC_AAC_CONFIG_
-#define _PPBOX_AVFORMAT_CODEC_AAC_CONFIG_
+#ifndef _PPBOX_AVFORMAT_CODEC_AAC_AAC_CONFIG_H_
+#define _PPBOX_AVFORMAT_CODEC_AAC_AAC_CONFIG_H_
 
 #include "ppbox/avformat/BitsType.h"
 
@@ -39,7 +39,7 @@ namespace ppbox
                 std::vector<boost::uint8_t> const & buf);
 
             void to_data(
-                std::vector<boost::uint8_t> & buf);
+                std::vector<boost::uint8_t> & buf) const;
 
         public:
             boost::uint32_t get_frequency() const
@@ -77,4 +77,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_CODEC_AAC_CONFIG_
+#endif // _PPBOX_AVFORMAT_CODEC_AAC_AAC_CONFIG_H_

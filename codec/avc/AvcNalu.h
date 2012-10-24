@@ -1,7 +1,7 @@
 // AvcNalu.h
 
-#ifndef _PPBOX_AVFORMAT_AVC_NALU_
-#define _PPBOX_AVFORMAT_AVC_NALU_
+#ifndef _PPBOX_AVFORMAT_AVC_AVC_NALU_H_
+#define _PPBOX_AVFORMAT_AVC_AVC_NALU_H_
 
 #include "ppbox/avformat/BitsType.h"
 
@@ -134,4 +134,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_AVC_NALU_
+#endif // _PPBOX_AVFORMAT_AVC_AVC_NALU_H_

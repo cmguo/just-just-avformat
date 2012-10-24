@@ -1,7 +1,7 @@
 // AacConfig.cpp
 
 #include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/codec/AacConfig.h"
+#include "ppbox/avformat/codec/aac/AacConfig.h"
 #include "ppbox/avformat/BitsIStream.h"
 #include "ppbox/avformat/BitsOStream.h"
 
@@ -66,7 +66,7 @@ namespace ppbox
         }
 
         void AacConfig::to_data(
-            std::vector<boost::uint8_t> & buf)
+            std::vector<boost::uint8_t> & buf) const
         {
             buf.resize(16);
             util::archive::ArchiveBuffer<boost::uint8_t> abuf((boost::uint8_t *)&buf[0], buf.size());
