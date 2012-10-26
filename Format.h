@@ -52,6 +52,8 @@ namespace ppbox
             boost::uint32_t sample_rate;
         };
 
+        class Codec;
+
         struct StreamInfoBase
         {
             StreamInfoBase()
@@ -59,6 +61,7 @@ namespace ppbox
                 , sub_type(VIDEO_TYPE_NONE)
                 , time_scale(0)
                 , duration(0)
+                , codec(NULL)
             {
             }
 
@@ -74,9 +77,8 @@ namespace ppbox
             boost::uint32_t time_scale;
             boost::uint64_t start_time;
             boost::uint64_t duration;
+            Codec * codec;
         };
-
-        class Codec;
 
         struct StreamInfo
             : StreamInfoBase
@@ -92,8 +94,6 @@ namespace ppbox
 
             StreamInfo()
                 : format_type(none)
-                , codec(NULL)
-                , attachment(NULL)
             {
             }
 
@@ -103,8 +103,6 @@ namespace ppbox
                 AudioInfo audio_format;
             };
             std::vector<boost::uint8_t> format_data; // 格式说明的内容
-            Codec * codec;
-            void * attachment; // 附件信息
         };
 
         struct FileBlock
