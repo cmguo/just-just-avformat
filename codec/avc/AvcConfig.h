@@ -26,7 +26,7 @@ namespace ppbox
             // for (i=0; i< numOfSequenceParameterSets; i++)
                 std::vector<U<16> > sequenceParameterSetLength;
                 std::vector<std::vector<boost::uint8_t> > sequenceParameterSetNALUnit;
-            U<5> numOfPictureParameterSets;
+            U<8> numOfPictureParameterSets;
                 // for (i=0; i< numOfPictureParameterSets; i++)
                 std::vector<U<16> > pictureParameterSetLength;
                 std::vector<std::vector<boost::uint8_t> > pictureParameterSetNALUnit;
