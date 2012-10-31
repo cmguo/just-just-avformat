@@ -141,7 +141,7 @@ namespace ppbox
             boost::uint32_t duration;
             boost::uint32_t size;
             std::vector<FileBlock> blocks;
-            StreamInfo const * media_info;
+            StreamInfo const * stream_info;
             void * context;
             std::deque<boost::asio::const_buffer> data;
         };
