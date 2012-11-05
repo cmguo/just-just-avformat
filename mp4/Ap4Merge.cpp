@@ -282,7 +282,7 @@ namespace ppbox
             boost::system::error_code & ec)
         {
             AP4_StcoAtom * stco1 = (AP4_StcoAtom *)atom1;
-            AP4_StcoAtom * stco2 = (AP4_StcoAtom *)atom2;
+            //AP4_StcoAtom * stco2 = (AP4_StcoAtom *)atom2;
             AP4_UI64 head_size1 = 0;
             AP4_Atom * mdat1 = file1->GetChild(AP4_ATOM_TYPE_MDAT);
             file1->GetChildren().Apply(AP4_AtomSizeAdder(head_size1));
@@ -324,14 +324,14 @@ namespace ppbox
                     AP4_Atom * atom2, 
                     boost::system::error_code & ec);
             } modify_table [] = {
-                "tkhd",                true,  ap4_merge_track_tkhd, 
-                "mdia/mdhd",           true,  ap4_merge_track_mdhd, 
-                "mdia/minf/stbl/stts", true,  ap4_merge_track_stts, 
-                "mdia/minf/stbl/ctts", false, ap4_merge_track_ctts, 
-                "mdia/minf/stbl/stss", false, ap4_merge_track_stss, 
-                "mdia/minf/stbl/stsz", true,  ap4_merge_track_stsz, // stsz 必须在 stss 后面，因为 stss 合并依赖的老的 sample count
-                "mdia/minf/stbl/stsc", true,  ap4_merge_track_stsc, 
-                "mdia/minf/stbl/stco", true,  ap4_merge_track_stco, // stco 必须在 stsc 后面，因为 stsc 合并依赖的老的 chunk count
+                {"tkhd",                true,  ap4_merge_track_tkhd}, 
+                {"mdia/mdhd",           true,  ap4_merge_track_mdhd}, 
+                {"mdia/minf/stbl/stts", true,  ap4_merge_track_stts}, 
+                {"mdia/minf/stbl/ctts", false, ap4_merge_track_ctts}, 
+                {"mdia/minf/stbl/stss", false, ap4_merge_track_stss}, 
+                {"mdia/minf/stbl/stsz", true,  ap4_merge_track_stsz}, // stsz 必须在 stss 后面，因为 stss 合并依赖的老的 sample count
+                {"mdia/minf/stbl/stsc", true,  ap4_merge_track_stsc}, 
+                {"mdia/minf/stbl/stco", true,  ap4_merge_track_stco}, // stco 必须在 stsc 后面，因为 stsc 合并依赖的老的 chunk count
             };
 
             for (size_t i = 0; i < sizeof(modify_table) / sizeof(modify_table[0]); ++i) {
