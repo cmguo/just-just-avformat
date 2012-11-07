@@ -52,10 +52,7 @@ namespace ppbox
     namespace avformat
     {
 
-        typedef boost::system::error_code ASF_ERROR; 
         typedef util::archive::LittleEndianBinaryOArchive<boost::uint8_t> ASFOArchive;
-        typedef util::archive::LittleEndianBinaryOArchive<char> ASFOArchiveChar;
-
         typedef util::archive::LittleEndianBinaryIArchive<boost::uint8_t> ASFIArchive;
 
         typedef framework::string::Uuid AsfUuid;
