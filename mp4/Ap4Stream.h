@@ -3,7 +3,7 @@
 #ifndef _PPBOX_MERGE_AP4_STREAM_BYTE_STREAM_H_
 #define _PPBOX_MERGE_AP4_STREAM_BYTE_STREAM_H_
 
-#include <ppbox/data/MediaInfo.h>
+#include <ppbox/data/SegmentInfo.h>
 
 #include <bento4/Core/Ap4ByteStream.h>
 
