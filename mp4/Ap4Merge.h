@@ -3,7 +3,7 @@
 #ifndef _PPBOX_AVFORMAT_MP4_AP4_MERGE_H_
 #define _PPBOX_AVFORMAT_MP4_AP4_MERGE_H_
 
-#include <ppbox/data/SegmentInfo.h>
+#include <ppbox/data/segment/SegmentInfo.h>
 
 class AP4_File;
 class AP4_ByteStream;

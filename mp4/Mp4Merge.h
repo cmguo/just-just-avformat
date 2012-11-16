@@ -3,7 +3,7 @@
 #ifndef _PPBOX_MERGE_MP4_MP4_MERGE_H_
 #define _PPBOX_MERGE_MP4_MP4_MERGE_H_
 
-#include <ppbox/data/SegmentInfo.h>
+#include <ppbox/data/segment/SegmentInfo.h>
 
 namespace ppbox
 {
