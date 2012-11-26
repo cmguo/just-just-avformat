@@ -2,6 +2,8 @@
 
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/codec/avc/AvcConfig.h"
+#include "ppbox/avformat/codec/avc/AvcNaluHelper.h"
+#include <ppbox/avformat/codec/avc/AvcNalu.h>
 #include "ppbox/avformat/BitsIStream.h"
 #include "ppbox/avformat/BitsOStream.h"
 
@@ -83,7 +85,23 @@ namespace ppbox
         void AvcConfig::from_es_data(
             std::vector<boost::uint8_t> const & buf)
         {
-
+            std::vector<NaluBuffer> nalus;
+            AvcNaluHelper::ConstBuffers buffers;
+            buffers.push_back(boost::asio::buffer(buf));
+            AvcNaluHelper list;
+            list.from_stream(buf.size(), buffers, nalus);
+            AvcNaluHelper::MyBuffersLimit limit(buffers.begin(), buffers.end());
+            for (size_t i = 0; i < nalus.size(); ++i) {
+                NaluHeader const nalu_header(nalus.at(i).begin.dereference_byte());
+                std::vector<boost::uint8_t> nalu(nalus[i].bytes_begin(limit), nalus[i].bytes_end());
+                if (nalu_header.nal_unit_type == avformat::NaluHeader::SPS) {
+                    sequenceParameterSetLength.push_back(nalu.size());
+                    sequenceParameterSetNALUnit.push_back(nalu);
+                } else if (nalu_header.nal_unit_type == avformat::NaluHeader::PPS) {
+                    pictureParameterSetLength.push_back(nalu.size());
+                    pictureParameterSetNALUnit.push_back(nalu);
+                }
+            }
         }
 
         void AvcConfig::to_es_data(
