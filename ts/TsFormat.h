@@ -71,6 +71,91 @@ namespace ppbox
             };
         };
 
+        template <typename _Ty>
+        struct TsVector
+            : std::vector<_Ty>
+        {
+            TsVector()
+                : has_suffer_(false)
+                , size_(0)
+            {
+            }
+
+            SERIALIZATION_SPLIT_MEMBER();
+
+            void set_byte_size(
+                boost::uint64_t size)
+            {
+                has_suffer_ = false;
+                size_ = size;
+            }
+
+            void set_byte_size_with_suffer(
+                boost::uint64_t size)
+            {
+                has_suffer_ = true;
+                size_ = size;
+            }
+
+            template <typename Archive>
+            void load(
+                Archive & ar)
+            {
+                clear();
+                boost::uint64_t byte_end = (boost::uint64_t)ar.tellg() + size_;
+                while (ar.tellg() < byte_end) {
+                    if (has_suffer_) {
+                        std::basic_streambuf<boost::uint8_t> * buf = ar.rdbuf();
+                        if (buf->sgetc() == 0xff) {
+                            break;
+                        }
+                    }
+                    _Ty t;
+                    ar >> t;
+                    if (ar) {
+                        push_back(t);
+                    } else {
+                        break;
+                    }
+                }
+                if (has_suffer_) {
+                    while ((boost::uint64_t)ar.tellg() < byte_end) {
+                        boost::uint8_t suffer(0xff);
+                        ar >> suffer;
+                    }
+                }
+                assert(!ar || (boost::uint64_t)ar.tellg() == byte_end);
+            }
+
+            template <typename Archive>
+            void save(
+                Archive & ar) const
+            {
+                boost::uint64_t byte_end = (boost::uint64_t)ar.tellp() + size_;
+                typename const_iterator iter = begin();
+                typename const_iterator iend = end();
+                while (ar.tellp() < byte_end && iter != iend) {
+                    ar << *iter;
+                    if (ar) {
+                        ++iter;
+                    } else {
+                        break;
+                    }
+                }
+                if (has_suffer_) {
+                    while ((boost::uint64_t)ar.tellp() < byte_end) {
+                        boost::uint8_t suffer(0xff);
+                        ar << suffer;
+                    }
+                }
+                assert(!ar || ((boost::uint64_t)ar.tellp() == byte_end && iter == iend));
+            }
+
+        private:
+            bool has_suffer_;
+            boost::uint64_t size_;
+        };
+
     } // namespace avformat
 } // namespace ppbox
 

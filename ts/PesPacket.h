@@ -69,6 +69,11 @@ namespace ppbox
             {
             }
 
+            boost::uint64_t value() const
+            {
+                return (boost::uint64_t)bits_32_30 << 30 | (boost::uint64_t)bits_29_15 << 15 | bits_14_0;
+            }
+
             template <typename Archive>
             void serialize(
                 Archive & ar)
@@ -158,6 +163,11 @@ namespace ppbox
                 boost::uint32_t size, 
                 boost::uint64_t cts, 
                 boost::uint64_t dts);
+
+            boost::uint32_t payload_length() const
+            {
+                return packet_length ? packet_length - 3 - header_data_length : 0;
+            }
 
             template <typename Archive>
             void serialize(

@@ -209,6 +209,11 @@ namespace ppbox
                 return 4 + ((adaptat_field_control & 2) ? (adaptation.adaptation_field_length + 1) : 0);
             }
 
+            boost::uint8_t payload_size() const
+            {
+                return PACKET_SIZE - header_adaptation_size();
+            }
+
             template <typename Archive>
             void serialize(
                 Archive & ar)
