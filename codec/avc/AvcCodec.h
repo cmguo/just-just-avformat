@@ -4,12 +4,13 @@
 #define _PPBOX_AVFORMAT_AVC_AVC_CODEC_H_
 
 #include "ppbox/avformat/codec/Codec.h"
-#include "ppbox/avformat/codec/avc/AvcConfig.h"
+#include "ppbox/avformat/codec/avc/AvcConfigHelper.h"
 
 namespace ppbox
 {
     namespace avformat
     {
+
         class AvcCodec
             : public Codec
         {
@@ -17,17 +18,30 @@ namespace ppbox
             AvcCodec();
 
             AvcCodec(
-                std::vector<boost::uint8_t> & config);
+                std::vector<boost::uint8_t> const & config);
+
+            struct from_es_tag {};
+
+            AvcCodec(
+                std::vector<boost::uint8_t> const & config, 
+                from_es_tag);
 
         public:
+            AvcConfigHelper const & config_helper() const
+            {
+                return config_helper_;
+            }
+
             AvcConfig const & config() const
             {
-                return config_;
+                return config_helper_.data();
             }
 
         private:
-            AvcConfig config_;
+            AvcConfigHelper config_helper_;
         };
+
+        PPBOX_REGISTER_CODEC(VIDEO_TYPE_AVC1, AvcCodec);
 
     } // namespace avformat
 } // namespace ppbox

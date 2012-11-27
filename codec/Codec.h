@@ -1,9 +1,11 @@
 // Codec.h
 
-#ifndef _PPBOX_AVFORMAT_CODEC_H_
-#define _PPBOX_AVFORMAT_CODEC_H_
+#ifndef _PPBOX_AVFORMAT_CODEC_CODEC_H_
+#define _PPBOX_AVFORMAT_CODEC_CODEC_H_
 
-#include <boost/asio/buffer.hpp>
+#include "ppbox/avformat/Format.h"
+
+#include <ppbox/common/ClassFactory.h>
 
 namespace ppbox
 {
@@ -11,6 +13,11 @@ namespace ppbox
     {
 
         class Codec
+            : public ppbox::common::ClassFactory<
+                Codec, 
+                boost::uint32_t, 
+                Codec *(std::vector<boost::uint8_t> const &)
+            >
         {
         public:
             Codec()
@@ -25,4 +32,6 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_CODEC_H_
+#define PPBOX_REGISTER_CODEC(key, cls) PPBOX_REGISTER_CLASS(key, cls)
+
+#endif // _PPBOX_AVFORMAT_CODEC_CODEC_H_

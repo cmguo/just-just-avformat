@@ -12,7 +12,7 @@ namespace ppbox
 
         // AVC Decoder Configuration Record
 
-        class AvcConfig
+        struct AvcConfig
         {
         public:
             U<8> configurationVersion;
@@ -32,28 +32,36 @@ namespace ppbox
                 std::vector<std::vector<boost::uint8_t> > pictureParameterSetNALUnit;
 
         public:
-            AvcConfig();
-
-            AvcConfig(
-                boost::uint8_t const * buf, 
-                boost::uint32_t size);
-
-            AvcConfig(
-                std::vector<boost::uint8_t> const & buf);
-
-        public:
-            void from_data(
-                std::vector<boost::uint8_t> const & buf);
-
-            void to_data(
-                std::vector<boost::uint8_t> & buf) const;
-
-        public:
-            void from_es_data(
-                std::vector<boost::uint8_t> const & buf);
-
-            void to_es_data(
-                std::vector<boost::uint8_t> & buf) const;
+            template <
+                typename Archive
+            >
+            void serialize(
+                Archive & ar)
+            {
+                ar & configurationVersion;
+                ar & AVCProfileIndication;
+                ar & profile_compatibility;
+                ar & AVCLevelIndication;
+                ar & reserved;
+                ar & lengthSizeMinusOne;
+                ar & reserved2;
+                ar & numOfSequenceParameterSets;
+                sequenceParameterSetLength.resize(numOfSequenceParameterSets);
+                sequenceParameterSetNALUnit.resize(numOfSequenceParameterSets);
+                for (size_t i = 0; i < sequenceParameterSetLength.size(); ++i) {
+                    ar & sequenceParameterSetLength[i];
+                    sequenceParameterSetNALUnit[i].resize(sequenceParameterSetLength[i]);
+                    util::serialization::serialize_collection(ar, sequenceParameterSetNALUnit[i], sequenceParameterSetNALUnit[i].size());
+                }
+                ar & numOfPictureParameterSets;
+                pictureParameterSetLength.resize(numOfPictureParameterSets);
+                pictureParameterSetNALUnit.resize(numOfPictureParameterSets);
+                for (size_t i = 0; i < pictureParameterSetLength.size(); ++i) {
+                    ar & pictureParameterSetLength[i];
+                    pictureParameterSetNALUnit[i].resize(pictureParameterSetLength[i]);
+                    util::serialization::serialize_collection(ar, pictureParameterSetNALUnit[i], pictureParameterSetNALUnit[i].size());
+                }
+            }
         };
 
     } // namespace avformat

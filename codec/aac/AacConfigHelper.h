@@ -25,6 +25,12 @@ namespace ppbox
             ~AacConfigHelper();
 
         public:
+            AacConfig const & data() const
+            {
+                return *data_;
+            }
+
+        public:
             void from_data(
                 std::vector<boost::uint8_t> const & buf);
 
