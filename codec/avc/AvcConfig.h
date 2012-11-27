@@ -5,6 +5,8 @@
 
 #include "ppbox/avformat/BitsType.h"
 
+#include <util/serialization/Collection.h>
+
 namespace ppbox
 {
     namespace avformat
