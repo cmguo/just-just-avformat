@@ -101,9 +101,9 @@ namespace ppbox
             void load(
                 Archive & ar)
             {
-                clear();
+                this->clear();
                 boost::uint64_t byte_end = (boost::uint64_t)ar.tellg() + size_;
-                while (ar.tellg() < byte_end) {
+                while ((boost::uint64_t)ar.tellg() < byte_end) {
                     if (has_suffer_) {
                         std::basic_streambuf<boost::uint8_t> * buf = ar.rdbuf();
                         if (buf->sgetc() == 0xff) {
@@ -113,7 +113,7 @@ namespace ppbox
                     _Ty t;
                     ar >> t;
                     if (ar) {
-                        push_back(t);
+                        this->push_back(t);
                     } else {
                         break;
                     }
@@ -132,9 +132,9 @@ namespace ppbox
                 Archive & ar) const
             {
                 boost::uint64_t byte_end = (boost::uint64_t)ar.tellp() + size_;
-                typename const_iterator iter = begin();
-                typename const_iterator iend = end();
-                while (ar.tellp() < byte_end && iter != iend) {
+                typename TsVector::const_iterator iter = this->begin();
+                typename TsVector::const_iterator iend = this->end();
+                while ((boost::uint64_t)ar.tellp() < byte_end && iter != iend) {
                     ar << *iter;
                     if (ar) {
                         ++iter;

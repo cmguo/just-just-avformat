@@ -146,8 +146,8 @@ namespace ppbox
                 : packet_start_code_prefix1(0)
                 , packet_start_code_prefix2(0)
                 , packet_start_code_prefix3(0)
-                , packet_length(0)
                 , stream_id(0)
+                , packet_length(0)
                 , byte1(0)
                 , byte2(0)
             {

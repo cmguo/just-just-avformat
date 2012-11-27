@@ -104,7 +104,7 @@ namespace ppbox
             ~AutoCrc()
             {
                 ar_.rdbuf(&buf_.next_layer());
-                check((Archive::is_saving *)0);
+                check((typename Archive::is_saving *)0);
             }
 
         private:
