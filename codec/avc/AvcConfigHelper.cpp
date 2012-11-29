@@ -20,14 +20,10 @@ namespace ppbox
         {
         }
 
-        AvcConfigHelper::~AvcConfigHelper()
-        {
-            delete data_;
-        }
-
         AvcConfigHelper::AvcConfigHelper(
             boost::uint8_t const * buf, 
             boost::uint32_t size)
+            : data_(new AvcConfig)
         {
             std::vector<boost::uint8_t> vec(buf, buf + size);
             from_data(vec);
@@ -35,8 +31,14 @@ namespace ppbox
 
         AvcConfigHelper::AvcConfigHelper(
             std::vector<boost::uint8_t> const & vec)
+            : data_(new AvcConfig)
         {
             from_data(vec);
+        }
+
+        AvcConfigHelper::~AvcConfigHelper()
+        {
+            delete data_;
         }
 
         void AvcConfigHelper::from_data(
