@@ -110,8 +110,8 @@ namespace ppbox
             };
         };
 
-        typedef util::archive::BigEndianBinaryIArchive<boost::uint8_t> FLVArchive;
-        typedef util::archive::BigEndianBinaryOArchive<char> FLVOArchive;
+        typedef util::archive::BigEndianBinaryIArchive<boost::uint8_t> FlvIArchive;
+        typedef util::archive::BigEndianBinaryOArchive<boost::uint8_t> FlvOArchive;
 
         struct FlvMetadata
         {
