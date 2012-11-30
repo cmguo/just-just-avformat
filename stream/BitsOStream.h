@@ -1,9 +1,9 @@
 // BitsOStream.h
 
-#ifndef _PPBOX_AVFORMAT_BITS_O_STREAM_H_
-#define _PPBOX_AVFORMAT_BITS_O_STREAM_H_
+#ifndef _PPBOX_AVFORMAT_STREAM_BITS_O_STREAM_H_
+#define _PPBOX_AVFORMAT_STREAM_BITS_O_STREAM_H_
 
-#include "ppbox/avformat/BitsType.h"
+#include "ppbox/avformat/stream/BitsType.h"
 
 #include <util/archive/StreamOArchive.h>
 
@@ -175,4 +175,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_BITS_O_STREAM_H_
+#endif // _PPBOX_AVFORMAT_STREAM_BITS_O_STREAM_H_

@@ -121,9 +121,7 @@ namespace ppbox
                 boost::uint16_t program_number);
 
             void add_stream(
-                bool video, 
-                boost::uint8_t type, 
-                boost::uint32_t index);
+                boost::uint8_t type);
 
             template <typename Archive>
             void serialize(

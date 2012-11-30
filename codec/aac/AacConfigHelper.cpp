@@ -4,10 +4,9 @@
 #include "ppbox/avformat/codec/aac/AacConfigHelper.h"
 #include "ppbox/avformat/codec/aac/AacConfig.h"
 #include "ppbox/avformat/codec/aac/AacAdts.h"
-#include "ppbox/avformat/BitsIStream.h"
-#include "ppbox/avformat/BitsOStream.h"
-
-#include <util/archive/ArchiveBuffer.h>
+#include "ppbox/avformat/stream/BitsIStream.h"
+#include "ppbox/avformat/stream/BitsOStream.h"
+#include "ppbox/avformat/stream/FormatBuffer.h"
 
 namespace ppbox
 {
@@ -107,8 +106,8 @@ namespace ppbox
         void AacConfigHelper::from_data(
             std::vector<boost::uint8_t> const & buf)
         {
-            util::archive::ArchiveBuffer<boost::uint8_t> abuf((boost::uint8_t *)&buf[0], buf.size(), buf.size());
-            ppbox::avformat::BitsIStream<boost::uint8_t> is(abuf);
+            FormatBuffer abuf((boost::uint8_t *)&buf[0], buf.size(), buf.size());
+            BitsIStream<boost::uint8_t> is(abuf);
             is >> *data_;
         }
 
@@ -116,7 +115,7 @@ namespace ppbox
             std::vector<boost::uint8_t> & buf) const
         {
             buf.resize(16);
-            util::archive::ArchiveBuffer<boost::uint8_t> abuf((boost::uint8_t *)&buf[0], buf.size());
+            FormatBuffer abuf((boost::uint8_t *)&buf[0], buf.size());
             ppbox::avformat::BitsOStream<boost::uint8_t> os(abuf);
             os << *data_;
             while (!os.byte_aligned())
@@ -128,7 +127,7 @@ namespace ppbox
             std::vector<boost::uint8_t> const & buf)
         {
             AacAdts adts;
-            util::archive::ArchiveBuffer<boost::uint8_t> abuf((boost::uint8_t *)&buf[0], buf.size());
+            FormatBuffer abuf((boost::uint8_t *)&buf[0], buf.size());
             ppbox::avformat::BitsOStream<boost::uint8_t> os(abuf);
             os << adts;
             if (!os)

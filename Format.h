@@ -131,7 +131,6 @@ namespace ppbox
             };
 
             boost::uint32_t itrack;
-            boost::uint32_t idesc;
             boost::uint32_t flags;
             boost::uint64_t time;
             boost::uint64_t ustime;
@@ -140,9 +139,9 @@ namespace ppbox
             boost::uint32_t cts_delta;
             boost::uint32_t duration;
             boost::uint32_t size;
-            std::vector<FileBlock> blocks;
             StreamInfo const * stream_info;
-            void * context;
+            void * context; // 处理上下文
+            std::vector<FileBlock> blocks;
             std::deque<boost::asio::const_buffer> data;
         };
 

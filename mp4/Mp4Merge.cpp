@@ -61,7 +61,7 @@ namespace ppbox
         big_head_size,
         obj_stream);
 
-        ppbox::avformat::Ap4HeadMerge mp4_head;
+        Ap4HeadMerge mp4_head;
         mp4_head.stream_ = obj_stream;
         mp4_head.CheckMp4Head(ec);
         boost::uint64_t duration_sum = 0;

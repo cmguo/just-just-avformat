@@ -3,6 +3,8 @@
 #ifndef _PPBOX_AVFORMAT_FLV_FLV_FORMAT_H_
 #define _PPBOX_AVFORMAT_FLV_FLV_FORMAT_H_
 
+#include "ppbox/avformat/stream/FormatBuffer.h"
+
 #include <util/archive/BigEndianBinaryIArchive.h>
 #include <util/archive/BigEndianBinaryOArchive.h>
 

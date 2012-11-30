@@ -4,6 +4,7 @@
 #define _PPBOX_AVFORMAT_MKV_MKV_OBJECT_TYPE_H_
 
 #include "ppbox/avformat/mkv/EBMLType.h"
+#include "ppbox/avformat/stream/FormatBuffer.h"
 
 namespace ppbox
 {

@@ -3,7 +3,7 @@
 #ifndef _PPBOX_AVFORMAT_CODEC_AAC_AAC_CONFIG_H_
 #define _PPBOX_AVFORMAT_CODEC_AAC_AAC_CONFIG_H_
 
-#include "ppbox/avformat/BitsType.h"
+#include "ppbox/avformat/stream/BitsType.h"
 #include "ppbox/avformat/codec/aac/AacGAConfig.h"
 
 namespace ppbox

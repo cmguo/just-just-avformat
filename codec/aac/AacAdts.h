@@ -3,7 +3,7 @@
 #ifndef _PPBOX_AVFORMAT_CODEC_AAC_AAC_ADTS_H_
 #define _PPBOX_AVFORMAT_CODEC_AAC_AAC_ADTS_H_
 
-#include "ppbox/avformat/BitsType.h"
+#include "ppbox/avformat/stream/BitsType.h"
 
 namespace ppbox
 {

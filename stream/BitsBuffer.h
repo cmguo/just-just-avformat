@@ -1,7 +1,7 @@
 // BitsBuffer.h
 
-#ifndef _PPBOX_AVFORMAT_BITS_BUFFER_
-#define _PPBOX_AVFORMAT_BITS_BUFFER_
+#ifndef _PPBOX_AVFORMAT_STREAM_BITS_BUFFER_H_
+#define _PPBOX_AVFORMAT_STREAM_BITS_BUFFER_H_
 
 #include <streambuf>
 
@@ -81,4 +81,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_BITS_BUFFER_
+#endif // _PPBOX_AVFORMAT_STREAM_BITS_BUFFER_H_

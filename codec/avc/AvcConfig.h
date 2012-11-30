@@ -3,7 +3,7 @@
 #ifndef _PPBOX_AVFORMAT_CODEC_AVC_AVC_CONFIG_H_
 #define _PPBOX_AVFORMAT_CODEC_AVC_AVC_CONFIG_H_
 
-#include "ppbox/avformat/BitsType.h"
+#include "ppbox/avformat/stream/BitsType.h"
 
 #include <util/serialization/Collection.h>
 

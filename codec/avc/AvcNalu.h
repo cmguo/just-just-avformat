@@ -3,7 +3,7 @@
 #ifndef _PPBOX_AVFORMAT_AVC_AVC_NALU_H_
 #define _PPBOX_AVFORMAT_AVC_AVC_NALU_H_
 
-#include "ppbox/avformat/BitsType.h"
+#include "ppbox/avformat/stream/BitsType.h"
 
 namespace ppbox
 {

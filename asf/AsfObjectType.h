@@ -4,6 +4,7 @@
 #define _PPBOX_AVFORMAT_ASF_ASF_OBJECT_TYPE_H_
 
 #include "ppbox/avformat/asf/AsfGuid.h"
+#include "ppbox/avformat/stream/FormatBuffer.h"
 
 #include <util/archive/LittleEndianBinaryIArchive.h>
 #include <util/archive/LittleEndianBinaryOArchive.h>

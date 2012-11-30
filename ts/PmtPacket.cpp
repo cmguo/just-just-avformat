@@ -18,14 +18,13 @@ namespace ppbox
         }
 
         void PmtSection::add_stream(
-            bool video, 
-            boost::uint8_t type, 
-            boost::uint32_t index)
+            boost::uint8_t type)
         {
-            if (video || pcr_pid == 0) {
-                pcr_pid = TsPid::stream_base + (boost::uint16_t)index;
+            boost::uint16_t pid = TsPid::stream_base + (boost::uint16_t)streams.size();
+            if (streams.empty()) {
+                pcr_pid = pid;
             }
-            streams.push_back(PmtStream(type, TsPid::stream_base + (boost::uint16_t)index));
+            streams.push_back(PmtStream(type, pid));
             section_length += 5;
         }
 
