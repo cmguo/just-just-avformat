@@ -114,6 +114,9 @@ namespace ppbox
         void AacConfigHelper::to_data(
             std::vector<boost::uint8_t> & buf) const
         {
+            if (data_->audioObjectType == 0) {
+                return;
+            }
             buf.resize(16);
             FormatBuffer abuf((boost::uint8_t *)&buf[0], buf.size());
             ppbox::avformat::BitsOStream<boost::uint8_t> os(abuf);
@@ -127,11 +130,13 @@ namespace ppbox
             std::vector<boost::uint8_t> const & buf)
         {
             AacAdts adts;
-            FormatBuffer abuf((boost::uint8_t *)&buf[0], buf.size());
-            ppbox::avformat::BitsOStream<boost::uint8_t> os(abuf);
-            os << adts;
-            if (!os)
+
+            FormatBuffer abuf((boost::uint8_t *)&buf[0], buf.size(), buf.size());
+            ppbox::avformat::BitsIStream<boost::uint8_t> is(abuf);
+            is >> adts;
+            if (!is)
                 return;
+
             data_->audioObjectType = adts.profile + 1;
             data_->audioObjectTypeExt = 0;
             data_->samplingFrequencyIndex = adts.sampling_frequency_index;
@@ -147,6 +152,7 @@ namespace ppbox
             std::vector<boost::uint8_t> & buf) const
         {
             AacAdts adts;
+
             adts.syncword = 0xfff;
             adts.version = 0; // MPEG4 part 3
             adts.layer = 0;
@@ -162,6 +168,11 @@ namespace ppbox
             adts.frame_length = frame_size + 7;
             adts.buffer_fullness = 0x1fff;
             adts.no_raw_data_blocks_in_frame = 0;
+
+            buf.resize(7);
+            FormatBuffer abuf((boost::uint8_t *)&buf[0], buf.size());
+            ppbox::avformat::BitsOStream<boost::uint8_t> os(abuf);
+            os << adts;
         }
 
     } // namespace avformat

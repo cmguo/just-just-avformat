@@ -51,7 +51,7 @@ namespace ppbox
         void AvcConfigHelper::to_data(
             std::vector<boost::uint8_t> & buf) const
         {
-            buf.resize(16);
+            buf.resize(256);
             FormatBuffer abuf((boost::uint8_t *)&buf[0], buf.size());
             BitsOStream<boost::uint8_t> os(abuf);
             os << *data_;
@@ -78,6 +78,15 @@ namespace ppbox
                     data_->pictureParameterSetNALUnit.push_back(nalu);
                 }
             }
+            data_->configurationVersion = 1;
+            data_->AVCProfileIndication = data_->sequenceParameterSetNALUnit[0][1];
+            data_->profile_compatibility = 0;
+            data_->AVCLevelIndication = data_->sequenceParameterSetNALUnit[0][3];
+            data_->reserved = 0x3f;
+            data_->lengthSizeMinusOne = 3;
+            data_->reserved2 = 0x7;
+            data_->numOfSequenceParameterSets = data_->sequenceParameterSetNALUnit.size();
+            data_->numOfPictureParameterSets = data_->pictureParameterSetNALUnit.size();
         }
 
         void AvcConfigHelper::to_es_data(

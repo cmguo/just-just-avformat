@@ -77,6 +77,10 @@ namespace ppbox
                     & buffer_fullness
                     & no_raw_data_blocks_in_frame
                     ;
+
+                if (syncword != 0xfff) {
+                    ar.fail();
+                }
             }
         };
 
