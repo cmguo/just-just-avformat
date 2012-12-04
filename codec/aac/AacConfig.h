@@ -37,7 +37,7 @@ namespace ppbox
 
             //if ( audioObjectType == 5 ) {
                 U<4> extensionSamplingFrequencyIndex;
-                U<4> extensionSamplingFrequency; // if extensionSamplingFrequencyIndex = 0xf
+                U<24> extensionSamplingFrequency; // if extensionSamplingFrequencyIndex = 0xf
                 U<5> extensionAudioObjectType;
                 U<6> extensionAudioObjectTypeExt; // if extensionAudioObjectType == 31 extensionAudioObjectTypeExt = 32 + extensionAudioObjectType
             //}
