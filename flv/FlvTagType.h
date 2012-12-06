@@ -43,7 +43,7 @@ namespace ppbox
                 , Signature2('L')
                 , Signature3('V')
                 , Version(1)
-                , flag(5) // TypeFlagsReserved = 0, TypeFlagsAudio = 1, TypeFlagsReserved2 = 0, TypeFlagsVideo = 0
+                , flag(0)
                 , DataOffset(9)
                 , PreTagSize(0)
             {
