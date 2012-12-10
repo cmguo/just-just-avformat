@@ -47,11 +47,79 @@ namespace ppbox
             delete data_;
         }
 
+        boost::uint32_t AacConfigHelper::get_object_type() const
+        {
+            if (data_->audioObjectType == 5) {
+                return (data_->extensionAudioObjectType == 31) 
+                    ? (boost::uint32_t)data_->extensionAudioObjectTypeExt + 32 
+                    : (boost::uint32_t)data_->extensionAudioObjectType;
+            }
+            return (data_->audioObjectType == 31) 
+                ? (boost::uint32_t)data_->audioObjectTypeExt + 32 
+                : (boost::uint32_t)data_->audioObjectType;
+        }
+
         boost::uint32_t AacConfigHelper::get_frequency() const
         {
-            return (data_->samplingFrequencyIndex == 15) 
+            return (data_->samplingFrequencyIndex == 0xf) 
                 ? (boost::uint32_t)data_->samplingFrequency 
                 : frequency_table[data_->samplingFrequencyIndex];
+        }
+
+        boost::uint32_t AacConfigHelper::get_channel_count() const
+        {
+            return data_->channelConfiguration;
+        }
+
+        boost::uint32_t AacConfigHelper::get_extension_object_type() const
+        {
+            if (data_->audioObjectType == 5 || 
+                data_->audioObjectType == 29) {
+                    return data_->audioObjectType;
+            }
+            if (data_->syncExtensionType == 0x2b7) {
+                return (data_->syncExtensionAudioObjectType == 31) 
+                    ? (boost::uint32_t)data_->syncExtensionAudioObjectTypeExt + 32 
+                    : (boost::uint32_t)data_->syncExtensionAudioObjectType;
+            }
+            return 0;
+        }
+
+        boost::uint32_t AacConfigHelper::get_extension_frequency() const
+        {
+            if (data_->audioObjectType == 5 || 
+                data_->audioObjectType == 29) {
+                    return data_->extensionSamplingFrequencyIndex == 0xf 
+                        ? (boost::uint32_t)data_->samplingFrequency 
+                        : frequency_table[data_->extensionSamplingFrequencyIndex];
+            }
+            if (data_->syncExtensionType == 0x2b7) {
+                return (data_->syncExtensionSamplingFrequencyIndex == 0xf) 
+                    ? (boost::uint32_t)data_->syncExtensionSamplingFrequency + 32 
+                    : frequency_table[data_->syncExtensionSamplingFrequencyIndex];
+            }
+            return 0;
+        }
+
+        bool AacConfigHelper::sbr_present() const
+        {
+            return data_->audioObjectType == 5 || data_->audioObjectType == 29 || data_->syncSbrPresentFlag;
+        }
+
+        bool AacConfigHelper::ps_present() const
+        {
+            return data_->audioObjectType == 29 || (data_->audioObjectType != 5 && data_->syncPsPresentFlag);
+        }
+
+        void AacConfigHelper::set_object_type(
+            size_t object_type)
+        {
+            if (object_type < 31) {
+                data_->audioObjectType = object_type;
+            } else {
+                data_->audioObjectType = 31;
+                data_->audioObjectTypeExt = object_type - 32;
+            }
         }
 
         void AacConfigHelper::set_frequency(
@@ -65,42 +133,6 @@ namespace ppbox
             }
             data_->samplingFrequencyIndex = 15;
             data_->samplingFrequency = frequency;
-        }
-
-        boost::uint32_t AacConfigHelper::get_object_type() const
-        {
-            if (data_->audioObjectType == 5) {
-                return (data_->extensionAudioObjectType == 31) 
-                    ? (boost::uint32_t)data_->extensionAudioObjectTypeExt + 32 
-                    : (boost::uint32_t)data_->extensionAudioObjectType;
-            }
-            return (data_->audioObjectType == 31) 
-                ? (boost::uint32_t)data_->audioObjectTypeExt + 32 
-                : (boost::uint32_t)data_->audioObjectType;
-        }
-
-        boost::uint32_t AacConfigHelper::get_extension_object_type() const
-        {
-            if (data_->audioObjectType == 5) {
-                return data_->audioObjectType;
-            }
-            return 0;
-        }
-
-        boost::uint32_t AacConfigHelper::get_channel_count() const
-        {
-            return data_->channelConfiguration;
-        }
-
-        void AacConfigHelper::set_object_type(
-            size_t object_type)
-        {
-            if (object_type < 31) {
-                data_->audioObjectType = object_type;
-            } else {
-                data_->audioObjectType = 31;
-                data_->audioObjectTypeExt = object_type - 32;
-            }
         }
 
         void AacConfigHelper::from_data(
@@ -145,6 +177,14 @@ namespace ppbox
             data_->ga_config.frameLengthFlag = 0;
             data_->ga_config.dependsOnCoreCoder = 0;
             data_->ga_config.extensionFlag = 0;
+            /*
+            data_->extensionAudioObjectType = data_->audioObjectType;
+            data_->extensionAudioObjectTypeExt = data_->audioObjectTypeExt;
+            data_->extensionSamplingFrequencyIndex = data_->samplingFrequencyIndex;
+            data_->extensionSamplingFrequency = data_->samplingFrequency;
+            data_->audioObjectType = 5;
+            data_->samplingFrequencyIndex = data_->extensionSamplingFrequencyIndex - 3;
+            */
         }
 
         void AacConfigHelper::to_adts_data(

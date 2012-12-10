@@ -45,19 +45,26 @@ namespace ppbox
                 std::vector<boost::uint8_t> & buf) const;
 
         public:
-            boost::uint32_t get_frequency() const;
-
-            void set_frequency(
-                size_t frequency);
-
             boost::uint32_t get_object_type() const;
 
-            boost::uint32_t get_extension_object_type() const;
+            boost::uint32_t get_frequency() const;
 
             boost::uint32_t get_channel_count() const;
 
+            boost::uint32_t get_extension_object_type() const;
+
+            boost::uint32_t get_extension_frequency() const;
+
+            bool sbr_present() const;
+
+            bool ps_present() const;
+
+        public:
             void set_object_type(
                 size_t object_type);
+
+            void set_frequency(
+                size_t frequency);
 
         private:
             AacConfig * data_;

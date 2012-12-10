@@ -44,6 +44,16 @@ namespace ppbox
 
             AacGAConfig ga_config;
 
+            U<11> syncExtensionType;
+            U<5> syncExtensionAudioObjectType;
+            U<6> syncExtensionAudioObjectTypeExt;
+            U<1> syncSbrPresentFlag;
+            U<4> syncExtensionSamplingFrequencyIndex;
+            U<24> syncExtensionSamplingFrequency;
+
+            U<11> syncExtensionType2;
+            U<1> syncPsPresentFlag;
+
         public:
             template <
                 typename Archive
@@ -58,7 +68,7 @@ namespace ppbox
                 if (samplingFrequencyIndex == 0xf)
                     ar & samplingFrequency;
                 ar & channelConfiguration;
-                if (audioObjectType == 5) {
+                if (audioObjectType == 5 || audioObjectType == 29) {
                     ar & extensionSamplingFrequencyIndex;
                     if (extensionSamplingFrequencyIndex == 0xf) {
                         ar & extensionSamplingFrequency;
@@ -68,6 +78,34 @@ namespace ppbox
                         ar & extensionAudioObjectTypeExt;
                 }
                 ar & ga_config;
+
+                if (ar && audioObjectType != 5) {
+                    ar & syncExtensionType;
+                    if (syncExtensionType == 0x2b7) {
+                        ar & syncExtensionAudioObjectType;
+                        if (syncExtensionAudioObjectType == 31) {
+                            ar & syncExtensionAudioObjectTypeExt;
+                        }
+                        if (syncExtensionAudioObjectType == 5) {
+                            ar & syncSbrPresentFlag;
+                            if (syncSbrPresentFlag) {
+                                ar & syncExtensionSamplingFrequencyIndex;
+                                if (syncExtensionSamplingFrequencyIndex == 0xf)
+                                    ar & syncExtensionSamplingFrequency;
+                                if (ar) {
+                                    ar & syncExtensionType2;
+                                    if (syncExtensionType2 == 0x548) {
+                                        ar & syncPsPresentFlag;
+                                    } else if (syncExtensionType2 == 0) {
+                                        ar.clear();
+                                    }
+                                } // 
+                            }
+                        }
+                    } else if (syncSbrPresentFlag == 0) {
+                        ar.clear();
+                    }
+                }
             };
         };
 
