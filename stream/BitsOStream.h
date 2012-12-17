@@ -16,6 +16,95 @@ namespace ppbox
             typename _Elem = char, 
             typename _Traits = std::char_traits<_Elem>
         >
+        class BitsOStream;
+
+    } // namespace avformat
+} // namespace ppbox
+
+namespace util
+{
+    namespace serialization
+    {
+
+        template<
+            typename _Elem, 
+            typename _Traits, 
+            size_t n
+        >
+        struct is_primitive<ppbox::avformat::BitsOStream<_Elem, _Traits>, ppbox::avformat::I<n> >
+            : boost::true_type
+        {
+        };
+
+        template<
+            typename _Elem, 
+            typename _Traits, 
+            size_t n
+        >
+        struct is_primitive<ppbox::avformat::BitsOStream<_Elem, _Traits>, ppbox::avformat::U<n> >
+            : boost::true_type
+        {
+        };
+
+        template<
+            typename _Elem, 
+            typename _Traits, 
+            typename V
+        >
+        struct is_primitive<ppbox::avformat::BitsOStream<_Elem, _Traits>, ppbox::avformat::IV<V> >
+            : boost::true_type
+        {
+        };
+
+        template<
+            typename _Elem, 
+            typename _Traits, 
+            typename V
+        >
+        struct is_primitive<ppbox::avformat::BitsOStream<_Elem, _Traits>, ppbox::avformat::UV<V> >
+            : boost::true_type
+        {
+        };
+
+        template<
+            typename _Elem, 
+            typename _Traits
+        >
+        struct is_primitive<ppbox::avformat::BitsOStream<_Elem, _Traits>, ppbox::avformat::SE>
+            : boost::true_type
+        {
+        };
+
+        template<
+            typename _Elem, 
+            typename _Traits
+        >
+        struct is_primitive<ppbox::avformat::BitsOStream<_Elem, _Traits>, ppbox::avformat::UE>
+            : boost::true_type
+        {
+        };
+
+        template<
+            typename _Elem, 
+            typename _Traits
+        >
+        struct is_primitive<ppbox::avformat::BitsOStream<_Elem, _Traits>, ppbox::avformat::P>
+            : boost::true_type
+        {
+        };
+
+    } // namespace serialization
+} // namespace util
+
+namespace ppbox
+{
+    namespace avformat
+    {
+
+        template <
+            typename _Elem, 
+            typename _Traits
+        >
         class BitsOStream
             : public util::archive::StreamOArchive<BitsOStream<_Elem, _Traits>, _Elem, _Traits>
         {
