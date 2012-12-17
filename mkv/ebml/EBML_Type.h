@@ -3,12 +3,12 @@
 #ifndef _PPBOX_AVFORMAT_MKV_EBML_EBML_TYPE_H_
 #define _PPBOX_AVFORMAT_MKV_EBML_EBML_TYPE_H_
 
-#include <util/archive/BigEndianBinaryIArchive.h>
-#include <util/archive/BigEndianBinaryOArchive.h>
 #include <util/serialization/stl/vector.h>
 #include <util/serialization/SplitMember.h>
 #include <util/serialization/VariableNumber.h>
 #include <util/serialization/Array.h>
+#include <util/archive/BigEndianBinaryIArchive.h>
+#include <util/archive/BigEndianBinaryOArchive.h>
 
 #include <framework/system/VariableNumber.h>
 
@@ -457,7 +457,7 @@ namespace ppbox
         typedef EBML_UnitType<std::string> EBML_String;
         typedef EBML_UnitType<boost::uint8_t> EBML_Bool;
         typedef EBML_UnitType<EBML_FloatOrDouble> EBML_Float;
-        typedef EBML_UnitType<std::vector<boost::uint8_t>> EBML_Binary;
+        typedef EBML_UnitType<std::vector<boost::uint8_t> > EBML_Binary;
 
     } // namespace avformat
 } // namespace ppbox

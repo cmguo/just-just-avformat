@@ -73,12 +73,12 @@ namespace ppbox
                     if (LaceType == ebml_lacing) {
                         vint size = sizes[0];
                         ar & size;
-                        for (size_t i = 1; i < frame_count_minus_one + 1; ++i) {
+                        for (size_t i = 1; i < (size_t)frame_count_minus_one; ++i) {
                             svint size = (boost::int32_t)(sizes[i] - sizes[i - 1]);
                             ar & size;
                         }
                     } else if (LaceType == xiph_lacing) {
-                        for (size_t i = 0; i < frame_count_minus_one + 1; ++i) {
+                        for (size_t i = 0; i < (size_t)frame_count_minus_one + 1; ++i) {
                             boost::uint32_t size = sizes[i];
                             boost::uint8_t size255 = 255;
                             while (size >= 255) {
@@ -108,7 +108,7 @@ namespace ppbox
                         ar & size;
                         sizes[0] = size;
                         total += size;
-                        for (size_t i = 1; i < frame_count_minus_one; ++i) {
+                        for (size_t i = 1; i < (size_t)frame_count_minus_one; ++i) {
                             svint size;
                             ar & size;
                             sizes[i] = sizes[i - 1] + size;
@@ -116,7 +116,7 @@ namespace ppbox
                         }
                         sizes.back() = total;
                     } else if (LaceType == xiph_lacing) {
-                        for (size_t i = 0; i < frame_count_minus_one + 1; ++i) {
+                        for (size_t i = 0; i < (size_t)frame_count_minus_one + 1; ++i) {
                             boost::uint8_t size;
                             ar & size;
                             while (size >= 255) {
@@ -158,7 +158,7 @@ namespace ppbox
         {
             EBML_Int ReferenceBlock;
             EBML_Int BlockDuration;
-            MkvBlock MkvBlock;
+            MkvBlock Block;
 
             MkvBlockGroupData()
                 : ReferenceBlock(0x7B)
@@ -171,7 +171,7 @@ namespace ppbox
             {
                 ar & ReferenceBlock
                     & BlockDuration
-                    & MkvBlock;
+                    & Block;
             }
         };
 

@@ -270,7 +270,6 @@ namespace ppbox
             void load_items(
                 Element & elem)
             {
-                boost::uint64_t beg = ar_.tellg();
                 boost::uint64_t offset = elem.offset;
                 boost::uint64_t end = offset + elem.byte_size();
                 offset += elem.head_size();
