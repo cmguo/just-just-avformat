@@ -119,7 +119,7 @@ namespace ppbox
 
             MkvVideo Video;
             MkvAudio Audio;
-            MkvContentEncoding ContentEncoding;
+            MkvContentEncodings ContentEncodings;
 
             MkvTrackEntryData()
                 : TrackNumber(0x57)
@@ -165,7 +165,7 @@ namespace ppbox
                     & AttachmentLink
                     & Video
                     & Audio
-                    & ContentEncoding;
+                    & ContentEncodings;
             }
         };
 

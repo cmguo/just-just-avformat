@@ -195,7 +195,7 @@ namespace ppbox
             void load(
                 EBML_ElementHeader & v)
             {
-                v.Size == vint();
+                v.clear();
                 if (elements_.size() == 1) {
                     Element & elem = elements_.back();
                     elem.act = 0;
@@ -234,7 +234,7 @@ namespace ppbox
             void load(
                 EBML_UnitType<_Ty, _Traits> & v)
             {
-                v.Size == vint();
+                v.clear();
                 Element & elem = elements_.back();
                 for (size_t i = 0; i < elem.items.size(); ++i) {
                     if (elem.items[i].Id == v.Id) {

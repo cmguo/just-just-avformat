@@ -23,13 +23,15 @@ namespace ppbox
 
         typedef framework::system::VariableNumber<boost::uint32_t> vint;
 
+        typedef framework::system::VariableNumber<boost::uint64_t> vint64;
+
         typedef framework::system::VariableNumber<boost::int32_t> svint;
 
         //EBML
         struct EBML_ElementHeader
         {
             vint Id;
-            vint Size;
+            vint64 Size;
 
             EBML_ElementHeader()
             {
@@ -43,7 +45,7 @@ namespace ppbox
 
             EBML_ElementHeader(
                 boost::uint32_t id,
-                boost::uint32_t size)
+                boost::uint64_t size)
                 : Id(id)
                 , Size(size)
             {
@@ -61,25 +63,25 @@ namespace ppbox
 
             void clear()
             {
-                Size = vint();
+                Size = vint64();
             }
 
             bool empty() const
             {
-                return Size == vint();
+                return Size == vint64();
             }
 
-            size_t head_size() const
+            boost::uint64_t head_size() const
             {
                 return empty() ? 0 : Id.size() + Size.size();
             }
 
-            size_t data_size() const
+            boost::uint64_t data_size() const
             {
-                return Size;
+                return Size.is_unknown() ? boost::uint64_t(0x8000000000000000ULL) : boost::uint64_t(Size);
             }
 
-            size_t byte_size() const
+            boost::uint64_t byte_size() const
             {
                 return empty() ? 0 : Id.size() + Size.size() + Size;
             }
@@ -166,7 +168,7 @@ namespace ppbox
             _Ty const & value_or(
                 _Ty const & o) const
             {
-                return Size == vint() ? o : v_;
+                return empty() ? o : v_;
             }
 
         public:
@@ -179,7 +181,7 @@ namespace ppbox
                 if (empty())
                     return;
                 ar << (EBML_ElementHeader const &)(*this);
-                _Traits::save(ar, const_cast<_Ty const &>(v_), Size);
+                _Traits::save(ar, const_cast<_Ty const &>(v_), (size_t)Size.value());
             }
 
             template <typename Archive>
@@ -189,14 +191,14 @@ namespace ppbox
                 EBML_ElementHeader::serialize(ar);
                 if (empty())
                     return;
-                _Traits::load(ar, v_, Size);
+                _Traits::load(ar, v_, (size_t)Size.value());
             }
 
             template <typename Archive>
             void load_value(
                 Archive & ar)
             {
-                _Traits::load(ar, v_, Size);
+                _Traits::load(ar, v_, (size_t)Size.value());
             }
 
         private:
@@ -370,6 +372,11 @@ namespace ppbox
             double const & double_value() const
             {
                 return d_;
+            }
+
+            boost::int64_t as_int64() const
+            {
+                return t_ ? (boost::int64_t)d_ : (boost::int64_t)f_;
             }
 
             boost::int32_t as_int32() const
