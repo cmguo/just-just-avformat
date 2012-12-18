@@ -67,6 +67,10 @@ namespace ppbox
             AvcNaluHelper list;
             list.from_stream(buf.size(), buffers, nalus);
             AvcNaluHelper::MyBuffersLimit limit(buffers.begin(), buffers.end());
+            data_->sequenceParameterSetLength.clear();
+            data_->sequenceParameterSetNALUnit.clear();
+            data_->pictureParameterSetLength.clear();
+            data_->pictureParameterSetNALUnit.clear();
             for (size_t i = 0; i < nalus.size(); ++i) {
                 NaluHeader const nalu_header(nalus.at(i).begin.dereference_byte());
                 std::vector<boost::uint8_t> nalu(nalus[i].bytes_begin(limit), nalus[i].bytes_end());
@@ -78,15 +82,17 @@ namespace ppbox
                     data_->pictureParameterSetNALUnit.push_back(nalu);
                 }
             }
-            data_->configurationVersion = 1;
-            data_->AVCProfileIndication = data_->sequenceParameterSetNALUnit[0][1];
-            data_->profile_compatibility = 0;
-            data_->AVCLevelIndication = data_->sequenceParameterSetNALUnit[0][3];
-            data_->reserved = 0x3f;
-            data_->lengthSizeMinusOne = 3;
-            data_->reserved2 = 0x7;
-            data_->numOfSequenceParameterSets = data_->sequenceParameterSetNALUnit.size();
-            data_->numOfPictureParameterSets = data_->pictureParameterSetNALUnit.size();
+            if (!data_->sequenceParameterSetNALUnit.empty()) {
+                data_->configurationVersion = 1;
+                data_->AVCProfileIndication = data_->sequenceParameterSetNALUnit[0][1];
+                data_->profile_compatibility = 0;
+                data_->AVCLevelIndication = data_->sequenceParameterSetNALUnit[0][3];
+                data_->reserved = 0x3f;
+                data_->lengthSizeMinusOne = 3;
+                data_->reserved2 = 0x7;
+                data_->numOfSequenceParameterSets = data_->sequenceParameterSetNALUnit.size();
+                data_->numOfPictureParameterSets = data_->pictureParameterSetNALUnit.size();
+            }
         }
 
         void AvcConfigHelper::to_es_data(
