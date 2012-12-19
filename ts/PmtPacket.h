@@ -42,6 +42,7 @@ namespace ppbox
             //for (i = 0; i < N; i++) {
             //    descriptor()
             //}
+            std::vector<boost::uint8_t> descriptor;
 
             PmtStream()
                 : stream_type(0)
@@ -71,6 +72,10 @@ namespace ppbox
                 ar & stream_type;
                 ar & byte23;
                 ar & byte45;
+                if (es_info_length) {
+                    descriptor.resize(es_info_length);
+                    ar & framework::container::make_array(&descriptor.front(), descriptor.size());
+                }
             }
         };
 
@@ -106,6 +111,7 @@ namespace ppbox
             //for (i = 0; i < N; i++) {
             //    descriptor()
             //}
+            std::vector<boost::uint8_t> descriptor;
 
             TsVector<PmtStream> streams;
 
@@ -132,7 +138,11 @@ namespace ppbox
                 PsiTable::serialize(ar);
                 ar & byte12;
                 ar & byte34;
-                streams.set_byte_size(body_size() - 4);
+                if (program_info_length) {
+                    descriptor.resize(program_info_length);
+                    ar & framework::container::make_array(&descriptor.front(), descriptor.size());
+                }
+                streams.set_byte_size(body_size() - 4 - program_info_length);
                 ar & streams;
             }
         };
