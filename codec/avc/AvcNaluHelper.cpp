@@ -20,10 +20,22 @@ namespace ppbox
             std::vector<NaluBuffer> & nalus)
         {
             nalus.clear();
-            MyFindIterator2 finder(data, boost::asio::buffer("\0\0\0\1", 4));
+            MyFindIterator2 finder(data, boost::asio::buffer("\0\0", 2));
             MyFindIterator2 end;
             while (finder != end) {
-                finder.skip_bytes(4);
+                finder.skip_bytes(2);
+                while (finder != end) {
+                    boost::uint8_t byte = finder->dereference_byte();
+                    finder.skip_bytes(1);
+                    if (byte == 0) {
+                    } else if (byte == 1) {
+                        break;
+                    } else {
+                        if (++finder != end) {
+                            finder.skip_bytes(2);
+                        }
+                    }
+                }
                 MyBuffersPosition pos = finder.position();
                 NaluHeader const nalu_header(finder.position().dereference_byte());
                 if (nalu_header.nal_unit_type == NaluHeader::IDR ||
@@ -34,7 +46,7 @@ namespace ppbox
                             finder.end_position()));
                         break;
                 }
-                finder++;
+                ++finder;
                 nalus.push_back(NaluBuffer(finder.position().skipped_bytes() - pos.skipped_bytes(), pos, finder.position()));
             }
             return true;
