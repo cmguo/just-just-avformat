@@ -3,9 +3,9 @@
 #ifndef _PPBOX_AVFORMAT_CODEC_CODEC_H_
 #define _PPBOX_AVFORMAT_CODEC_CODEC_H_
 
-#include "ppbox/avformat/Format.h"
-
 #include <ppbox/common/ClassFactory.h>
+
+#include <boost/intrusive_ptr.hpp>
 
 namespace ppbox
 {
@@ -27,6 +27,24 @@ namespace ppbox
             virtual ~Codec()
             {
             }
+
+        private:
+            friend void intrusive_ptr_add_ref(
+                Codec const * p)
+            {
+                ++p->nref_;
+            }
+
+            friend void intrusive_ptr_release(
+                Codec const * p)
+            {
+                if (--p->nref_ == 0) {
+                    delete p;
+                }
+            }
+
+        private:
+            mutable size_t nref_;
         };
 
     } // namespace avformat

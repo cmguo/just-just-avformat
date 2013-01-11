@@ -114,7 +114,7 @@ namespace ppbox
 
         private:
             std::vector<EBML_ElementHeader *> headers_;
-            std::vector<boost::uint32_t> sizes_;
+            std::vector<boost::uint64_t> sizes_;
         };
 
         class EBML_ElementIArchive

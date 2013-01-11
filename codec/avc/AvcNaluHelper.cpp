@@ -14,14 +14,29 @@ namespace ppbox
     namespace avformat
     {
 
-        bool AvcNaluHelper::from_stream(
-            boost::uint32_t size, 
-            ConstBuffers const & data, 
+        AvcNaluHelper::AvcNaluHelper(
+            boost::uint8_t nalu_length_size)
+            : nalu_length_size_(nalu_length_size)
+        {
+            nalu_start_code_[0] = 0;
+            nalu_start_code_[1] = 0;
+            nalu_start_code_[2] = 0;
+            nalu_start_code_[3] = 1;
+        }
+
+        void AvcNaluHelper::nalus(
             std::vector<NaluBuffer> & nalus)
         {
-            nalus.clear();
-            MyFindIterator2 finder(data, boost::asio::buffer("\0\0", 2));
-            MyFindIterator2 end;
+            return nalus.swap(nalus_);
+        }
+
+        bool AvcNaluHelper::from_stream(
+            boost::uint32_t size, 
+            buffers_t const & data)
+        {
+            nalus_.clear();
+            SampleBuffers::FindIterator2 finder(data, boost::asio::buffer("\0\0", 2));
+            SampleBuffers::FindIterator2 end;
             while (finder != end) {
                 finder.skip_bytes(2);
                 while (finder != end) {
@@ -36,58 +51,54 @@ namespace ppbox
                         }
                     }
                 }
-                MyBuffersPosition pos = finder.position();
+                SampleBuffers::BuffersPosition pos = finder.position();
                 NaluHeader const nalu_header(finder.position().dereference_byte());
                 if (nalu_header.nal_unit_type == NaluHeader::IDR ||
                     nalu_header.nal_unit_type == NaluHeader::UNIDR) {
-                        nalus.push_back(NaluBuffer(
+                        nalus_.push_back(NaluBuffer(
                             size - pos.skipped_bytes(),
                             pos,
                             finder.end_position()));
                         break;
                 }
                 ++finder;
-                nalus.push_back(NaluBuffer(finder.position().skipped_bytes() - pos.skipped_bytes(), pos, finder.position()));
+                nalus_.push_back(NaluBuffer(finder.position().skipped_bytes() - pos.skipped_bytes(), pos, finder.position()));
             }
             return true;
         }
 
         bool AvcNaluHelper::from_packet(
             boost::uint32_t size, 
-            ConstBuffers const & data, 
-            std::vector<NaluBuffer> & nalus)
+            buffers_t const & data)
         {
-            nalus.clear();
-            MyBuffersLimit limit(data.begin(), data.end());
-            MyBuffersPosition position(limit);
+            nalus_.clear();
+            SampleBuffers::BuffersPosition position(data.begin(), data.end());
+            SampleBuffers::BuffersPosition end(data.end());
             while (!position.at_end()) {
                 boost::uint32_t len = 0;
                 util::buffers::buffers_copy(
-                    boost::asio::buffer((char *)&len + 4 - nalu_length_, nalu_length_), 
-                    util::buffers::Container<boost::asio::const_buffer, MyBufferIterator>(MyBufferIterator(limit, position)));
+                    boost::asio::buffer((char *)&len + 4 - nalu_length_size_, nalu_length_size_), 
+                    util::buffers::Container<boost::asio::const_buffer, SampleBuffers::BufferIterator>(SampleBuffers::BufferIterator(position, end)));
                 len = framework::system::BytesOrder::net_to_host_long(len);
-                position.increment_bytes(limit, nalu_length_);
-                MyBuffersPosition pos = position;
-                position.increment_bytes(limit, len);
-                nalus.push_back(NaluBuffer(len, pos, position));
+                position.increment_bytes(end, nalu_length_size_);
+                SampleBuffers::BuffersPosition pos = position;
+                position.increment_bytes(end, len);
+                nalus_.push_back(NaluBuffer(len, pos, position));
             }
             return true;
         }
 
         bool AvcNaluHelper::to_stream(
             boost::uint32_t & size, 
-            ConstBuffers & data, 
-            std::vector<NaluBuffer> const & nalus)
+            buffers_t & data)
         {
-            util::buffers::BuffersLimit<ConstBuffers::const_iterator> limit(data.begin(), data.end());
-            MyBufferIterator end;
             std::deque<boost::asio::const_buffer> datas;
-            for (boost::uint32_t i = 0; i < nalus.size(); ++i) {
-                NaluHeader nalu_header(nalus[i].begin.dereference_byte());
-                MyBufferIterator iter(limit, nalus[i].begin, nalus[i].end);
-                //datas.push_back(boost::asio::buffer(nalu_start_code_));
-                datas.insert(datas.end(), iter, end);
-                size += nalus[i].size + 4;
+            for (boost::uint32_t i = 0; i < nalus_.size(); ++i) {
+                NaluBuffer const & nalu = nalus_[i];
+                NaluHeader nalu_header(nalu.begin.dereference_byte());
+                datas.push_back(boost::asio::buffer(nalu_start_code_));
+                datas.insert(datas.end(), nalu.buffers_begin(), nalu.buffers_end());
+                size += nalu.size + 4;
             }
             data.swap(datas);
             return true;
@@ -95,32 +106,24 @@ namespace ppbox
 
         bool AvcNaluHelper::to_packet(
             boost::uint32_t & size, 
-            ConstBuffers & data, 
-            std::vector<NaluBuffer> const & nalus)
+            buffers_t & data)
         {
-            util::buffers::BuffersLimit<ConstBuffers::const_iterator> limit(data.begin(), data.end());
-            if (nalus.size() == 0) {
-                return true;
-            }
-            NaluBuffer const * nalu = NULL;
-            for (boost::uint32_t i = 0; i < nalus.size(); ++i) {
-                NaluHeader const nalu_header(nalus.at(i).begin.dereference_byte());
-                if (nalu_header.nal_unit_type == NaluHeader::IDR 
-                    || nalu_header.nal_unit_type == NaluHeader::UNIDR) {
-                        nalu = &nalus.at(i);
-                        break;
+            std::deque<boost::asio::const_buffer> datas;
+            size_t n = 0;
+            for (boost::uint32_t i = 0; i < nalus_.size(); ++i) {
+                NaluBuffer const & nalu = nalus_[i];
+                NaluHeader const nalu_header(nalu.begin.dereference_byte());
+                if (nalu_header.nal_unit_type == NaluHeader::UNIDR 
+                    || nalu_header.nal_unit_type == NaluHeader::IDR
+                    || nalu_header.nal_unit_type == NaluHeader::SEI) {
+                        assert(n < sizeof(nalu_length_) / sizeof(nalu_length_[0]));
+                        size += nalu.size + nalu_length_size_;
+                        nalu_length_[n] = framework::system::BytesOrder::host_to_big_endian_long(nalu.size);
+                        datas.push_back(boost::asio::buffer((boost::uint8_t*)&(nalu_length_[n]) + 4 - nalu_length_size_, nalu_length_size_));
+                        datas.insert(datas.end(), nalu.buffers_begin(), nalu.buffers_end());
+                        ++n;
                 }
             }
-            if (nalu == NULL) {
-                nalu = &nalus.front();
-            }
-            std::deque<boost::asio::const_buffer> datas;
-            //frame_data_size_ = nalu->size;
-            //frame_data_size_ = framework::system::BytesOrder::host_to_big_endian_long(frame_data_size_);
-            //datas.push_back(boost::asio::buffer((boost::uint8_t*)&frame_data_size_, 4));
-            MyBufferIterator iter(limit, nalu->begin, nalu->end);
-            MyBufferIterator end;
-            datas.insert(datas.end(), iter, end);
             data.swap(datas);
             return true;
         }
@@ -129,18 +132,17 @@ namespace ppbox
             std::vector<boost::uint8_t> const & data, 
             boost::uint32_t * offset)
         {
-            ConstBuffers buffers;
+            buffers_t buffers;
             buffers.push_back(boost::asio::buffer(data));
-            std::vector<NaluBuffer> nalus;
-            from_stream(data.size(), buffers, nalus);
-            if (nalus.size() > 0) {
-                NaluHeader const nalu_header(nalus.back().begin.dereference_byte());
+            from_stream(data.size(), buffers);
+            if (nalus_.size() > 0) {
+                NaluHeader const nalu_header(nalus_.back().begin.dereference_byte());
                 if (nalu_header.nal_unit_type == 1 
                     || nalu_header.nal_unit_type == 5) {
                         if (offset) {
-                            *offset = nalus.back().begin.skipped_bytes() - 4;
+                            *offset = nalus_.back().begin.skipped_bytes() - 4;
                         }
-                        return nalu_header.nal_unit_type;
+                        return (boost::uint8_t)nalu_header.nal_unit_type;
                 }
             }
             return 0;

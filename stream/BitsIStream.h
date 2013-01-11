@@ -137,7 +137,7 @@ namespace ppbox
                 boost::uint32_t l = sizeof(T) * 8;
                 boost::uint32_t v = 0;
                 this->read_bits_flc(l, v);
-                t = v;
+                t = (T)v;
             }
 
             template<size_t N>

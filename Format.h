@@ -3,8 +3,11 @@
 #ifndef _PPBOX_AVFORMAT_FORMAT_H_
 #define _PPBOX_AVFORMAT_FORMAT_H_
 
+#include "ppbox/avformat/codec/Codec.h"
+
 #include <boost/detail/endian.hpp>
 #include <boost/asio/buffer.hpp>
+#include <boost/intrusive_ptr.hpp>
 
 namespace ppbox
 {
@@ -52,8 +55,6 @@ namespace ppbox
             boost::uint32_t sample_rate;
         };
 
-        class Codec;
-
         struct StreamInfoBase
         {
             StreamInfoBase()
@@ -77,7 +78,7 @@ namespace ppbox
             boost::uint32_t time_scale;
             boost::uint64_t start_time;
             boost::uint64_t duration;
-            Codec * codec;
+            boost::intrusive_ptr<Codec> codec;
         };
 
         struct StreamInfo

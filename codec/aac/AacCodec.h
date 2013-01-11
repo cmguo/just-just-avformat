@@ -5,6 +5,7 @@
 
 #include "ppbox/avformat/codec/Codec.h"
 #include "ppbox/avformat/codec/aac/AacConfigHelper.h"
+#include "ppbox/avformat/Format.h"
 
 namespace ppbox
 {

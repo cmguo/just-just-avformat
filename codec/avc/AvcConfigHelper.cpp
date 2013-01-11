@@ -5,6 +5,7 @@
 #include "ppbox/avformat/codec/avc/AvcConfig.h"
 #include "ppbox/avformat/codec/avc/AvcNaluHelper.h"
 #include <ppbox/avformat/codec/avc/AvcNalu.h>
+#include <ppbox/avformat/codec/avc/AvcNaluBuffer.h>
 #include "ppbox/avformat/stream/BitsIStream.h"
 #include "ppbox/avformat/stream/BitsOStream.h"
 #include "ppbox/avformat/stream/FormatBuffer.h"
@@ -61,25 +62,25 @@ namespace ppbox
         void AvcConfigHelper::from_es_data(
             std::vector<boost::uint8_t> const & buf)
         {
-            std::vector<NaluBuffer> nalus;
-            AvcNaluHelper::ConstBuffers buffers;
+            AvcNaluHelper::buffers_t buffers;
             buffers.push_back(boost::asio::buffer(buf));
-            AvcNaluHelper list;
-            list.from_stream(buf.size(), buffers, nalus);
-            AvcNaluHelper::MyBuffersLimit limit(buffers.begin(), buffers.end());
+            AvcNaluHelper helper;
+            helper.from_stream(buf.size(), buffers);
+            std::vector<NaluBuffer> const & nalus = helper.nalus();
             data_->sequenceParameterSetLength.clear();
             data_->sequenceParameterSetNALUnit.clear();
             data_->pictureParameterSetLength.clear();
             data_->pictureParameterSetNALUnit.clear();
             for (size_t i = 0; i < nalus.size(); ++i) {
-                NaluHeader const nalu_header(nalus.at(i).begin.dereference_byte());
-                std::vector<boost::uint8_t> nalu(nalus[i].bytes_begin(limit), nalus[i].bytes_end());
+                NaluBuffer const & nalu = nalus[i];
+                NaluHeader const nalu_header(nalu.begin.dereference_byte());
+                std::vector<boost::uint8_t> nalu_bytes(nalu.bytes_begin(), nalu.bytes_end());
                 if (nalu_header.nal_unit_type == avformat::NaluHeader::SPS) {
-                    data_->sequenceParameterSetLength.push_back(nalu.size());
-                    data_->sequenceParameterSetNALUnit.push_back(nalu);
+                    data_->sequenceParameterSetLength.push_back(nalu_bytes.size());
+                    data_->sequenceParameterSetNALUnit.push_back(nalu_bytes);
                 } else if (nalu_header.nal_unit_type == avformat::NaluHeader::PPS) {
-                    data_->pictureParameterSetLength.push_back(nalu.size());
-                    data_->pictureParameterSetNALUnit.push_back(nalu);
+                    data_->pictureParameterSetLength.push_back(nalu_bytes.size());
+                    data_->pictureParameterSetNALUnit.push_back(nalu_bytes);
                 }
             }
             if (!data_->sequenceParameterSetNALUnit.empty()) {
