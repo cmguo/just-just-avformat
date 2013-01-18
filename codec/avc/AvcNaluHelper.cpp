@@ -30,39 +30,52 @@ namespace ppbox
             return nalus.swap(nalus_);
         }
 
+        static void continue_find_nalu(
+            SampleBuffers::FindIterator2 & iter, 
+            SampleBuffers::FindIterator2 & iend, 
+            SampleBuffers::BuffersPosition & pos)
+        {
+            SampleBuffers::FindIterator2 ipos = iter;
+            ipos.skip_bytes(2);
+            while (ipos != iend) {
+                boost::uint8_t byte = ipos->dereference_byte();
+                ipos.skip_bytes(1);
+                if (byte == 0) {
+                } else if (byte == 1) {
+                    pos = *ipos;
+                    break;
+                } else {
+                    if (++iter != iend) {
+                        ipos = iter;
+                        ipos.skip_bytes(2);
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+
         bool AvcNaluHelper::from_stream(
             boost::uint32_t size, 
             buffers_t const & data)
         {
             nalus_.clear();
-            SampleBuffers::FindIterator2 finder(data, boost::asio::buffer("\0\0", 2));
-            SampleBuffers::FindIterator2 end;
-            while (finder != end) {
-                finder.skip_bytes(2);
-                while (finder != end) {
-                    boost::uint8_t byte = finder->dereference_byte();
-                    finder.skip_bytes(1);
-                    if (byte == 0) {
-                    } else if (byte == 1) {
-                        break;
-                    } else {
-                        if (++finder != end) {
-                            finder.skip_bytes(2);
-                        }
-                    }
-                }
-                SampleBuffers::BuffersPosition pos = finder.position();
-                NaluHeader const nalu_header(finder.position().dereference_byte());
+            SampleBuffers::FindIterator2 iter(data, boost::asio::buffer("\0\0", 2));
+            SampleBuffers::FindIterator2 iend;
+            SampleBuffers::BuffersPosition pos;
+            continue_find_nalu(iter, iend, pos);
+            while (iter != iend) {
+                SampleBuffers::BuffersPosition cur_pos = pos;
+                NaluHeader const nalu_header(cur_pos.dereference_byte());
                 if (nalu_header.nal_unit_type == NaluHeader::IDR ||
                     nalu_header.nal_unit_type == NaluHeader::UNIDR) {
-                        nalus_.push_back(NaluBuffer(
-                            size - pos.skipped_bytes(),
-                            pos,
-                            finder.end_position()));
+                        // 假定 IDR，UNIDR 是最后一个Nalu，不继续搜索，以提高效率
+                        nalus_.push_back(NaluBuffer(size - cur_pos.skipped_bytes(), cur_pos, iter.end_position()));
                         break;
                 }
-                ++finder;
-                nalus_.push_back(NaluBuffer(finder.position().skipped_bytes() - pos.skipped_bytes(), pos, finder.position()));
+                ++iter;
+                continue_find_nalu(iter, iend, pos);
+                nalus_.push_back(NaluBuffer(cur_pos, iter.position()));
             }
             return true;
         }
@@ -83,7 +96,7 @@ namespace ppbox
                 position.increment_bytes(end, nalu_length_size_);
                 SampleBuffers::BuffersPosition pos = position;
                 position.increment_bytes(end, len);
-                nalus_.push_back(NaluBuffer(len, pos, position));
+                nalus_.push_back(NaluBuffer(pos, position));
             }
             return true;
         }

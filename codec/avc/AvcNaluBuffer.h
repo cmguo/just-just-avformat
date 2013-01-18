@@ -14,10 +14,19 @@ namespace ppbox
             : SampleBuffers
         {
             NaluBuffer(
-                size_t t,
+                boost::uint32_t s, 
                 BuffersPosition const & b,
                 BuffersPosition const & e)
-                : size(t)
+                : size(s)
+                , begin(b)
+                , end(e)
+            {
+            }
+
+            NaluBuffer(
+                BuffersPosition const & b,
+                BuffersPosition const & e)
+                : size(e.skipped_bytes() - b.skipped_bytes())
                 , begin(b)
                 , end(e)
             {
