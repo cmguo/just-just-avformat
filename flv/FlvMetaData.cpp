@@ -1,7 +1,7 @@
 // FlvMetadata.cpp
 
 #include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/flv/FlvMetadata.h"
+#include "ppbox/avformat/flv/FlvMetaData.h"
 
 namespace ppbox
 {
