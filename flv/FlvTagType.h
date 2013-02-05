@@ -249,7 +249,8 @@ namespace ppbox
                     if (skip_metadata) {
                     } else {
                         ar & DataTag;
-                        skip_metadata = true;
+                        if (ar)
+                            skip_metadata = true;
                     }
                     is_sample = false;
                     is_sync = false;
