@@ -6,9 +6,12 @@
 #include "ppbox/avformat/codec/avc/AvcNaluHelper.h"
 #include <ppbox/avformat/codec/avc/AvcNalu.h>
 #include <ppbox/avformat/codec/avc/AvcNaluBuffer.h>
+#include <ppbox/avformat/codec/avc/AvcSpsPpsType.h>
 #include "ppbox/avformat/stream/BitsIStream.h"
 #include "ppbox/avformat/stream/BitsOStream.h"
+#include "ppbox/avformat/stream/BitsBuffer.h"
 #include "ppbox/avformat/stream/FormatBuffer.h"
+#include "ppbox/avformat/Format.h"
 
 namespace ppbox
 {
@@ -108,6 +111,27 @@ namespace ppbox
                 buf.insert(buf.end(), vec_0001, vec_0001 + 4);
                 buf.insert(buf.end(), data_->pictureParameterSetNALUnit[i].begin(), data_->pictureParameterSetNALUnit[i].end());
             }
+        }
+
+        void AvcConfigHelper::get_format(
+            VideoInfo & info) const
+        {
+            SeqParameterSetRbsp sps;
+            util::archive::ArchiveBuffer<boost::uint8_t> abuf(
+                &data_->sequenceParameterSetNALUnit[0].front(), 
+                data_->sequenceParameterSetLength[0], 
+                data_->sequenceParameterSetLength[0]);
+            BitsBuffer<boost::uint8_t> buf(abuf);
+            BitsIStream<boost::uint8_t> is(buf);
+            is >> sps;
+
+            info.width = (sps.pic_width_in_mbs_minus1 + 1) * 16 
+                - (sps.frame_crop_left_offset + sps.frame_crop_right_offset) * 2;
+            info.height = (2 - sps.frame_mbs_only_flag) * (sps.pic_height_in_map_units_minus1 + 1) * 16
+                - (sps.frame_crop_top_offset + sps.frame_crop_bottom_offset) * 2;
+            info.frame_rate = sps.vui_parameters.timing_info_present_flag 
+                ? sps.vui_parameters.time_scale / sps.vui_parameters.num_units_in_tick
+                : 0;
         }
 
     } // namespace avformat

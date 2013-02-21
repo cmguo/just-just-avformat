@@ -79,7 +79,8 @@ namespace ppbox
                 }
                 ar & ga_config;
 
-                if (ar && audioObjectType != 5) {
+                typename Archive::is_loading load;
+                if (ar && audioObjectType != 5 && (load || syncExtensionType)) {
                     ar & syncExtensionType;
                     if (syncExtensionType == 0x2b7) {
                         ar & syncExtensionAudioObjectType;
@@ -102,7 +103,7 @@ namespace ppbox
                                 } // 
                             }
                         }
-                    } else if (syncSbrPresentFlag == 0) {
+                    } else if (syncExtensionType == 0) {
                         ar.clear();
                     }
                 }

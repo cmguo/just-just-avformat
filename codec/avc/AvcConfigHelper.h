@@ -9,6 +9,7 @@ namespace ppbox
     {
 
         struct AvcConfig;
+        struct VideoInfo;
 
         class AvcConfigHelper
         {
@@ -43,6 +44,10 @@ namespace ppbox
 
             void to_es_data(
                 std::vector<boost::uint8_t> & buf) const;
+
+        public:
+            void get_format(
+                VideoInfo & info) const;
 
         private:
             AvcConfig * data_;
