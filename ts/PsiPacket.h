@@ -90,26 +90,6 @@ namespace ppbox
             }
         };
 
-        template <typename Archive>
-        struct CrcArchive
-            : Archive
-        {
-            void load()
-            {
-
-            }
-
-        private:
-            boost::uint32_t crc;
-        };
-
-        boost::uint32_t psi_calc_crc(
-            boost::uint8_t const * data, 
-            boost::uint32_t data_size);
-
-        boost::uint32_t psi_calc_crc(
-            boost::asio::const_buffer const & data);
-
     } // namespace avformat
 } // namespace ppbox
 
