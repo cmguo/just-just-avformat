@@ -245,7 +245,7 @@ namespace ppbox
                     is_sample = VideoHeader.AVCPacketType == 1;
                     is_sync = VideoHeader.FrameType == FlvFrameType::KEY;
                     cts_delta = VideoHeader.CompositionTime;
-                } else if (Type == FlvTagType::META) {
+                } else if (Type == FlvTagType::DATA) {
                     if (skip_metadata) {
                     } else {
                         ar & DataTag;
