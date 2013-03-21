@@ -130,6 +130,7 @@ namespace ppbox
             {
                  sync = 1, 
                  discontinuity = 2,
+                 config = 4, 
             };
 
             boost::uint32_t itrack;

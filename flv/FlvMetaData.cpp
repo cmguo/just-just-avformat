@@ -36,7 +36,7 @@ namespace ppbox
             for (size_t i = 0; i < variables.size(); ++i) {
                 FlvDataObjectProperty const & property = variables[i];
                 if (property.PropertyName.StringData == "datarate") {
-                    datarate = (boost::uint32_t)property.PropertyData.Double;
+                    datarate = (boost::uint32_t)(property.PropertyData.Double * 1000);
                 }
                 if (property.PropertyName.StringData == "width") {
                     width = (boost::uint32_t)property.PropertyData.Double;
@@ -95,7 +95,7 @@ namespace ppbox
                 variables.push_back(FlvDataObjectProperty("audiosamplesize", audiosamplesize));
             }
             if (duration > 0) {
-                variables.push_back(FlvDataObjectProperty("duration", duration));
+                variables.push_back(FlvDataObjectProperty("duration", (double)duration / 1000.0));
             }
         }
 
