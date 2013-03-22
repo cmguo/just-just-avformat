@@ -36,7 +36,13 @@ namespace ppbox
             for (size_t i = 0; i < variables.size(); ++i) {
                 FlvDataObjectProperty const & property = variables[i];
                 if (property.PropertyName.StringData == "datarate") {
-                    datarate = (boost::uint32_t)(property.PropertyData.Double * 1000);
+                    datarate = (boost::uint32_t)property.PropertyData.Double;
+                }
+                if (property.PropertyName.StringData == "duration") {
+                    duration = (boost::uint32_t)(property.PropertyData.Double * 1000);
+                }
+                if (property.PropertyName.StringData == "videocodecid") {
+                    videocodecid = (boost::uint32_t)property.PropertyData.Double;
                 }
                 if (property.PropertyName.StringData == "width") {
                     width = (boost::uint32_t)property.PropertyData.Double;
@@ -46,6 +52,9 @@ namespace ppbox
                 }
                 if (property.PropertyName.StringData == "framerate") {
                     framerate = (boost::uint32_t)property.PropertyData.Double;
+                }
+                if (property.PropertyName.StringData == "audiocodecid") {
+                    audiocodecid = (boost::uint32_t)property.PropertyData.Double;
                 }
                 if (property.PropertyName.StringData == "audiosamplerate") {
                     audiosamplerate = (boost::uint32_t)property.PropertyData.Double;
@@ -73,6 +82,9 @@ namespace ppbox
             if (datarate > 0) {
                 variables.push_back(FlvDataObjectProperty("datarate", datarate));
             }
+            if (duration > 0) {
+                variables.push_back(FlvDataObjectProperty("duration", (double)duration / 1000.0));
+            }
             if (videocodecid > 0) {
                 variables.push_back(FlvDataObjectProperty("videocodecid", videocodecid));
             }
@@ -93,9 +105,6 @@ namespace ppbox
             }
             if (audiosamplesize > 0) {
                 variables.push_back(FlvDataObjectProperty("audiosamplesize", audiosamplesize));
-            }
-            if (duration > 0) {
-                variables.push_back(FlvDataObjectProperty("duration", (double)duration / 1000.0));
             }
         }
 
