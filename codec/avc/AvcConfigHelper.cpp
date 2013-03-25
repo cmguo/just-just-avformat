@@ -11,7 +11,7 @@
 #include "ppbox/avformat/stream/BitsOStream.h"
 #include "ppbox/avformat/stream/BitsBuffer.h"
 #include "ppbox/avformat/stream/FormatBuffer.h"
-#include "ppbox/avformat/Format.h"
+#include "ppbox/avformat/StreamInfo.h"
 
 namespace ppbox
 {
