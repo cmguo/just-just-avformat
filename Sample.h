@@ -21,22 +21,6 @@ namespace ppbox
 
         struct Sample
         {
-            Sample()
-                : itrack(0)
-                , flags(0)
-                , time(0)
-                , ustime(0)
-                , dts(0)
-                , us_delta(0)
-                , cts_delta(0)
-                , duration(0)
-                , size(0)
-                , stream_info(NULL)
-                , memory(NULL)
-                , context(NULL)
-            {
-            }
-
             enum FlagEnum
             {
                  sync = 1, 
@@ -44,11 +28,16 @@ namespace ppbox
                  config = 4, 
             };
 
+            Sample();
+
+            Sample(
+                Sample const & s);
+
             Sample & operator=(
-                Sample & s);
+                Sample const & s);
 
             void append(
-                Sample & s);
+                Sample const & s);
 
             void append(
                 MemoryLock * mem);
@@ -63,7 +52,7 @@ namespace ppbox
             boost::uint32_t duration;
             boost::uint32_t size;
             StreamInfo const * stream_info;
-            MemoryLock * memory; // 内存锁
+            mutable MemoryLock * memory; // 内存锁
             void * context; // 处理上下文
             std::deque<boost::asio::const_buffer> data;
         };
