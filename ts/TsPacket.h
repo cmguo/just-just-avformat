@@ -214,6 +214,13 @@ namespace ppbox
                 return PACKET_SIZE - header_adaptation_size();
             }
 
+            bool has_pcr() const
+            {
+                return (adaptat_field_control & 2) 
+                    && adaptation.adaptation_field_length > 0 
+                    && adaptation.PCR_flag == 1;
+            }
+
             template <typename Archive>
             void serialize(
                 Archive & ar)

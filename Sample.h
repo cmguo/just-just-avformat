@@ -36,6 +36,9 @@ namespace ppbox
             Sample & operator=(
                 Sample const & s);
 
+            void slice(
+                Sample const & s);
+
             void append(
                 Sample const & s);
 

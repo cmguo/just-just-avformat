@@ -35,6 +35,9 @@ namespace ppbox
             SampleBuffers::FindIterator2 & iend, 
             SampleBuffers::BuffersPosition & pos)
         {
+            if (iter == iend) {
+                return;
+            }
             SampleBuffers::FindIterator2 ipos = iter;
             ipos.skip_bytes(2);
             while (ipos != iend) {

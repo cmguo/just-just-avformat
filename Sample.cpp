@@ -48,7 +48,6 @@ namespace ppbox
             Sample const & s)
         {
             assert(memory == NULL);
-            assert(data.empty());
 
             itrack = s.itrack;
             flags = s.flags;
@@ -66,6 +65,23 @@ namespace ppbox
             s.memory = NULL;
 
             return *this;
+        }
+
+        void Sample::slice(
+            Sample const & s)
+        {
+            assert(memory == NULL);
+
+            itrack = s.itrack;
+            flags = s.flags;
+            time = s.time;
+            ustime = s.ustime;
+            dts = s.dts;
+            us_delta = s.us_delta;
+            cts_delta = s.cts_delta;
+            duration = s.duration;
+            stream_info = s.stream_info;
+            context = s.context;
         }
 
         void Sample::append(
