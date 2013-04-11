@@ -40,6 +40,7 @@ namespace ppbox
             , stream_info(s.stream_info)
             , memory(s.memory)
             , context(s.context)
+            , data(s.data)
         {
             s.memory = NULL;
         }
@@ -62,6 +63,7 @@ namespace ppbox
             memory = s.memory;
             context = s.context;
             data = s.data;
+
             s.memory = NULL;
 
             return *this;
