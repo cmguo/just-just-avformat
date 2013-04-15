@@ -654,7 +654,7 @@ namespace ppbox
                 };
                 boost::uint8_t flag2;
             };
-            boost::uint32_t PacketLenth;
+            boost::uint32_t PacketLength;
             boost::uint32_t Sequence;
             boost::uint32_t PaddingLength;
             boost::uint32_t SendTime;
@@ -663,7 +663,7 @@ namespace ppbox
             PayLoadParsingInformation()
                 : flag1(0)
                 , flag2(0)
-                , PacketLenth(0)
+                , PacketLength(0)
                 , Sequence(0)
                 , PaddingLength(0)
                 , SendTime(0)
@@ -676,12 +676,8 @@ namespace ppbox
             void serialize(Archive & ar)
             {
                 ar & flag1;
-                assert(!ar || (MultiplePayloadsPresent || PacketLengthType));
-                if (ar && !MultiplePayloadsPresent && PacketLengthType == 0) {
-                    ar.fail();
-                }
                 ar & flag2;
-                serialize_length(ar, PacketLenth, PacketLengthType);
+                serialize_length(ar, PacketLength, PacketLengthType);
                 serialize_length(ar, Sequence, SequenceType);
                 serialize_length(ar, PaddingLength, PaddingLengthType);
                 ar  & SendTime & Duration;
@@ -716,6 +712,24 @@ namespace ppbox
             }
         };
 
+        struct ASF_Packet;
+
+        struct ASF_ParseContext
+        {
+            ASF_ParseContext()
+                : max_packet_size(0)
+                , packet(NULL)
+                , packet_payload_end(0)
+                , payload_data_offset(0)
+            {
+            }
+
+            boost::uint32_t max_packet_size;
+            ASF_Packet const * packet;
+            boost::uint64_t packet_payload_end;
+            boost::uint64_t payload_data_offset;
+        };
+
         struct ASF_Packet//page 45
         {
             //boost::uint32_t MaximumDataPacketSize;
@@ -735,48 +749,45 @@ namespace ppbox
                 boost::uint8_t flag;
             };
 
-            boost::uint32_t payload_end;
 
-            ASF_Packet(
-                boost::uint32_t const & maximum_data_packet_size)
+            ASF_Packet()
                 : flag(0)
-                , maximum_data_packet_size(maximum_data_packet_size)
             {
-                payload_end = 0;
             }
 
             template <typename Archive>
             void serialize(Archive & ar)
             {
                 boost::uint32_t start_offset = archive_tell(ar);
+                ASF_ParseContext * ctx = (ASF_ParseContext *)ar.context();
+
                 ar & ErrorCorrectionInfo
                     & PayLoadParseInfo;
 
+                if (PayLoadParseInfo.PacketLengthType == 0) {
+                    PayLoadParseInfo.PacketLength = ctx->max_packet_size;
+                } else {
+                    assert(!ar || PayLoadParseInfo.PacketLength <= ctx->max_packet_size);
+                    if (ar && PayLoadParseInfo.PacketLength > ctx->max_packet_size) {
+                        ar.fail();
+                    }
+                }
+
+                ctx->packet_payload_end = start_offset + PayLoadParseInfo.PacketLength - PayLoadParseInfo.PaddingLength;
+
                 if (PayLoadParseInfo.MultiplePayloadsPresent) {//Multiple Payloads
                     ar & flag;
-                    payload_end = start_offset + maximum_data_packet_size - PayLoadParseInfo.PaddingLength;
-                    assert(!ar || PayLoadParseInfo.PacketLenth == 0);
-                    if (ar && PayLoadParseInfo.PacketLenth != 0) {
-                        ar.fail();
-                    }
                 } else {//Single Payload
-                    assert(!ar || PayLoadParseInfo.PacketLenth <= maximum_data_packet_size);
-                    if (ar && PayLoadParseInfo.PacketLenth > maximum_data_packet_size) {
-                        ar.fail();
-                    }
                     PayloadNum = 1;
                     PayloadLengthType = 0;
-                    boost::uint32_t end_offset = archive_tell(ar);
-                    assert(!ar || start_offset + PayLoadParseInfo.PacketLenth > end_offset + PayLoadParseInfo.PaddingLength);
-                    if (ar && start_offset + PayLoadParseInfo.PacketLenth <= end_offset + PayLoadParseInfo.PaddingLength) {
-                        ar.fail();
-                    }
-                    payload_end = start_offset + PayLoadParseInfo.PacketLenth - PayLoadParseInfo.PaddingLength;
+                }
+
+                boost::uint32_t end_offset = archive_tell(ar);
+                assert(!ar || start_offset + PayLoadParseInfo.PacketLength > end_offset + PayLoadParseInfo.PaddingLength);
+                if (ar && start_offset + PayLoadParseInfo.PacketLength <= end_offset + PayLoadParseInfo.PaddingLength) {
+                    ar.fail();
                 }
             }
-
-        private:
-            boost::uint32_t const & maximum_data_packet_size;
         };
 
         struct ASF_PayloadHeader
@@ -801,7 +812,6 @@ namespace ppbox
             std::vector<boost::uint8_t> ReplicateData;
             // Only for Multiple payloads
             boost::uint32_t PayloadLength;
-            boost::uint32_t data_offset;
 
             ASF_PayloadHeader()
                 : flags(0)
@@ -811,29 +821,23 @@ namespace ppbox
                 , MediaObjectSize(0)
                 , PresTime(0)
                 , PayloadLength(0)
-                , data_offset(0)
             {
-                packet_ = NULL;
-            }
-
-            void set_packet(
-                ASF_Packet const & packet)
-            {
-                packet_ = &packet;
             }
 
             template <typename Archive>
             void serialize(Archive & ar)
             {
+                ASF_ParseContext * ctx = (ASF_ParseContext *)ar.context();
+
                 ar & flags;
                 //serialize_length():指定序列化位数
-                serialize_length(ar, MediaObjNum, packet_->PayLoadParseInfo.MediaObjNumType);
-                serialize_length(ar, OffsetIntoMediaObj, packet_->PayLoadParseInfo.OffsetIntoMOLType);
-                serialize_length(ar, ReplicatedDataLen, packet_->PayLoadParseInfo.ReplicatedDataLengthType);
+                serialize_length(ar, MediaObjNum, ctx->packet->PayLoadParseInfo.MediaObjNumType);
+                serialize_length(ar, OffsetIntoMediaObj, ctx->packet->PayLoadParseInfo.OffsetIntoMOLType);
+                serialize_length(ar, ReplicatedDataLen, ctx->packet->PayLoadParseInfo.ReplicatedDataLengthType);
                 // 不考虑压缩的情形
                 assert(!ar || ReplicatedDataLen >= 8);
                 boost::uint32_t start_offset = archive_tell(ar);
-                if (ar && (ReplicatedDataLen < 8 || start_offset + ReplicatedDataLen >= packet_->payload_end)) {
+                if (ar && (ReplicatedDataLen < 8 || start_offset + ReplicatedDataLen >= ctx->packet_payload_end)) {
                     ar.fail();
                 }
                 ar & MediaObjectSize;
@@ -842,21 +846,17 @@ namespace ppbox
                 if (ReplicatedDataLen > 8)
                     //serialize_collection():集合类型的序列化，同时指定集合长度
                     util::serialization::serialize_collection(ar, ReplicateData, ReplicatedDataLen - 8);
-                if (packet_->PayLoadParseInfo.MultiplePayloadsPresent) {
-                    serialize_length(ar, PayloadLength, packet_->PayloadLengthType);
-                    data_offset = archive_tell(ar);
-                    if (ar && PayloadLength + data_offset > packet_->payload_end) {
+                if (ctx->packet->PayLoadParseInfo.MultiplePayloadsPresent) {
+                    serialize_length(ar, PayloadLength, ctx->packet->PayloadLengthType);
+                    ctx->payload_data_offset = archive_tell(ar);
+                    if (ar && PayloadLength + ctx->payload_data_offset > ctx->packet_payload_end) {
                         ar.fail();
                     }
                 } else {
-                    data_offset = archive_tell(ar);
-                    PayloadLength = packet_->payload_end - data_offset;
+                    ctx->payload_data_offset = archive_tell(ar);
+                    PayloadLength = ctx->packet_payload_end - ctx->payload_data_offset;
                 }
-                archive_seek(ar, PayloadLength, std::ios_base::cur);
             }
-
-        private:
-            ASF_Packet const * packet_;
         };
 
     } // namespace avformat

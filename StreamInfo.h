@@ -33,8 +33,8 @@ namespace ppbox
                 : type(MEDIA_TYPE_NONE)
                 , sub_type(VIDEO_TYPE_NONE)
                 , time_scale(0)
+                , start_time(0)
                 , duration(0)
-                , codec(NULL)
             {
             }
 
