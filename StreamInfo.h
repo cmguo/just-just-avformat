@@ -3,7 +3,6 @@
 #ifndef _PPBOX_AVFORMAT_STREAM_INFO_H_
 #define _PPBOX_AVFORMAT_STREAM_INFO_H_
 
-#include "ppbox/avformat/Format.h"
 #include "ppbox/avformat/codec/Codec.h"
 
 #include <boost/intrusive_ptr.hpp>
@@ -29,14 +28,7 @@ namespace ppbox
 
         struct StreamInfoBase
         {
-            StreamInfoBase()
-                : type(MEDIA_TYPE_NONE)
-                , sub_type(VIDEO_TYPE_NONE)
-                , time_scale(0)
-                , start_time(0)
-                , duration(0)
-            {
-            }
+            StreamInfoBase();
 
             union {
                 boost::uint32_t type;
@@ -56,20 +48,7 @@ namespace ppbox
         struct StreamInfo
             : StreamInfoBase
         {
-            enum FormatTypeEnum
-            {
-                none, 
-                video_avc_packet = 1, 
-                video_avc_byte_stream = 2, 
-                audio_microsoft_wave = 3, 
-                audio_iso_mp4 = 4, 
-                audio_aac_adts = 5, 
-            };
-
-            StreamInfo()
-                : format_type(none)
-            {
-            }
+            StreamInfo();
 
             boost::uint32_t format_type;             // 格式说明的类型
             union {

@@ -3,8 +3,6 @@
 #ifndef _PPBOX_AVFORMAT_SAMPLE_H_
 #define _PPBOX_AVFORMAT_SAMPLE_H_
 
-#include "ppbox/avformat/StreamInfo.h"
-
 #include <boost/asio/buffer.hpp>
 
 namespace ppbox
@@ -18,6 +16,8 @@ namespace ppbox
     {
 
         using ppbox::data::MemoryLock;
+
+        struct StreamInfo;
 
         struct Sample
         {
