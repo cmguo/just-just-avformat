@@ -100,7 +100,7 @@ namespace ppbox
                 memory = mem;
             } else if (mem) {
                 mem->unlink();
-                memory->insert(memory, mem); // static push_back
+                memory->join.insert(mem);
             }
         }
 
