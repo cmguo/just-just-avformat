@@ -24,29 +24,47 @@ namespace ppbox
     (((boost::uint32_t)c4) << 24))
 #endif
 
-        static const boost::uint32_t MEDIA_TYPE_VIDE = MAKE_FOURC_TYPE('V', 'I', 'D', 'E');
-        static const boost::uint32_t MEDIA_TYPE_AUDI = MAKE_FOURC_TYPE('A', 'U', 'D', 'I');
-        static const boost::uint32_t MEDIA_TYPE_NONE = 0;
+        struct StreamType
+        {
+            enum Enum
+            {
+                NONE = 0, 
+                VIDE = MAKE_FOURC_TYPE('V', 'I', 'D', 'E'), 
+                AUDI = MAKE_FOURC_TYPE('A', 'U', 'D', 'I'), 
+            };
+        };
 
-        static const boost::uint32_t VIDEO_TYPE_AVC1 = MAKE_FOURC_TYPE('A', 'V', 'C', '1');
-        static const boost::uint32_t VIDEO_TYPE_WMV3 = MAKE_FOURC_TYPE('W', 'M', 'V', '3');
-        static const boost::uint32_t VIDEO_TYPE_MP4V = MAKE_FOURC_TYPE('M', 'P', '4', 'V');
-        static const boost::uint32_t VIDEO_TYPE_NONE = 0;
+        struct VideoSubType
+        {
+            enum Enum
+            {
+                NONE = 0, 
+                AVC1 = MAKE_FOURC_TYPE('A', 'V', 'C', '1'), 
+                WMV3 = MAKE_FOURC_TYPE('W', 'M', 'V', '3'), 
+                MP4V = MAKE_FOURC_TYPE('M', 'P', '4', 'V'), 
+            };
+        };
 
-        static const boost::uint32_t AUDIO_TYPE_MP4A = MAKE_FOURC_TYPE('M', 'P', '4', 'A');
-        static const boost::uint32_t AUDIO_TYPE_MP1A = MAKE_FOURC_TYPE('M', 'P', '1', 'A');
-        static const boost::uint32_t AUDIO_TYPE_WMA2 = MAKE_FOURC_TYPE('W', 'M', 'A', '2');
-        static const boost::uint32_t AUDIO_TYPE_NONE = 0;
+        struct AudioSubType
+        {
+            enum Enum
+            {
+                NONE = 0, 
+                MP4A = MAKE_FOURC_TYPE('M', 'P', '4', 'A'), 
+                MP1A = MAKE_FOURC_TYPE('M', 'P', '1', 'A'), 
+                WMA2 = MAKE_FOURC_TYPE('W', 'M', 'A', '2'), 
+            };
+        };
 
         struct FormatType
         {
             enum Enum
             {
-                none, 
+                none = 0, 
                 video_avc_packet = 1, 
                 video_avc_byte_stream = 2, 
-                audio_iso_mp4 = 1, 
-                audio_aac_adts = 2, 
+                audio_raw = 1, 
+                audio_adts = 2, 
             };
         };
 

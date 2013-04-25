@@ -13,16 +13,14 @@ namespace ppbox
         }
 
         AacCodec::AacCodec(
+            boost::uint32_t format, 
             std::vector<boost::uint8_t> const & config)
-            : config_helper_(config)
         {
-        }
-
-        AacCodec::AacCodec(
-            std::vector<boost::uint8_t> const & config, 
-            from_adts_tag)
-        {
-            config_helper_.from_adts_data(config);
+            if (format == FormatType::audio_raw) {
+                config_helper_.from_data(config);
+            } else {
+                config_helper_.from_adts_data(config);
+            }
         }
 
     } // namespace avformat

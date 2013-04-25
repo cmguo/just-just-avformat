@@ -16,7 +16,7 @@ namespace ppbox
             : public ppbox::common::ClassFactory<
                 Codec, 
                 boost::uint32_t, 
-                Codec *(std::vector<boost::uint8_t> const &)
+                Codec *(boost::uint32_t, std::vector<boost::uint8_t> const &)
             >
         {
         public:

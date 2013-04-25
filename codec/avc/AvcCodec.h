@@ -19,13 +19,8 @@ namespace ppbox
             AvcCodec();
 
             AvcCodec(
+                boost::uint32_t format, 
                 std::vector<boost::uint8_t> const & config);
-
-            struct from_es_tag {};
-
-            AvcCodec(
-                std::vector<boost::uint8_t> const & config, 
-                from_es_tag);
 
         public:
             AvcConfigHelper const & config_helper() const
@@ -42,7 +37,7 @@ namespace ppbox
             AvcConfigHelper config_helper_;
         };
 
-        PPBOX_REGISTER_CODEC(VIDEO_TYPE_AVC1, AvcCodec);
+        PPBOX_REGISTER_CODEC(VideoSubType::AVC1, AvcCodec);
 
     } // namespace avformat
 } // namespace ppbox

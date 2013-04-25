@@ -13,16 +13,14 @@ namespace ppbox
         }
 
         AvcCodec::AvcCodec(
+            boost::uint32_t format, 
             std::vector<boost::uint8_t> const & config)
-            : config_helper_(config)
         {
-        }
-
-        AvcCodec::AvcCodec(
-            std::vector<boost::uint8_t> const & config, 
-            from_es_tag)
-        {
-            config_helper_.from_es_data(config);
+            if (format == FormatType::video_avc_packet) {
+                config_helper_.from_data(config);
+            } else {
+                config_helper_.from_es_data(config);
+            }
         }
 
     } // namespace avformat

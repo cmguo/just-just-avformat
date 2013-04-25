@@ -19,13 +19,8 @@ namespace ppbox
             AacCodec();
 
             AacCodec(
+                boost::uint32_t format, 
                 std::vector<boost::uint8_t> const & config);
-
-            struct from_adts_tag {};
-
-            AacCodec(
-                std::vector<boost::uint8_t> const & config, 
-                from_adts_tag);
 
         public:
             AacConfigHelper const & config_helper() const
@@ -42,7 +37,7 @@ namespace ppbox
             AacConfigHelper config_helper_;
         };
 
-        PPBOX_REGISTER_CODEC(AUDIO_TYPE_MP4A, AacCodec);
+        PPBOX_REGISTER_CODEC(AudioSubType::MP4A, AacCodec);
 
     } // namespace avformat
 } // namespace ppbox

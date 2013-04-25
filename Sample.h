@@ -23,9 +23,9 @@ namespace ppbox
         {
             enum FlagEnum
             {
-                 sync = 1, 
-                 discontinuity = 2,
-                 config = 4, 
+                 f_sync = 1, 
+                 f_discontinuity = 2,
+                 f_config = 4, 
             };
 
             Sample();
@@ -56,7 +56,7 @@ namespace ppbox
             boost::uint32_t size;
             StreamInfo const * stream_info;
             mutable MemoryLock * memory; // 内存锁
-            void * context; // 处理上下文
+            void const * context; // 处理上下文
             std::deque<boost::asio::const_buffer> data;
         };
 

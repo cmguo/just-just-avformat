@@ -32,25 +32,21 @@ namespace ppbox
 
         static void continue_find_nalu(
             SampleBuffers::FindIterator2 & iter, 
-            SampleBuffers::FindIterator2 & iend, 
-            SampleBuffers::BuffersPosition & pos)
+            SampleBuffers::FindIterator2 & iend)
         {
             if (iter == iend) {
                 return;
             }
-            SampleBuffers::FindIterator2 ipos = iter;
-            ipos.skip_bytes(2);
-            while (ipos != iend) {
-                boost::uint8_t byte = ipos->dereference_byte();
-                ipos.skip_bytes(1);
+            iter.skip_bytes(2);
+            while (iter != iend) {
+                boost::uint8_t byte = iter->dereference_byte();
+                iter.skip_bytes(1);
                 if (byte == 0) {
                 } else if (byte == 1) {
-                    pos = *ipos;
                     break;
                 } else {
                     if (++iter != iend) {
-                        ipos = iter;
-                        ipos.skip_bytes(2);
+                        iter.skip_bytes(2);
                     } else {
                         break;
                     }
@@ -65,10 +61,9 @@ namespace ppbox
             nalus_.clear();
             SampleBuffers::FindIterator2 iter(data, boost::asio::buffer("\0\0", 2));
             SampleBuffers::FindIterator2 iend;
-            SampleBuffers::BuffersPosition pos;
-            continue_find_nalu(iter, iend, pos);
+            continue_find_nalu(iter, iend);
             while (iter != iend) {
-                SampleBuffers::BuffersPosition cur_pos = pos;
+                SampleBuffers::BuffersPosition cur_pos = *iter;
                 NaluHeader const nalu_header(cur_pos.dereference_byte());
                 if (nalu_header.nal_unit_type == NaluHeader::IDR ||
                     nalu_header.nal_unit_type == NaluHeader::UNIDR) {
@@ -77,7 +72,7 @@ namespace ppbox
                         break;
                 }
                 ++iter;
-                continue_find_nalu(iter, iend, pos);
+                continue_find_nalu(iter, iend);
                 nalus_.push_back(NaluBuffer(cur_pos, iter.position()));
             }
             return true;

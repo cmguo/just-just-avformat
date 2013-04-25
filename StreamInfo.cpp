@@ -10,9 +10,10 @@ namespace ppbox
     {
 
         StreamInfoBase::StreamInfoBase()
-            : type(MEDIA_TYPE_NONE)
-            , sub_type(VIDEO_TYPE_NONE)
+            : type(StreamType::NONE)
+            , sub_type(0)
             , time_scale(0)
+            , bitrate(0)
             , start_time(0)
             , duration(0)
         {
