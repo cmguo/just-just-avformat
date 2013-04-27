@@ -48,9 +48,7 @@ namespace ppbox
             boost::uint32_t itrack;
             boost::uint32_t flags;
             boost::uint64_t time;
-            boost::uint64_t ustime;
             boost::uint64_t dts;
-            boost::uint32_t us_delta; //pts-dts
             boost::uint32_t cts_delta;
             boost::uint32_t duration;
             boost::uint32_t size;

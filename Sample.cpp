@@ -14,9 +14,7 @@ namespace ppbox
             : itrack(0)
             , flags(0)
             , time(0)
-            , ustime(0)
             , dts(0)
-            , us_delta(0)
             , cts_delta(0)
             , duration(0)
             , size(0)
@@ -31,9 +29,7 @@ namespace ppbox
             : itrack(s.itrack)
             , flags(s.flags)
             , time(s.time)
-            , ustime(s.ustime)
             , dts(s.dts)
-            , us_delta(s.us_delta)
             , cts_delta(s.cts_delta)
             , duration(s.duration)
             , size(s.size)
@@ -53,9 +49,7 @@ namespace ppbox
             itrack = s.itrack;
             flags = s.flags;
             time = s.time;
-            ustime = s.ustime;
             dts = s.dts;
-            us_delta = s.us_delta;
             cts_delta = s.cts_delta;
             duration = s.duration;
             size = s.size;
@@ -77,9 +71,7 @@ namespace ppbox
             itrack = s.itrack;
             flags = s.flags;
             time = s.time;
-            ustime = s.ustime;
             dts = s.dts;
-            us_delta = s.us_delta;
             cts_delta = s.cts_delta;
             duration = s.duration;
             stream_info = s.stream_info;
