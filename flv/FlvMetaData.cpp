@@ -9,8 +9,8 @@ namespace ppbox
     {
 
         FlvMetaData::FlvMetaData()
-            : hasaudio(true)
-            , hasvideo(true)
+            : hasaudio(false)
+            , hasvideo(false)
             , duration(0)
             , datarate(0)
             , livetime(0)
