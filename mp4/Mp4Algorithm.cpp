@@ -2,9 +2,10 @@
 
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/mp4/Mp4Algorithm.h"
-#include "ppbox/avformat/Format.h"
 
 #include "ppbox/demux/base/DemuxError.h"
+
+#include <ppbox/avbase/Format.h>
 
 #include <framework/system/BytesOrder.h>
 

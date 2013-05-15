@@ -4,7 +4,7 @@
 #define _PPBOX_AVFORMAT_ASF_ASF_OBJECT_TYPE_H_
 
 #include "ppbox/avformat/asf/AsfGuid.h"
-#include "ppbox/avformat/stream/FormatBuffer.h"
+#include "ppbox/avformat/FormatBuffer.h"
 
 #include <util/archive/LittleEndianBinaryIArchive.h>
 #include <util/archive/LittleEndianBinaryOArchive.h>
@@ -53,8 +53,8 @@ namespace ppbox
     namespace avformat
     {
 
-        typedef util::archive::LittleEndianBinaryOArchive<boost::uint8_t> ASFOArchive;
-        typedef util::archive::LittleEndianBinaryIArchive<boost::uint8_t> ASFIArchive;
+        typedef util::archive::LittleEndianBinaryOArchive<boost::uint8_t> AsfOArchive;
+        typedef util::archive::LittleEndianBinaryIArchive<boost::uint8_t> AsfIArchive;
 
         typedef framework::string::Uuid AsfUuid;
         typedef framework::string::UUID ASFUUID;
@@ -164,16 +164,16 @@ namespace ppbox
             return typex::invoke(ar, off, dir);
         }
 
-        struct ASF_Object_Header
+        struct AsfObjectHeader
         {
             AsfUuid ObjectId;
             boost::uint64_t ObjLength;
 
-            ASF_Object_Header()
+            AsfObjectHeader()
             {
 
             }
-            ASF_Object_Header(
+            AsfObjectHeader(
                 AsfUuid const &ObjectId)
                 : ObjectId(ObjectId)
                 , ObjLength(0)
@@ -188,15 +188,15 @@ namespace ppbox
             }
         };
 
-        struct ASF_Header_Object
-            : ASF_Object_Header//page 6 ,3.1
+        struct AsfHeaderObject
+            : AsfObjectHeader//page 6 ,3.1
         {
             boost::uint32_t NumOfHeaderObject;
             boost::uint8_t Reserved1;
             boost::uint8_t Reserver2;
 
-            ASF_Header_Object()
-                : ASF_Object_Header(ASF_HEADER_OBJECT)
+            AsfHeaderObject()
+                : AsfObjectHeader(ASF_HEADER_OBJECT)
                 , NumOfHeaderObject(0)
                 , Reserved1(1)
                 , Reserver2(2)
@@ -206,7 +206,7 @@ namespace ppbox
             template <typename Archive>
             void serialize(Archive & ar)
             {
-                ASF_Object_Header::serialize(ar);
+                AsfObjectHeader::serialize(ar);
                 ar & NumOfHeaderObject
                     & Reserved1
                     & Reserver2;
@@ -244,7 +244,7 @@ namespace ppbox
             }
         };
 
-        struct ASF_File_Properties_Object_Data
+        struct AsfFilePropertiesObjectData
         {
             AsfUuid FileId;//调用generate()生成
             boost::uint64_t FileSize;
@@ -258,7 +258,7 @@ namespace ppbox
             boost::uint32_t MaximumDataPacketSize;
             boost::uint32_t MaximumBitrate;
 
-            ASF_File_Properties_Object_Data()
+            AsfFilePropertiesObjectData()
                 : FileSize(0)
                 , CreationDate(0)
                 , DataPacketsCount(0xFFFFFFFF)
@@ -290,24 +290,24 @@ namespace ppbox
         };
 
 
-        struct ASF_File_Properties_Object
-            : ASF_Object_Header
-            , ASF_File_Properties_Object_Data
+        struct AsfFilePropertiesObject
+            : AsfObjectHeader
+            , AsfFilePropertiesObjectData
         {
-            ASF_File_Properties_Object()
-                :ASF_Object_Header(ASF_FILE_PROPERTIES_OBJECT)
+            AsfFilePropertiesObject()
+                :AsfObjectHeader(ASF_FILE_PROPERTIES_OBJECT)
             {
             }
 
             template <typename Archive>
             void serialize(Archive & ar)
             {
-                ASF_Object_Header::serialize(ar);
-                ASF_File_Properties_Object_Data::serialize(ar);
+                AsfObjectHeader::serialize(ar);
+                AsfFilePropertiesObjectData::serialize(ar);
             }
         };
 
-        struct ASF_Header_Extension_Object
+        struct AsfHeaderExtensionObject
         {
             AsfUuid ObjectId;
             boost::uint64_t ObjectSize;
@@ -316,7 +316,7 @@ namespace ppbox
             boost::uint32_t HeaderExtensionDataSize;
             std::vector<boost::uint8_t> HeaderExtensionData;
 
-            ASF_Header_Extension_Object()
+            AsfHeaderExtensionObject()
                 : ObjectId(ASF_HEADER_EXTENSION_OBJECT)
                 , ObjectSize(0)
                 , Reserved1(ASF_Reserved_1)
@@ -343,7 +343,7 @@ namespace ppbox
             }
         };
 
-        struct StreamProperFlag
+        struct AsfStreamProperFlag
         {
             union {
                 struct {
@@ -360,7 +360,7 @@ namespace ppbox
                 boost::uint16_t flag;
             };
 
-            StreamProperFlag()
+            AsfStreamProperFlag()
                 :flag(0)
             {
 
@@ -373,7 +373,7 @@ namespace ppbox
             }
         };
 
-        struct ASF_Audio_Media_Type//page 80
+        struct AsfAudioMediaType//page 80
         {
             boost::uint16_t CodecId;
             boost::uint16_t NumberOfChannels;
@@ -384,7 +384,7 @@ namespace ppbox
             boost::uint16_t CodecSpecificDataSize;
             std::vector<boost::uint8_t> CodecSpecificData;
 
-            ASF_Audio_Media_Type()
+            AsfAudioMediaType()
                 : CodecId(0)
                 , NumberOfChannels(0)
                 , SamplesPerSecond(0)
@@ -410,13 +410,14 @@ namespace ppbox
             }
         };
 
-        struct ASF_Video_Media_Type//page 82
+        struct AsfVideoMediaType//page 82
         {
             boost::uint32_t EncodeImageWidth;
             boost::uint32_t EncodeImageHeight;
             boost::uint8_t ReservedFlags;
             boost::uint16_t FormatDataSize;
-            struct Format_Data {
+
+            struct FormatData {
                 boost::uint32_t FormatDataSize;
                 boost::uint32_t ImageWidth;
                 boost::uint32_t ImageHeight;
@@ -430,7 +431,7 @@ namespace ppbox
                 boost::uint32_t ImportantColorsCount;
                 std::vector<boost::uint8_t> CodecSpecificData;
 
-                Format_Data()
+                FormatData()
                     : FormatDataSize(0)
                     , ImageWidth(0)
                     , ImageHeight(0)
@@ -464,7 +465,7 @@ namespace ppbox
                 }
             } FormatData;
 
-            ASF_Video_Media_Type()
+            AsfVideoMediaType()
                 : EncodeImageWidth(0)
                 , EncodeImageHeight(0)
                 , ReservedFlags(2)
@@ -484,21 +485,21 @@ namespace ppbox
             }
         };
 
-        struct ASF_Stream_Properties_Object_Data//page 9
+        struct AsfStreamPropertiesObjectData//page 9
         {
             AsfUuid StreamType;
             AsfUuid ErrorCorrectionType;
             boost::uint64_t TimeOffset;
             boost::uint32_t TypeSpecificDataLength;
             boost::uint32_t ErrorCorrectionDataLength;
-            struct StreamProperFlag Flag;
+            struct AsfStreamProperFlag Flag;
             boost::uint32_t Reserved;
-            ASF_Video_Media_Type Video_Media_Type;
-            ASF_Audio_Media_Type Audio_Media_Type;
+            AsfVideoMediaType Video_Media_Type;
+            AsfAudioMediaType Audio_Media_Type;
             std::vector<boost::uint8_t> TypeSpecificData;
             std::vector<boost::uint8_t> Error_Correction_Data;
 
-            ASF_Stream_Properties_Object_Data()
+            AsfStreamPropertiesObjectData()
                 : ErrorCorrectionType(ASF_ERROR_CORRECTION_OBJECT)
                 , TimeOffset(0)
                 , TypeSpecificDataLength(0)
@@ -545,20 +546,20 @@ namespace ppbox
             }
         };
         
-        struct ASF_Stream_Properties_Object
-            : ASF_Object_Header
-            , ASF_Stream_Properties_Object_Data
+        struct AsfStreamPropertiesObject
+            : AsfObjectHeader
+            , AsfStreamPropertiesObjectData
         {
-            ASF_Stream_Properties_Object()
-                :ASF_Object_Header(ASF_STREAM_PROPERTIES_OBJECT)
+            AsfStreamPropertiesObject()
+                :AsfObjectHeader(ASF_STREAM_PROPERTIES_OBJECT)
             {
             }
             
             template <typename Archive>
             void serialize(Archive & ar)
             {
-                ASF_Object_Header::serialize(ar);
-                ASF_Stream_Properties_Object_Data::serialize(ar);
+                AsfObjectHeader::serialize(ar);
+                AsfStreamPropertiesObjectData::serialize(ar);
             }
         };
 
@@ -617,7 +618,7 @@ namespace ppbox
             }
         };
 
-        struct PayLoadParsingInformation//page 47
+        struct AsfPayLoadParsingInformation//page 47
         {
             union {
                 struct {
@@ -660,7 +661,7 @@ namespace ppbox
             boost::uint32_t SendTime;
             boost::uint16_t Duration;
 
-            PayLoadParsingInformation()
+            AsfPayLoadParsingInformation()
                 : flag1(0)
                 , flag2(0)
                 , PacketLength(0)
@@ -684,7 +685,7 @@ namespace ppbox
             }
         };
 
-        struct ASF_Data_Object//page 44
+        struct AsfDataObject//page 44
         {
             AsfUuid ObjectId;
             boost::uint64_t ObjLength;
@@ -692,7 +693,7 @@ namespace ppbox
             boost::uint64_t TotalDataPackets;
             boost::uint16_t Reserved;
             
-            ASF_Data_Object()
+            AsfDataObject()
                 : ObjectId(ASF_DATA_OBJECT)
                 , ObjLength(0)
                 , TotalDataPackets(0)
@@ -712,11 +713,11 @@ namespace ppbox
             }
         };
 
-        struct ASF_Packet;
+        struct AsfPacket;
 
-        struct ASF_ParseContext
+        struct AsfParseContext
         {
-            ASF_ParseContext()
+            AsfParseContext()
                 : max_packet_size(0)
                 , packet(NULL)
                 , packet_payload_end(0)
@@ -725,16 +726,16 @@ namespace ppbox
             }
 
             boost::uint32_t max_packet_size;
-            ASF_Packet const * packet;
+            AsfPacket const * packet;
             boost::uint64_t packet_payload_end;
             boost::uint64_t payload_data_offset;
         };
 
-        struct ASF_Packet//page 45
+        struct AsfPacket//page 45
         {
             //boost::uint32_t MaximumDataPacketSize;
             ErrorCorrectionData ErrorCorrectionInfo;
-            PayLoadParsingInformation PayLoadParseInfo;
+            AsfPayLoadParsingInformation PayLoadParseInfo;
             // Only for Multiple payloads
             union {
                 struct {
@@ -750,7 +751,7 @@ namespace ppbox
             };
 
 
-            ASF_Packet()
+            AsfPacket()
                 : flag(0)
             {
             }
@@ -759,7 +760,7 @@ namespace ppbox
             void serialize(Archive & ar)
             {
                 boost::uint32_t start_offset = archive_tell(ar);
-                ASF_ParseContext * ctx = (ASF_ParseContext *)ar.context();
+                AsfParseContext * ctx = (AsfParseContext *)ar.context();
 
                 ar & ErrorCorrectionInfo
                     & PayLoadParseInfo;
@@ -790,7 +791,7 @@ namespace ppbox
             }
         };
 
-        struct ASF_PayloadHeader
+        struct AsfPayloadHeader
         {
             union {
                 struct {
@@ -813,7 +814,7 @@ namespace ppbox
             // Only for Multiple payloads
             boost::uint32_t PayloadLength;
 
-            ASF_PayloadHeader()
+            AsfPayloadHeader()
                 : flags(0)
                 , MediaObjNum(0)
                 , OffsetIntoMediaObj(0)
@@ -827,7 +828,7 @@ namespace ppbox
             template <typename Archive>
             void serialize(Archive & ar)
             {
-                ASF_ParseContext * ctx = (ASF_ParseContext *)ar.context();
+                AsfParseContext * ctx = (AsfParseContext *)ar.context();
 
                 ar & flags;
                 //serialize_length():指定序列化位数
