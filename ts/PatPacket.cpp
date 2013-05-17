@@ -2,6 +2,7 @@
 
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/ts/PatPacket.h"
+#include "ppbox/avformat/ts/TsEnum.h"
 
 namespace ppbox
 {

@@ -4,6 +4,7 @@
 #define _PPBOX_AVFORMAT_TS_PAT_PACKET_H_
 
 #include "ppbox/avformat/ts/PsiPacket.h"
+#include "ppbox/avformat/ts/TsVector.h"
 
 namespace ppbox
 {

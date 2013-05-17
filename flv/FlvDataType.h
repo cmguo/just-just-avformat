@@ -3,7 +3,7 @@
 #ifndef _PPBOX_AVFORMAT_FLV_FLV_DATA_TYPE_H_
 #define _PPBOX_AVFORMAT_FLV_FLV_DATA_TYPE_H_
 
-#include "ppbox/avformat/flv/FlvFormat.h"
+#include "ppbox/avformat/flv/FlvArchive.h"
 
 namespace ppbox
 {

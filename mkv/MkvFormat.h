@@ -3,19 +3,32 @@
 #ifndef _PPBOX_AVFORMAT_MKV_MKV_FORMAT_H_
 #define _PPBOX_AVFORMAT_MKV_MKV_FORMAT_H_
 
-#include "ppbox/avformat/mkv/ebml/EBML_Type.h"
-#include "ppbox/avformat/FormatBuffer.h"
+#include "ppbox/avformat/Format.h"
 
 namespace ppbox
 {
     namespace avformat
     {
 
-        typedef EBML_OArchive MkvOArchive;
+        class MkvFormat
+            : public Format
+        {
+        public:
+            MkvFormat();
 
-        typedef EBML_IArchive MkvIArchive;
+        public:
+            virtual CodecInfo const * codec_from_format(
+                boost::uint32_t category, 
+                intptr_t format);
+
+        private:
+            static CodecInfo const codecs_[];
+        };
+
+        PPBOX_REGISTER_FORMAT(FormatType::MKV, MkvFormat);
 
     } // namespace avformat
 } // namespace ppbox
+
 
 #endif // _PPBOX_AVFORMAT_MKV_MKV_FORMAT_H_

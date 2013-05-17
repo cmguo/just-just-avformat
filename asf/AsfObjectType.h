@@ -855,7 +855,7 @@ namespace ppbox
                     }
                 } else {
                     ctx->payload_data_offset = archive_tell(ar);
-                    PayloadLength = ctx->packet_payload_end - ctx->payload_data_offset;
+                    PayloadLength = (boost::uint32_t)(ctx->packet_payload_end - ctx->payload_data_offset);
                 }
             }
         };
