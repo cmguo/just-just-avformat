@@ -5,7 +5,7 @@
 
 #include "ppbox/demux/base/DemuxError.h"
 
-#include <ppbox/avbase/Format.h>
+#include <ppbox/avbase/FourCC.h>
 
 #include <framework/system/BytesOrder.h>
 
