@@ -4,6 +4,7 @@
 #define _PPBOX_AVFORMAT_FLV_FLV_TAG_TYPE_H_
 
 #include "ppbox/avformat/flv/FlvFormat.h"
+#include "ppbox/avformat/flv/FlvEnum.h"
 #include "ppbox/avformat/flv/FlvDataType.h"
 
 #include <util/serialization/NumberBits24.h>

@@ -3,6 +3,8 @@
 #ifndef _PPBOX_AVFORMAT_TS_TS_PACKET_H_
 #define _PPBOX_AVFORMAT_TS_TS_PACKET_H_
 
+#include "ppbox/avformat/ts/TsArchive.h"
+
 namespace ppbox
 {
     namespace avformat
