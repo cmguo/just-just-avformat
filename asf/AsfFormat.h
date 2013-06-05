@@ -20,7 +20,7 @@ namespace ppbox
             static CodecInfo const codecs_[];
         };
 
-        PPBOX_REGISTER_FORMAT(FormatType::ASF, AsfFormat);
+        PPBOX_REGISTER_FORMAT("asf", AsfFormat);
 
     } // namespace avformat
 } // namespace ppbox

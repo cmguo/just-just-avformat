@@ -20,7 +20,7 @@ namespace ppbox
             static CodecInfo const codecs_[];
         };
 
-        PPBOX_REGISTER_FORMAT(FormatType::FLV, FlvFormat);
+        PPBOX_REGISTER_FORMAT("flv", FlvFormat);
 
     } // namespace avformat
 } // namespace ppbox

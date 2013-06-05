@@ -14,8 +14,13 @@ namespace ppbox
     {
 
         CodecInfo const MkvFormat::codecs_[] = {
-            {StreamType::VIDE,  (intptr_t)"V_MPEG4/ISO/AVC",  VideoSubType::AVC1, AvcFormatType::packet}, 
-            {StreamType::AUDI,  (intptr_t)"A_AAC",            AudioSubType::MP4A, AacFormatType::raw}, 
+            {StreamType::VIDE,  0,  VideoSubType::AVC1, AvcFormatType::packet,    1000}, 
+            {StreamType::AUDI,  1,  AudioSubType::MP4A, AacFormatType::raw,       1000}, 
+        };
+
+        char const * const MkvFormat::type_strs[] = {
+            "V_MPEG4/ISO/AVC", 
+            "A_AAC", 
         };
 
         MkvFormat::MkvFormat()
@@ -23,35 +28,38 @@ namespace ppbox
         {
         }
 
-        struct mkv_codec_info_equal_format
+        struct mkv_equal_type_str
         {
-            mkv_codec_info_equal_format(
-                boost::uint32_t category, 
-                intptr_t format)
-                : category_(category)
-                , format_(format)
+            mkv_equal_type_str(
+                std::string const & str)
+                : str_(str)
             {
             }
 
             bool operator()(
-                CodecInfo const & l)
+                char const * l)
             {
-                return l.category == category_ && strcmp((char const *)l.format, (char const *)format_) == 0;
+                return str_ == l;
             }
 
         private:
-            boost::uint32_t category_;
-            intptr_t format_;
+            std::string const & str_;
         };
 
-        CodecInfo const * MkvFormat::codec_from_format(
-            boost::uint32_t category, 
-            intptr_t format)
+        boost::uint32_t MkvFormat::stream_type(
+            std::string const & type_str)
         {
-            CodecInfo const * codec = std::find_if(codecs_, codecs_ + ncodec_, mkv_codec_info_equal_format(category, format));
-            if (codec == codecs_ + ncodec_)
-                codec = NULL;
-            return codec;
+            char const * const * str = std::find_if(type_strs, 
+                type_strs + sizeof(type_strs) / sizeof(type_strs[0]), mkv_equal_type_str(type_str));
+            return (boost::uint32_t)(str - type_strs);
+        }
+
+
+        char const * MkvFormat::stream_type_str(
+            boost::uint32_t type)
+        {
+            assert(type < sizeof(type_strs) / sizeof(type_strs[0]));
+            return type_strs[type];
         }
 
     } // namespace avformat

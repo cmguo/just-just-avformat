@@ -17,15 +17,18 @@ namespace ppbox
             MkvFormat();
 
         public:
-            virtual CodecInfo const * codec_from_format(
-                boost::uint32_t category, 
-                intptr_t format);
+            static boost::uint32_t stream_type(
+                std::string const & type_str);
+
+            static char const * stream_type_str(
+                boost::uint32_t type);
 
         private:
             static CodecInfo const codecs_[];
+            static char const * const type_strs[];
         };
 
-        PPBOX_REGISTER_FORMAT(FormatType::MKV, MkvFormat);
+        PPBOX_REGISTER_FORMAT("mkv", MkvFormat);
 
     } // namespace avformat
 } // namespace ppbox

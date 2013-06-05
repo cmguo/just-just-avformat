@@ -15,11 +15,11 @@ namespace ppbox
     {
 
         CodecInfo const AsfFormat::codecs_[] = {
-            {StreamType::VIDE,  AsfVideoCodec::H264,    VideoSubType::AVC1, AvcFormatType::byte_stream}, 
-            {StreamType::VIDE,  AsfVideoCodec::h264,    VideoSubType::AVC1, AvcFormatType::byte_stream}, 
-            {StreamType::VIDE,  AsfVideoCodec::WMV3,    VideoSubType::WMV3, StreamFormatType::none}, 
-            {StreamType::AUDI,  AsfAudioCodec::AAC,     AudioSubType::MP4A, AacFormatType::raw}, 
-            {StreamType::AUDI,  AsfAudioCodec::WMA2,    AudioSubType::WMA2, StreamFormatType::none}, 
+            {StreamType::VIDE,  AsfVideoCodec::H264,    VideoSubType::AVC1, AvcFormatType::byte_stream, 1000}, 
+            {StreamType::VIDE,  AsfVideoCodec::h264,    VideoSubType::AVC1, AvcFormatType::byte_stream, 1000}, 
+            {StreamType::VIDE,  AsfVideoCodec::WMV3,    VideoSubType::WMV3, StreamFormatType::none,     1000}, 
+            {StreamType::AUDI,  AsfAudioCodec::AAC,     AudioSubType::MP4A, AacFormatType::raw,         1000}, 
+            {StreamType::AUDI,  AsfAudioCodec::WMA2,    AudioSubType::WMA2, StreamFormatType::none,     1000}, 
         };
 
         AsfFormat::AsfFormat()

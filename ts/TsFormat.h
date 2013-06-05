@@ -17,15 +17,15 @@ namespace ppbox
             TsFormat();
 
         public:
-            virtual  CodecInfo const * codec_from_format(
+            virtual  CodecInfo const * codec_from_stream(
                 boost::uint32_t category, 
-                intptr_t format);
+                boost::uint32_t stream_type);
 
         private:
             static CodecInfo const codecs_[];
         };
 
-        PPBOX_REGISTER_FORMAT(FormatType::TS, TsFormat);
+        PPBOX_REGISTER_FORMAT("ts", TsFormat);
 
     } // namespace avformat
 } // namespace ppbox

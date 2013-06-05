@@ -3,6 +3,8 @@
 #ifndef _PPBOX_AVFORMAT_ASF_ASF_ENUM_H_
 #define _PPBOX_AVFORMAT_ASF_ASF_ENUM_H_
 
+#include <ppbox/avbase/FourCC.h>
+
 namespace ppbox
 {
     namespace avformat
