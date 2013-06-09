@@ -30,7 +30,7 @@ namespace ppbox
         struct ts_codec_info_equal_stream_type
         {
             ts_codec_info_equal_stream_type(
-                intptr_t format)
+                boost::uint32_t format)
                 : format_(format)
             {
             }
@@ -42,7 +42,7 @@ namespace ppbox
             }
 
         private:
-            intptr_t format_;
+            boost::uint32_t format_;
         };
 
         CodecInfo const * TsFormat::codec_from_stream(
