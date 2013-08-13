@@ -12,14 +12,15 @@ namespace ppbox
 
             enum errors
             {
-                avformat_success =0,
-                invalid_mp4_head , 
-                invalid_mp4_truck,
+                format_not_support = 1, 
+                codec_not_support, 
+                end_of_stream, 
+                bad_media_format,    // 文件内容的格式错误
             };
 
             namespace detail {
 
-                class live_category
+                class avformat_category
                     : public boost::system::error_category
                 {
                 public:
@@ -32,12 +33,14 @@ namespace ppbox
                     {
                         switch (value) 
                         {
-                        case avformat_success:
-                            return "operator success";
-                            case invalid_mp4_head:
-                                return "invalid mp4 head";
-                            case invalid_mp4_truck:
-                                return "invalid mp4 truck";
+                            case format_not_support:
+                                return "avformat: format not support";
+                            case codec_not_support:
+                                return "avformat: codec not support";
+                            case end_of_stream:
+                                return "avformat: end of stream";
+                            case bad_media_format:
+                                return "avformat: bad media format";
                             default:
                                 return "avformat other error";
                         }
@@ -48,7 +51,7 @@ namespace ppbox
 
             inline const boost::system::error_category & get_category()
             {
-                static detail::live_category instance;
+                static detail::avformat_category instance;
                 return instance;
             }
 
