@@ -16,6 +16,7 @@ namespace ppbox
                 codec_not_support, 
                 end_of_stream, 
                 bad_media_format,    // 文件内容的格式错误
+                file_stream_error, 
             };
 
             namespace detail {
@@ -41,6 +42,8 @@ namespace ppbox
                                 return "avformat: end of stream";
                             case bad_media_format:
                                 return "avformat: bad media format";
+                            case file_stream_error:
+                                return "avformat: file stream error";
                             default:
                                 return "avformat other error";
                         }

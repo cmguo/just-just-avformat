@@ -2,8 +2,7 @@
 
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/mp4/Mp4Algorithm.h"
-
-#include "ppbox/demux/base/DemuxError.h"
+#include "ppbox/avformat/Error.h"
 
 #include <ppbox/avbase/FourCC.h>
 
@@ -31,7 +30,7 @@ namespace ppbox
             while (true) {
                 //if(total_len < head_len + 8) {
                 //    head_len = head_len + 8;
-                //    ec = ppbox::demux::error::file_stream_error;
+                //    ec = error::file_stream_error;
                 //    break;
                 //}
                 union {
@@ -44,7 +43,7 @@ namespace ppbox
                     is.clear();
                     assert(is);
                     head_len += 8;
-                    ec = ppbox::demux::error::file_stream_error;
+                    ec = error::file_stream_error;
                     break;
                 }
                 for (size_t i = 0; i < sizeof(fourccs) / sizeof(fourccs[0]); ++i) {
@@ -56,7 +55,7 @@ namespace ppbox
                 n[0] = framework::system::BytesOrder::host_to_net_long(n[0]);
                 if (n[0] < 8) {
                     head_len = 0; // invalid mp4 file
-                    ec = ppbox::demux::error::bad_file_format;
+                    ec = error::bad_media_format;
                     break;
                 }
                 if (find_flag == (1 << sizeof(fourccs) / sizeof(fourccs[0])) - 1) {
@@ -69,7 +68,7 @@ namespace ppbox
                         if (!is) {
                             is.clear();
                             assert(is);
-                            ec = ppbox::demux::error::file_stream_error;
+                            ec = error::file_stream_error;
                         }
                     }
                     break;

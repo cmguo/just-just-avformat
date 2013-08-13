@@ -2,10 +2,8 @@
 
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/mkv/MkvAlgorithm.h"
-#include <ppbox/avformat/mkv/MkvObjectType.h>
-
-#include "ppbox/demux/base/DemuxError.h"
-
+#include "ppbox/avformat/mkv/MkvObjectType.h"
+#include "ppbox/avformat/Error.h"
 
 namespace ppbox
 {
@@ -37,7 +35,7 @@ namespace ppbox
                     ia.clear();
                     assert(ia);
                     head_len += 2;
-                    ec = ppbox::demux::error::file_stream_error;
+                    ec = error::file_stream_error;
                     break;
                 }
                 if (seg_end == 0) {
@@ -62,14 +60,14 @@ namespace ppbox
                             if (!ia) {
                                 ia.clear();
                                 assert(ia);
-                                ec = ppbox::demux::error::file_stream_error;
+                                ec = error::file_stream_error;
                             }
                         }
                         break;
                     }
                     head_len += header.byte_size();
                     if (head_len >= seg_end) {
-                        ec = ppbox::demux::error::bad_file_format;
+                        ec = error::bad_media_format;
                         break;
                     }
                 }
