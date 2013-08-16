@@ -29,6 +29,9 @@ namespace ppbox
             >
         {
         public:
+            static boost::system::error_code error_not_found();
+
+        public:
             Format();
 
             Format(
@@ -40,30 +43,35 @@ namespace ppbox
         public:
             virtual CodecInfo const * codec_from_stream(
                 boost::uint32_t category, 
-                boost::uint32_t stream_type);
+                boost::uint32_t stream_type, 
+                boost::system::error_code & ec);
 
             virtual CodecInfo const * codec_from_codec(
                 boost::uint32_t category, 
-                boost::uint32_t codec_type);
+                boost::uint32_t codec_type, 
+                boost::system::error_code & ec);
 
         public:
             // call by demuxer, with type, sub_type of info valid, 
             // sub_type is the stream type according to file specific
             // fill type, sub_type and time_scale
             virtual bool finish_from_stream(
-                ppbox::avbase::StreamInfo & info);
+                ppbox::avbase::StreamInfo & info, 
+                boost::system::error_code & ec);
 
             // call by muxer, with type, sub_type of info valid, 
             // fill format_type according to file specific
             // fill time_scale according to file specific
             virtual bool finish_from_codec(
-                ppbox::avbase::StreamInfo & info);
+                ppbox::avbase::StreamInfo & info, 
+                boost::system::error_code & ec);
 
         public:
             static bool finish_from_stream(
                 ppbox::avbase::StreamInfo & info, 
                 std::string const & format_str, 
-                boost::uint32_t stream_type);
+                boost::uint32_t stream_type, 
+                boost::system::error_code & ec);
 
         protected:
             CodecInfo const * codecs_;

@@ -88,4 +88,4 @@ namespace boost
     }
 }
 
-#endif // _PPBOX_PPAP_ERROR_H_
+#endif // _PPBOX_AVFORMAT_ERROR_H_

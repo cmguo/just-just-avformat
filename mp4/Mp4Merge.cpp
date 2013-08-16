@@ -21,8 +21,15 @@ namespace ppbox
             std::vector<ppbox::data::SegmentInfo> & segment_infos,
             boost::system::error_code & ec)
         {
-            if (segment_infos.empty())
+            if (segment_infos.empty()) {
+                ec = framework::system::logic_error::invalid_argument;
+                return false;
+            }
+
+            if (segment_infos.size() == 1) {
+                ec.clear();
                 return true;
+            }
 
             AP4_File * file = NULL;
             boost::uint64_t offset = 0;
@@ -46,40 +53,6 @@ namespace ppbox
 
             return !ec;
         }
-        /*
-        bool vod_valid_segment_info(
-        std::istream & is,
-        std::vector<ppbox::data::SegmentInfo> & segment_infos,
-        boost::system::error_code & ec)
-        {
-        is.seekg(0, std::ios::end);
-        boost::uint32_t big_head_size = is.tellg();
-        is.seekg(0, std::ios::beg);
-        AP4_ByteStream* obj_stream = NULL;
-        AP4_StreamByteStream::Create(is, 
-        0, 
-        big_head_size,
-        obj_stream);
 
-        Ap4HeadMerge mp4_head;
-        mp4_head.stream_ = obj_stream;
-        mp4_head.CheckMp4Head(ec);
-        boost::uint64_t duration_sum = 0;
-        if (!ec) {
-        for (boost::uint32_t i = 0; i < segment_infos.size()-1; ++i) {
-        duration_sum += segment_infos[i].duration;
-        boost::uint32_t diff_offset;
-        mp4_head.FindMinOffset(duration_sum, diff_offset, i, segment_infos, ec);
-        if (ec) {
-        break;
-        }
-        segment_infos[i].size -= diff_offset;
-        //segment_infos[i].size -= 34259;
-        //diff_offset = diff_offset;
-        }
-        }
-        return !ec;
-        }
-        */
     } // namespace avformat
 } // namespace ppbox
