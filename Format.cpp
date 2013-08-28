@@ -5,6 +5,7 @@
 #include "ppbox/avformat/Error.h"
 
 #include <ppbox/common/ClassRegister.h>
+#include "ppbox/avformat/mp4/Mp4Format.h"
 #include "ppbox/avformat/flv/FlvFormat.h"
 #include "ppbox/avformat/asf/AsfFormat.h"
 #include "ppbox/avformat/ts/TsFormat.h"
@@ -121,7 +122,8 @@ namespace ppbox
                 info.type = codec->category;
                 info.sub_type = codec->codec_type;
                 info.format_type = codec->codec_format;
-                info.time_scale = codec->time_scale;
+                if (info.time_scale == 0 && codec->time_scale != 0)
+                    info.time_scale = codec->time_scale;
                 return ppbox::avcodec::Codec::static_finish_stream_info(info, ec);
             }
             return false;
@@ -136,7 +138,8 @@ namespace ppbox
                 info.type = codec->category;
                 info.sub_type = codec->codec_type;
                 info.format_type = codec->codec_format;
-                info.time_scale = codec->time_scale;
+                if (info.time_scale == 0 && codec->time_scale != 0)
+                    info.time_scale = codec->time_scale;
                 return true;
             } else {
                 return false;
