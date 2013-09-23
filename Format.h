@@ -5,7 +5,7 @@
 
 #include <ppbox/avbase/StreamInfo.h>
 
-#include <ppbox/common/ClassFactory.h>
+#include <util/tools/ClassFactory.h>
 
 namespace ppbox
 {
@@ -22,7 +22,7 @@ namespace ppbox
         };
 
         class Format
-            : public ppbox::common::ClassFactory<
+            : public util::tools::ClassFactory<
                 Format, 
                 std::string, 
                 Format *()
@@ -81,6 +81,6 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#define PPBOX_REGISTER_FORMAT(key, cls) PPBOX_REGISTER_CLASS(key, cls)
+#define PPBOX_REGISTER_FORMAT(key, cls) UTIL_REGISTER_CLASS(key, cls)
 
 #endif // _PPBOX_AVFORMAT_FORMAT_H_

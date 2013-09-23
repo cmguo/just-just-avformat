@@ -4,7 +4,7 @@
 #include "ppbox/avformat/Format.h"
 #include "ppbox/avformat/Error.h"
 
-#include <ppbox/common/ClassRegister.h>
+#include <util/tools/ClassRegister.h>
 #include "ppbox/avformat/mp4/Mp4Format.h"
 #include "ppbox/avformat/flv/FlvFormat.h"
 #include "ppbox/avformat/asf/AsfFormat.h"
