@@ -18,6 +18,7 @@ namespace ppbox
             {StreamType::VIDE,  AsfVideoCodec::H264,    VideoSubType::AVC1, AvcFormatType::byte_stream, 1000}, 
             {StreamType::VIDE,  AsfVideoCodec::h264,    VideoSubType::AVC1, AvcFormatType::byte_stream, 1000}, 
             {StreamType::VIDE,  AsfVideoCodec::WMV3,    VideoSubType::WMV3, StreamFormatType::none,     1000}, 
+            {StreamType::AUDI,  AsfAudioCodec::MP3,     AudioSubType::MP1A, AacFormatType::raw,         1000}, 
             {StreamType::AUDI,  AsfAudioCodec::AAC,     AudioSubType::MP4A, AacFormatType::raw,         1000}, 
             {StreamType::AUDI,  AsfAudioCodec::WMA2,    AudioSubType::WMA2, StreamFormatType::none,     1000}, 
         };
