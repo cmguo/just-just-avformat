@@ -8,6 +8,7 @@
 using namespace ppbox::avcodec;
 
 extern "C" {
+#define UINT64_C(c)   c ## ULL
 #include <libavformat/avformat.h>
 }
 

@@ -19,7 +19,8 @@ namespace ppbox
         public:
             virtual  CodecInfo const * codec_from_stream(
                 boost::uint32_t category, 
-                boost::uint32_t stream_type);
+                boost::uint32_t stream_type, 
+                boost::system::error_code & ec);
 
         private:
             static CodecInfo const codecs_[];

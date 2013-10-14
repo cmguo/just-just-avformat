@@ -4,6 +4,7 @@
 #include "ppbox/avformat/ts/TsFormat.h"
 #include "ppbox/avformat/ts/TsEnum.h"
 #include "ppbox/avformat/ts/TsPacket.h"
+#include "ppbox/avformat/Error.h"
 
 #include <ppbox/avcodec/avc/AvcFormatType.h>
 #include <ppbox/avcodec/aac/AacFormatType.h>
@@ -47,11 +48,16 @@ namespace ppbox
 
         CodecInfo const * TsFormat::codec_from_stream(
             boost::uint32_t category, 
-            boost::uint32_t stream_type)
+            boost::uint32_t stream_type, 
+            boost::system::error_code & ec)
         {
             CodecInfo const * codec = std::find_if(codecs_, codecs_ + ncodec_, ts_codec_info_equal_stream_type(stream_type));
-            if (codec == codecs_ + ncodec_)
-                codec = NULL;
+            if (codec == codecs_ + ncodec_) {
+                codec = NULL; 
+                ec = error::codec_not_support;
+            } else {
+                ec.clear();
+            }
             return codec;
         }
 
