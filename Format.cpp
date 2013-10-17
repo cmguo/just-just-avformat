@@ -19,11 +19,6 @@ namespace ppbox
     namespace avformat
     {
 
-        boost::system::error_code Format::error_not_found()
-        {
-            return error::format_not_support;
-        }
-
         Format::Format()
             : codecs_(NULL)
             , ncodec_(0)
@@ -153,7 +148,7 @@ namespace ppbox
             boost::uint32_t stream_type, 
             boost::system::error_code & ec)
         {
-            Format * format = factory_type::create(format_str, ec);
+            Format * format = FormatFactory::create(format_str, ec);
             if (format) {
                 info.sub_type = stream_type;
                 bool b = format->finish_from_stream(info, ec);
@@ -162,6 +157,11 @@ namespace ppbox
             } else {
                 return false;
             }
+        }
+
+        boost::system::error_code FormatTraits::error_not_found()
+        {
+            return error::format_not_support;
         }
 
     } // namespace avformat

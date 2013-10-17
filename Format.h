@@ -22,15 +22,7 @@ namespace ppbox
         };
 
         class Format
-            : public util::tools::ClassFactory<
-                Format, 
-                std::string, 
-                Format *()
-            >
         {
-        public:
-            static boost::system::error_code error_not_found();
-
         public:
             Format();
 
@@ -78,9 +70,20 @@ namespace ppbox
             size_t ncodec_;
         };
 
+        struct FormatTraits
+            : util::tools::ClassFactoryTraits
+        {
+            typedef std::string key_type;
+            typedef Format * (create_proto)();
+
+            static boost::system::error_code error_not_found();
+        };
+
+        typedef util::tools::ClassFactory<FormatTraits> FormatFactory;
+
     } // namespace avformat
 } // namespace ppbox
 
-#define PPBOX_REGISTER_FORMAT(key, cls) UTIL_REGISTER_CLASS(key, cls)
+#define PPBOX_REGISTER_FORMAT(key, cls) UTIL_REGISTER_CLASS(ppbox::avformat::FormatFactory, key, cls)
 
 #endif // _PPBOX_AVFORMAT_FORMAT_H_
