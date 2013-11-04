@@ -10,7 +10,7 @@
 #include "ppbox/avformat/asf/AsfFormat.h"
 #include "ppbox/avformat/ts/TsFormat.h"
 #include "ppbox/avformat/mkv/MkvFormat.h"
-#include "ppbox/avformat/ffmpeg/FFMpegFormat.h"
+//#include "ppbox/avformat/ffmpeg/FFMpegFormat.h"
 
 #include <ppbox/avcodec/Codec.h>
 
