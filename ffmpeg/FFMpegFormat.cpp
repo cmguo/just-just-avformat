@@ -5,6 +5,7 @@
 
 #include <ppbox/avcodec/avc/AvcFormatType.h>
 #include <ppbox/avcodec/aac/AacFormatType.h>
+#include <ppbox/avcodec/ffmpeg/FFMpegCodecMap.h>
 using namespace ppbox::avcodec;
 
 extern "C" {
@@ -17,15 +18,30 @@ namespace ppbox
     namespace avformat
     {
 
-        CodecInfo const FFMpegFormat::codecs_[] = {
-            {StreamType::VIDE,  AV_CODEC_ID_H264, VideoSubType::AVC1,   StreamFormatType::none,    0}, 
-            {StreamType::AUDI,  AV_CODEC_ID_AAC,  AudioSubType::MP4A,   StreamFormatType::none,    0}, 
-            {StreamType::AUDI,  AV_CODEC_ID_MP3,  AudioSubType::MP1A,   StreamFormatType::none,    0}, 
-        };
+        static CodecInfo const * make_ffmpeg_codecs()
+        {
+            FFMpegCodec const * table = FFMpegCodecMap::table();
+            CodecInfo * codecs = new CodecInfo[FFMpegCodecMap::count()];
+            for (size_t i = 0; i < FFMpegCodecMap::count(); ++i) {
+                codecs[i].category = table[i].category;
+                codecs[i].stream_type = table[i].ffmpeg_type;
+                codecs[i].codec_type = table[i].type;
+                codecs[i].codec_format = 0;
+                codecs[i].time_scale = 0;
+            }
+            return codecs;
+        }
+
+        static CodecInfo const * ffmpeg_codecs()
+        {
+            static std::auto_ptr<CodecInfo const> codecs(make_ffmpeg_codecs()); // better use auto_array_ptr
+            return codecs.get();
+        }
 
         FFMpegFormat::FFMpegFormat()
-            : Format(codecs_, sizeof(codecs_) / sizeof(CodecInfo))
+            : Format(ffmpeg_codecs(), FFMpegCodecMap::count())
         {
+
         }
 
     } // namespace avformat

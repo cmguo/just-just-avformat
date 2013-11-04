@@ -15,9 +15,6 @@ namespace ppbox
         {
         public:
             FFMpegFormat();
-
-        private:
-            static CodecInfo const codecs_[];
         };
 
         PPBOX_REGISTER_FORMAT("ffmpeg", FFMpegFormat);
