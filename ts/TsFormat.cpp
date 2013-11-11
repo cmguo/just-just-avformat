@@ -8,8 +8,9 @@
 
 #include <ppbox/avcodec/avc/AvcFormatType.h>
 #include <ppbox/avcodec/aac/AacFormatType.h>
-
 using namespace ppbox::avcodec;
+
+#include <ppbox/avbase/TypeMap.h>
 
 namespace ppbox
 {
@@ -28,30 +29,14 @@ namespace ppbox
         {
         }
 
-        struct ts_codec_info_equal_stream_type
-        {
-            ts_codec_info_equal_stream_type(
-                boost::uint32_t format)
-                : format_(format)
-            {
-            }
-
-            bool operator()(
-                CodecInfo const & l)
-            {
-                return l.stream_type == format_;
-            }
-
-        private:
-            boost::uint32_t format_;
-        };
-
         CodecInfo const * TsFormat::codec_from_stream(
             boost::uint32_t category, 
             boost::uint32_t stream_type, 
             boost::system::error_code & ec)
         {
-            CodecInfo const * codec = std::find_if(codecs_, codecs_ + ncodec_, ts_codec_info_equal_stream_type(stream_type));
+            CodecInfo const * codec = ppbox::avbase::type_map_find(
+                codecs_, ncodec_, 
+                &CodecInfo::stream_type, stream_type);
             if (codec == codecs_ + ncodec_) {
                 codec = NULL; 
                 ec = error::codec_not_support;

@@ -6,6 +6,8 @@
 #include <ppbox/avcodec/avc/AvcFormatType.h>
 #include <ppbox/avcodec/aac/AacFormatType.h>
 
+#include <ppbox/avcodec/Codec.h>
+
 using namespace ppbox::avcodec;
 
 namespace ppbox

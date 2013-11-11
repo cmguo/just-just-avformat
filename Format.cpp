@@ -10,9 +10,11 @@
 #include "ppbox/avformat/asf/AsfFormat.h"
 #include "ppbox/avformat/ts/TsFormat.h"
 #include "ppbox/avformat/mkv/MkvFormat.h"
-//#include "ppbox/avformat/ffmpeg/FFMpegFormat.h"
+#include "ppbox/avformat/ffmpeg/FFMpegFormat.h"
 
 #include <ppbox/avcodec/Codec.h>
+
+#include <ppbox/avbase/TypeMap.h>
 
 namespace ppbox
 {
@@ -63,7 +65,10 @@ namespace ppbox
             boost::uint32_t stream_type, 
             boost::system::error_code & ec)
         {
-            CodecInfo const * codec = std::find_if(codecs_, codecs_ + ncodec_, codec_info_equal_stream_type(category, stream_type));
+            CodecInfo const * codec = ppbox::avbase::type_map_find(
+                codecs_, ncodec_, 
+                &CodecInfo::category, category, 
+                &CodecInfo::stream_type, stream_type);
             if (codec == codecs_ + ncodec_) {
                 codec = NULL;
                 ec = error::codec_not_support;
@@ -73,33 +78,15 @@ namespace ppbox
             return codec;
         }
 
-        struct codec_info_equal_codec_type
-        {
-            codec_info_equal_codec_type(
-                boost::uint32_t category, 
-                boost::uint32_t codec_type)
-                : category_(category)
-                , codec_type_(codec_type)
-            {
-            }
-
-            bool operator()(
-                CodecInfo const & l)
-            {
-                return l.category == category_ && l.codec_type == codec_type_;
-            }
-
-        private:
-            boost::uint32_t category_;
-            boost::uint32_t codec_type_;
-        };
-
         CodecInfo const * Format::codec_from_codec(
             boost::uint32_t category, 
             boost::uint32_t codec_type, 
             boost::system::error_code & ec)
         {
-            CodecInfo const * codec = std::find_if(codecs_, codecs_ + ncodec_, codec_info_equal_codec_type(category, codec_type));
+            CodecInfo const * codec = ppbox::avbase::type_map_find(
+                codecs_, ncodec_, 
+                &CodecInfo::category, category, 
+                &CodecInfo::codec_type, codec_type);
             if (codec == codecs_ + ncodec_) {
                 codec = NULL;
                 ec = error::codec_not_support;
