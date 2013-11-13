@@ -37,8 +37,7 @@ namespace ppbox
             CodecInfo const * codec = ppbox::avbase::type_map_find(
                 codecs_, ncodec_, 
                 &CodecInfo::stream_type, stream_type);
-            if (codec == codecs_ + ncodec_) {
-                codec = NULL; 
+            if (codec == NULL) {
                 ec = error::codec_not_support;
             } else {
                 ec.clear();

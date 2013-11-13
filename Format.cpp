@@ -69,8 +69,7 @@ namespace ppbox
                 codecs_, ncodec_, 
                 &CodecInfo::category, category, 
                 &CodecInfo::stream_type, stream_type);
-            if (codec == codecs_ + ncodec_) {
-                codec = NULL;
+            if (codec == NULL) {
                 ec = error::codec_not_support;
             } else {
                 ec.clear();
@@ -87,8 +86,7 @@ namespace ppbox
                 codecs_, ncodec_, 
                 &CodecInfo::category, category, 
                 &CodecInfo::codec_type, codec_type);
-            if (codec == codecs_ + ncodec_) {
-                codec = NULL;
+            if (codec == NULL) {
                 ec = error::codec_not_support;
             } else {
                 ec.clear();
