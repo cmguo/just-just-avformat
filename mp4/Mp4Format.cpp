@@ -23,6 +23,7 @@ namespace ppbox
             {StreamType::AUDI,  AP4_OTI_MPEG2_AAC_AUDIO_MAIN,   AudioSubType::MP4A, AacFormatType::raw,         0}, 
             {StreamType::AUDI,  AP4_OTI_MPEG2_AAC_AUDIO_LC,     AudioSubType::MP4A, AacFormatType::raw,         0}, 
             {StreamType::AUDI,  AP4_OTI_MPEG2_AAC_AUDIO_SSRP,   AudioSubType::MP4A, AacFormatType::raw,         0}, 
+            {StreamType::AUDI,  AP4_OTI_MPEG2_PART3_AUDIO,      AudioSubType::MP2A, StreamFormatType::none,     0}, 
             {StreamType::AUDI,  AP4_OTI_MPEG1_AUDIO,            AudioSubType::MP1A, StreamFormatType::none,     0}, 
         };
 
