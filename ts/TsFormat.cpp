@@ -22,6 +22,9 @@ namespace ppbox
             {StreamType::VIDE,  TsStreamType::iso_13818_2_video,    VideoSubType::MP4V, StreamFormatType::none,     TsPacket::TIME_SCALE}, 
             {StreamType::AUDI,  TsStreamType::iso_13818_7_audio,    AudioSubType::MP4A, AacFormatType::adts,        TsPacket::TIME_SCALE}, 
             {StreamType::AUDI,  TsStreamType::iso_11172_audio,      AudioSubType::MP1A, StreamFormatType::none,     TsPacket::TIME_SCALE}, 
+            {StreamType::AUDI,  TsStreamType::iso_11172_audio,      AudioSubType::MP1,  StreamFormatType::none,     TsPacket::TIME_SCALE}, 
+            {StreamType::AUDI,  TsStreamType::iso_11172_audio,      AudioSubType::MP2,  StreamFormatType::none,     TsPacket::TIME_SCALE}, 
+            {StreamType::AUDI,  TsStreamType::iso_11172_audio,      AudioSubType::MP3,  StreamFormatType::none,     TsPacket::TIME_SCALE}, 
             {StreamType::AUDI,  TsStreamType::iso_13818_3_audio,    AudioSubType::MP2A, StreamFormatType::none,     TsPacket::TIME_SCALE}, 
         };
 

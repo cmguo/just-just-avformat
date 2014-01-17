@@ -18,11 +18,19 @@ namespace ppbox
         CodecInfo const MkvFormat::codecs_[] = {
             {StreamType::VIDE,  0,  VideoSubType::AVC1, AvcFormatType::packet,    1000}, 
             {StreamType::AUDI,  1,  AudioSubType::MP4A, AacFormatType::raw,       1000}, 
+            {StreamType::AUDI,  2,  AudioSubType::MP1,  StreamFormatType::none,   1000}, 
+            {StreamType::AUDI,  3,  AudioSubType::MP2,  StreamFormatType::none,   1000}, 
+            {StreamType::AUDI,  4,  AudioSubType::MP3,  StreamFormatType::none,   1000}, 
+            {StreamType::AUDI,  4,  AudioSubType::MP1A, StreamFormatType::none,   1000}, 
+            {StreamType::AUDI,  4,  AudioSubType::MP2A, StreamFormatType::none,   1000}, 
         };
 
         char const * const MkvFormat::type_strs[] = {
             "V_MPEG4/ISO/AVC", 
             "A_AAC", 
+            "A_MPEG/L1", 
+            "A_MPEG/L2", 
+            "A_MPEG/L3", 
         };
 
         MkvFormat::MkvFormat()
