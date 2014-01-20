@@ -141,6 +141,7 @@ namespace ppbox
             Bits33 pts_bits;
             Bits33 dts_bits;
 
+            std::vector<boost::uint8_t> stuffing_byte;
 
             PesPacket()
                 : packet_start_code_prefix1(0)
@@ -181,12 +182,19 @@ namespace ppbox
                 ar & byte1;
                 ar & byte2;
                 ar & header_data_length;
+                boost::uint8_t l = header_data_length;
                 if (PTS_DTS_flags == 2) { // pts
                     ar & pts_bits;
+                    l -= 5;
                 }
                 if (PTS_DTS_flags == 3) { // pts & dts
                     ar & pts_bits;
                     ar & dts_bits;
+                    l -= 10;
+                }
+                if (l) {
+                    stuffing_byte.resize(l);
+                    ar & framework::container::make_array(&stuffing_byte.front(), stuffing_byte.size());
                 }
             }
         };

@@ -26,6 +26,7 @@ namespace ppbox
             {StreamType::AUDI,  TsStreamType::iso_11172_audio,      AudioSubType::MP2,  StreamFormatType::none,     TsPacket::TIME_SCALE}, 
             {StreamType::AUDI,  TsStreamType::iso_11172_audio,      AudioSubType::MP3,  StreamFormatType::none,     TsPacket::TIME_SCALE}, 
             {StreamType::AUDI,  TsStreamType::iso_13818_3_audio,    AudioSubType::MP2A, StreamFormatType::none,     TsPacket::TIME_SCALE}, 
+            {StreamType::AUDI,  MAKE_FOURC_TYPE('A','C','-','3'),   AudioSubType::AC3,  StreamFormatType::none,     TsPacket::TIME_SCALE}, 
         };
 
         TsFormat::TsFormat()

@@ -23,6 +23,7 @@ namespace ppbox
             {StreamType::AUDI,  4,  AudioSubType::MP3,  StreamFormatType::none,   1000}, 
             {StreamType::AUDI,  4,  AudioSubType::MP1A, StreamFormatType::none,   1000}, 
             {StreamType::AUDI,  4,  AudioSubType::MP2A, StreamFormatType::none,   1000}, 
+            {StreamType::AUDI,  5,  AudioSubType::AC3,  StreamFormatType::none,   1000}, 
         };
 
         char const * const MkvFormat::type_strs[] = {
@@ -31,6 +32,7 @@ namespace ppbox
             "A_MPEG/L1", 
             "A_MPEG/L2", 
             "A_MPEG/L3", 
+            "A_AC3", 
         };
 
         MkvFormat::MkvFormat()

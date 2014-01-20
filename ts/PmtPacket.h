@@ -5,6 +5,7 @@
 
 #include "ppbox/avformat/ts/PsiPacket.h"
 #include "ppbox/avformat/ts/TsVector.h"
+#include "ppbox/avformat/ts/TsDescriptor.h"
 
 namespace ppbox
 {
@@ -43,7 +44,7 @@ namespace ppbox
             //for (i = 0; i < N; i++) {
             //    descriptor()
             //}
-            std::vector<boost::uint8_t> descriptor;
+            TsVector<TsDescriptor> descriptor;
 
             PmtStream()
                 : stream_type(0)
@@ -54,12 +55,16 @@ namespace ppbox
 
             PmtStream(
                 boost::uint8_t stream_type, 
-                boost::uint16_t elementary_pid)
+                boost::uint16_t elementary_pid = 0)
                 : stream_type(stream_type)
                 , byte23(0xe000 | (elementary_pid & 0x1fff))
                 , byte45(0xf000)
             {
             }
+
+            void add_descriptor(
+                boost::uint8_t tag, 
+                std::vector<boost::uint8_t> const & descriptor);
 
             boost::uint32_t size() const
             {
@@ -74,8 +79,8 @@ namespace ppbox
                 ar & byte23;
                 ar & byte45;
                 if (es_info_length) {
-                    descriptor.resize(es_info_length);
-                    ar & framework::container::make_array(&descriptor.front(), descriptor.size());
+                    descriptor.set_byte_size(es_info_length);
+                    ar & descriptor;
                 }
             }
         };
@@ -112,7 +117,7 @@ namespace ppbox
             //for (i = 0; i < N; i++) {
             //    descriptor()
             //}
-            std::vector<boost::uint8_t> descriptor;
+            TsVector<TsDescriptor> descriptor;
 
             TsVector<PmtStream> streams;
 
@@ -130,6 +135,9 @@ namespace ppbox
             void add_stream(
                 boost::uint8_t type);
 
+            void add_stream(
+                PmtStream const & stream);
+
             template <typename Archive>
             void serialize(
                 Archive & ar)
@@ -140,8 +148,8 @@ namespace ppbox
                 ar & byte12;
                 ar & byte34;
                 if (program_info_length) {
-                    descriptor.resize(program_info_length);
-                    ar & framework::container::make_array(&descriptor.front(), descriptor.size());
+                    descriptor.set_byte_size(program_info_length);
+                    ar & descriptor;
                 }
                 streams.set_byte_size(body_size() - 4 - program_info_length);
                 ar & streams;

@@ -9,6 +9,18 @@ namespace ppbox
     namespace avformat
     {
 
+        void PmtStream::add_descriptor(
+            boost::uint8_t tag, 
+            std::vector<boost::uint8_t> const & descriptor)
+        {
+            TsDescriptor d;
+            d.descriptor_tag = tag;
+            d.descriptor_length = (boost::uint8_t)descriptor.size();
+            d.descriptor = descriptor;
+            this->descriptor.push_back(d);
+            es_info_length += 2 + d.descriptor_length;
+        }
+
         PmtSection::PmtSection(
             boost::uint16_t program_number)
             : PsiTable(PsiTableId::program_map, 4)
@@ -21,12 +33,19 @@ namespace ppbox
         void PmtSection::add_stream(
             boost::uint8_t type)
         {
+            add_stream(PmtStream(type));
+        }
+
+        void PmtSection::add_stream(
+            PmtStream const & stream)
+        {
             boost::uint16_t pid = TsPid::stream_base + (boost::uint16_t)streams.size();
             if (streams.empty()) {
                 pcr_pid = pid;
             }
-            streams.push_back(PmtStream(type, pid));
-            section_length += 5;
+            streams.push_back(stream);
+            streams.back().elementary_pid = pid;
+            section_length += stream.size();
         }
 
         PmtPayload::PmtPayload(
