@@ -3,6 +3,8 @@
 #ifndef _PPBOX_AVFORMAT_MKV_MKV_CONTENT_ENCODING_H_
 #define _PPBOX_AVFORMAT_MKV_MKV_CONTENT_ENCODING_H_
 
+#include "ppbox/avformat/mkv/ebml/EBML_Vector.h"
+
 namespace ppbox
 {
     namespace avformat
@@ -70,7 +72,7 @@ namespace ppbox
 
         struct MkvContentEncodingsData
         {
-            std::vector<MkvContentEncoding> ContentEncodings;
+            EBML_Vector<MkvContentEncoding> ContentEncodings;
 
             template <typename Archive>
             void serialize(Archive & ar)

@@ -63,7 +63,7 @@ namespace ppbox
         CodecInfo const * Format::codec_from_stream(
             boost::uint32_t category, 
             boost::uint32_t stream_type, 
-			void const * context, 
+            void const * context, 
             boost::system::error_code & ec)
         {
             CodecInfo const * codec = ppbox::avbase::type_map_find(
@@ -81,7 +81,7 @@ namespace ppbox
         CodecInfo const * Format::codec_from_codec(
             boost::uint32_t category, 
             boost::uint32_t codec_type, 
-			void const * context, 
+            void const * context, 
             boost::system::error_code & ec)
         {
             CodecInfo const * codec = ppbox::avbase::type_map_find(
@@ -101,7 +101,7 @@ namespace ppbox
             boost::uint32_t stream_type, 
             boost::system::error_code & ec)
         {
-			return codec_from_stream(category, stream_type, NULL, ec);
+            return codec_from_stream(category, stream_type, NULL, ec);
         }
 
         CodecInfo const * Format::codec_from_codec(
@@ -109,7 +109,7 @@ namespace ppbox
             boost::uint32_t codec_type, 
             boost::system::error_code & ec)
         {
-			return codec_from_codec(category, codec_type, NULL, ec);
+            return codec_from_codec(category, codec_type, NULL, ec);
         }
 
         bool Format::finish_from_stream(
@@ -121,7 +121,7 @@ namespace ppbox
                 info.type = codec->category;
                 info.sub_type = codec->codec_type;
                 info.format_type = codec->codec_format;
-				info.context = codec->context;
+                info.context = codec->context;
                 if (info.time_scale == 0 && codec->time_scale != 0)
                     info.time_scale = codec->time_scale;
                 return ppbox::avcodec::Codec::static_finish_stream_info(info, ec);
@@ -138,7 +138,7 @@ namespace ppbox
                 info.type = codec->category;
                 info.sub_type = codec->codec_type;
                 info.format_type = codec->codec_format;
-				info.context = codec->context;
+                info.context = codec->context;
                 if (info.time_scale == 0 && codec->time_scale != 0)
                     info.time_scale = codec->time_scale;
                 return true;

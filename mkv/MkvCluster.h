@@ -3,6 +3,8 @@
 #ifndef _PPBOX_AVFORMAT_MKV_MKV_CLUSTER_H_
 #define _PPBOX_AVFORMAT_MKV_MKV_CLUSTER_H_
 
+#include "ppbox/avformat/mkv/ebml/EBML_Vector.h"
+
 namespace ppbox
 {
     namespace avformat
@@ -189,8 +191,8 @@ namespace ppbox
             EBML_UInt Position;
             EBML_UInt PrevSize;
 
-            std::vector<MkvSimpleBlock> SimpleBlocks;
-            std::vector<MkvBlockGroup> BlockGroups;
+            EBML_Vector<MkvSimpleBlock> SimpleBlocks;
+            EBML_Vector<MkvBlockGroup> BlockGroups;
 
             MkvClusterData()
                 : TimeCode(0x67)

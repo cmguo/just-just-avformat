@@ -5,6 +5,7 @@
 
 #include "ppbox/avformat/mkv/MkvTrack.h"
 #include "ppbox/avformat/mkv/MkvCluster.h"
+#include "ppbox/avformat/mkv/ebml/EBML_Vector.h"
 
 namespace ppbox
 {
@@ -74,7 +75,7 @@ namespace ppbox
         {
             MkvSegmentInfo SegmentInfo;
             MkvTracks Tracks;
-            std::vector<MkvCluster> Clusters;
+            EBML_Vector<MkvCluster> Clusters;
 
             template <typename Archive>
             void serialize(Archive & ar)

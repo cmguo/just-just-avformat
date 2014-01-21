@@ -19,7 +19,7 @@ namespace ppbox
             boost::uint32_t codec_type;
             boost::uint32_t codec_format;
             boost::uint32_t time_scale;
-			void const * context;
+            void const * context;
         };
 
         class Format
@@ -37,13 +37,13 @@ namespace ppbox
             virtual CodecInfo const * codec_from_stream(
                 boost::uint32_t category, 
                 boost::uint32_t stream_type, 
-				void const * context, 
+                void const * context, 
                 boost::system::error_code & ec);
 
             virtual CodecInfo const * codec_from_codec(
                 boost::uint32_t category, 
                 boost::uint32_t codec_type, 
-				void const * context, 
+                void const * context, 
                 boost::system::error_code & ec);
 
             virtual CodecInfo const * codec_from_stream(

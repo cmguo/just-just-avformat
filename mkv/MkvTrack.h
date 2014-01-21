@@ -4,6 +4,7 @@
 #define _PPBOX_AVFORMAT_MKV_MKV_TRACK_H_
 
 #include "ppbox/avformat/mkv/MkvContentEncoding.h"
+#include "ppbox/avformat/mkv/ebml/EBML_Vector.h"
 
 namespace ppbox
 {
@@ -175,7 +176,7 @@ namespace ppbox
 
         struct MkvTracksData
         {
-            std::vector<MkvTrackEntry> Tracks;
+            EBML_Vector<MkvTrackEntry> Tracks;
 
             template <typename Archive>
             void serialize(

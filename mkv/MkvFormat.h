@@ -20,7 +20,7 @@ namespace ppbox
             virtual  CodecInfo const * codec_from_stream(
                 boost::uint32_t category, 
                 boost::uint32_t stream_type, 
-				void const * context, 
+                void const * context, 
                 boost::system::error_code & ec);
 
         private:

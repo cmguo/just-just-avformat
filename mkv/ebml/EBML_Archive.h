@@ -174,21 +174,6 @@ namespace ppbox
             }
 
         public:
-            template <typename EBML_Elem>
-            EBML_ElementIArchive & operator >> (
-                std::vector<EBML_Elem> & vec)
-            {
-                while (true) {
-                    EBML_Elem item;
-                    operator >>(item);
-                    if (item.empty()) {
-                        break;
-                    }
-                    vec.push_back(item);
-                }
-                return *this;
-            }
-
             using util::archive::BasicIArchive<EBML_ElementIArchive>::operator >>;
 
         public:

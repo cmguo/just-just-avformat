@@ -10,12 +10,12 @@ namespace ppbox
     namespace avformat
     {
 
-		struct TsContext
-		{
-			boost::uint8_t hdmv_type;
-			boost::uint8_t misc_type;
-			boost::uint32_t regd_type;
-		};
+        struct TsContext
+        {
+            boost::uint8_t hdmv_type;
+            boost::uint8_t misc_type;
+            boost::uint32_t regd_type;
+        };
 
         class TsFormat
             : public Format
@@ -27,7 +27,7 @@ namespace ppbox
             virtual  CodecInfo const * codec_from_stream(
                 boost::uint32_t category, 
                 boost::uint32_t stream_type, 
-				void const * context, 
+                void const * context, 
                 boost::system::error_code & ec);
 
         private:
