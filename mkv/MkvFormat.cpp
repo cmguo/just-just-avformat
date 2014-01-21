@@ -2,6 +2,7 @@
 
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/mkv/MkvFormat.h"
+#include "ppbox/avformat/Error.h"
 
 #include <ppbox/avcodec/avc/AvcFormatType.h>
 #include <ppbox/avcodec/aac/AacFormatType.h>
@@ -16,23 +17,15 @@ namespace ppbox
     {
 
         CodecInfo const MkvFormat::codecs_[] = {
-            {StreamType::VIDE,  0,  VideoSubType::AVC1, AvcFormatType::packet,    1000}, 
-            {StreamType::AUDI,  1,  AudioSubType::MP4A, AacFormatType::raw,       1000}, 
-            {StreamType::AUDI,  2,  AudioSubType::MP1,  StreamFormatType::none,   1000}, 
-            {StreamType::AUDI,  3,  AudioSubType::MP2,  StreamFormatType::none,   1000}, 
-            {StreamType::AUDI,  4,  AudioSubType::MP3,  StreamFormatType::none,   1000}, 
-            {StreamType::AUDI,  4,  AudioSubType::MP1A, StreamFormatType::none,   1000}, 
-            {StreamType::AUDI,  4,  AudioSubType::MP2A, StreamFormatType::none,   1000}, 
-            {StreamType::AUDI,  5,  AudioSubType::AC3,  StreamFormatType::none,   1000}, 
-        };
-
-        char const * const MkvFormat::type_strs[] = {
-            "V_MPEG4/ISO/AVC", 
-            "A_AAC", 
-            "A_MPEG/L1", 
-            "A_MPEG/L2", 
-            "A_MPEG/L3", 
-            "A_AC3", 
+            {StreamType::VIDE,  0,  VideoSubType::AVC1, AvcFormatType::packet,    1000, "V_MPEG4/ISO/AVC"}, 
+            {StreamType::AUDI,  1,  AudioSubType::MP4A, AacFormatType::raw,       1000, "A_AAC"}, 
+            {StreamType::AUDI,  2,  AudioSubType::MP1,  StreamFormatType::none,   1000, "A_MPEG/L1"}, 
+            {StreamType::AUDI,  3,  AudioSubType::MP2,  StreamFormatType::none,   1000, "A_MPEG/L2"}, 
+            {StreamType::AUDI,  4,  AudioSubType::MP3,  StreamFormatType::none,   1000, "A_MPEG/L3"}, 
+            {StreamType::AUDI,  4,  AudioSubType::MP1A, StreamFormatType::none,   1000, "A_MPEG/L3"}, 
+            {StreamType::AUDI,  4,  AudioSubType::MP2A, StreamFormatType::none,   1000, "A_MPEG/L3"}, 
+            {StreamType::AUDI,  5,  AudioSubType::AC3,  StreamFormatType::none,   1000, "A_AC3"}, 
+            {StreamType::AUDI,  5,  AudioSubType::EAC3, StreamFormatType::none,   1000, "A_EAC3"}, 
         };
 
         MkvFormat::MkvFormat()
@@ -43,35 +36,35 @@ namespace ppbox
         struct mkv_equal_type_str
         {
             mkv_equal_type_str(
-                std::string const & str)
+                char const * str)
                 : str_(str)
             {
             }
 
             bool operator()(
-                char const * l)
+                CodecInfo const & l)
             {
-                return str_ == l;
+                return str_ == (char const *)l.context;
             }
 
         private:
-            std::string const & str_;
+            std::string str_;
         };
 
-        boost::uint32_t MkvFormat::stream_type(
-            std::string const & type_str)
+        CodecInfo const * MkvFormat::codec_from_stream(
+            boost::uint32_t category, 
+            boost::uint32_t stream_type, 
+            void const * context, 
+            boost::system::error_code & ec)
         {
-            char const * const * str = std::find_if(type_strs, 
-                type_strs + sizeof(type_strs) / sizeof(type_strs[0]), mkv_equal_type_str(type_str));
-            return (boost::uint32_t)(str - type_strs);
-        }
-
-
-        char const * MkvFormat::stream_type_str(
-            boost::uint32_t type)
-        {
-            assert(type < sizeof(type_strs) / sizeof(type_strs[0]));
-            return type_strs[type];
+            CodecInfo const * codec = std::find_if(codecs_, 
+                codecs_ + sizeof(codecs_) / sizeof(codecs_[0]), mkv_equal_type_str((char const *)context));
+            if (codec == codecs_ + sizeof(codecs_) / sizeof(codecs_[0])) {
+                ec = error::codec_not_support;
+            } else {
+                ec.clear();
+            }
+            return codec;
         }
 
     } // namespace avformat

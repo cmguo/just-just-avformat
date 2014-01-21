@@ -30,6 +30,18 @@ namespace ppbox
             transport_stream_id = program_number; // transport_stream_id is program_number for pmt
         }
 
+        void PmtSection::add_descriptor(
+            boost::uint8_t tag, 
+            std::vector<boost::uint8_t> const & descriptor)
+        {
+            TsDescriptor d;
+            d.descriptor_tag = tag;
+            d.descriptor_length = (boost::uint8_t)descriptor.size();
+            d.descriptor = descriptor;
+            this->descriptor.push_back(d);
+            program_info_length += 2 + d.descriptor_length;
+        }
+
         void PmtSection::add_stream(
             boost::uint8_t type)
         {

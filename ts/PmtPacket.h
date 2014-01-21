@@ -132,6 +132,10 @@ namespace ppbox
             PmtSection(
                 boost::uint16_t program_number);
 
+            void add_descriptor(
+                boost::uint8_t tag, 
+                std::vector<boost::uint8_t> const & descriptor);
+
             void add_stream(
                 boost::uint8_t type);
 
