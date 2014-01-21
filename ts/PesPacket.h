@@ -5,6 +5,8 @@
 
 #include "ppbox/avformat/ts/TsFormat.h"
 
+#include <framework/container/Array.h>
+
 namespace ppbox
 {
     namespace avformat
