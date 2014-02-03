@@ -47,7 +47,7 @@ namespace ppbox
             bool result = stts_.next() 
                 && ctts_.next() 
                 && stss_.next()
-                && stss_.next() 
+                && stsc_.next(stsz_.size()) 
                 && stsz_.next();
             if (result) {
                 ec.clear();
