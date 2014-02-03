@@ -39,6 +39,7 @@ namespace ppbox
             d.descriptor_length = (boost::uint8_t)descriptor.size();
             d.descriptor = descriptor;
             this->descriptor.push_back(d);
+            section_length += 2 + d.descriptor_length;
             program_info_length += 2 + d.descriptor_length;
         }
 
