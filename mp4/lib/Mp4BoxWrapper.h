@@ -120,14 +120,14 @@ namespace ppbox
             Mp4BoxWrapper2(
                 Mp4Box & box)
                 : Mp4BoxWrapper<T>(box)
-                , Mp4BoxVectorWrapper<T>(data_)
+                , Mp4BoxVectorWrapper<T>(this->data_)
             {
             }
 
             Mp4BoxWrapper2(
                 Mp4Box * box)
                 : Mp4BoxWrapper<T>(box)
-                , Mp4BoxVectorWrapper<T>(data_)
+                , Mp4BoxVectorWrapper<T>(this->data_)
             {
             }
         };
