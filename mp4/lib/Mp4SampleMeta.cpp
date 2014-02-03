@@ -2,6 +2,7 @@
 
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/mp4/lib/Mp4SampleMeta.h"
+#include "ppbox/avformat/mp4/box/Mp4Box.hpp"
 
 namespace ppbox
 {
@@ -117,6 +118,8 @@ namespace ppbox
         bool Mp4CompositionOffsetTable::seek(
             boost::uint32_t sample_index)
         {
+            if (!data_)
+                return true;
             size_t table_index = 0;
             Mp4CompositionOffsetBox::Entry entry = data_->table[table_index];
             while (entry.sample_count < sample_index) {

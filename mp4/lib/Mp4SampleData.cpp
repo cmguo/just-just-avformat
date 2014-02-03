@@ -2,6 +2,7 @@
 
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/mp4/lib/Mp4SampleData.h"
+#include "ppbox/avformat/mp4/box/Mp4Box.hpp"
 
 namespace ppbox
 {
