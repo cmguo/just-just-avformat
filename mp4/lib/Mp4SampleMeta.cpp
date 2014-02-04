@@ -35,7 +35,7 @@ namespace ppbox
 
         bool Mp4TimeToSampleTable::seek(
             boost::uint64_t sample_time, 
-            boost::uint32_t & sample_index)
+            boost::uint32_t & sample_index) const
         {
             boost::uint64_t sample_time2 = sample_time;
             sample_index = 0;
@@ -50,15 +50,27 @@ namespace ppbox
                     return false;
                 }
             }
-            sample_time2 -= sample_time;
-            boost::uint32_t index_in_entry = (boost::uint32_t)(sample_time /= entry_.sample_delta);
-            sample_time2 += (boost::uint64_t)entry_.sample_delta * index_in_entry;
-            sample_index += index_in_entry;
-            entry.sample_count -= index_in_entry;
-            entry_ = entry;
-            index_ = table_index;
-            value_ = sample_time2;
+            sample_index += (boost::uint32_t)(sample_time / entry_.sample_delta);
             return true;
+        }
+
+        bool Mp4TimeToSampleTable::seek(
+            boost::uint32_t sample_index, 
+            boost::uint64_t & sample_time) const
+        {
+            size_t table_index = 0;
+            sample_time = 0;
+            Mp4TimeToSampleBox::Entry entry = data_->table[table_index];
+            while (entry.sample_count < sample_index) {
+                sample_index -= entry.sample_count;
+                sample_time += (boost::uint64_t)entry.sample_delta * entry.sample_count;
+                if (++table_index < data_->table.size()) {
+                    entry = data_->table[table_index];
+                } else {
+                    return false;
+                }
+            }
+            sample_time += (boost::uint64_t)entry.sample_delta * sample_index;
         }
 
         bool Mp4TimeToSampleTable::seek(

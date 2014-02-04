@@ -50,7 +50,7 @@ namespace ppbox
 
             boost::uint64_t offset() const
             {
-                return stsc_.offset();
+                return stco_.offset();
             }
 
         public:
@@ -63,11 +63,17 @@ namespace ppbox
 
             void rewind();
 
+            bool limit(
+                boost::uint64_t offset, 
+                boost::uint64_t & time, // dts
+                boost::system::error_code & ec) const;
+
         private:
             Mp4SampleDescriptionTable stsd_;
             Mp4TimeToSampleTable stts_;
             Mp4CompositionOffsetTable ctts_;
             Mp4SyncSampleTable stss_;
+            Mp4ChunkOffseTable stco_;
             Mp4SampleToChunkTable stsc_;
             Mp4SampleSizeTable stsz_;
 

@@ -22,7 +22,11 @@ namespace ppbox
 
             bool seek(
                 boost::uint64_t sample_time, 
-                boost::uint32_t & sample_index);
+                boost::uint32_t & sample_index) const;
+
+            bool seek(
+                boost::uint32_t sample_index, 
+                boost::uint64_t & sample_time) const;
 
             bool seek(
                 boost::uint32_t sample_index);

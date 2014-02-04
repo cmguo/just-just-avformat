@@ -16,8 +16,9 @@ namespace ppbox
             , stts_(find_item("/stts"))
             , ctts_(find_item("/ctts"))
             , stss_(find_item("/stss"))
-            , stsc_(find_item("/stsc"), find_item("/stco"))
-            , stsz_(find_item("/stsz"))
+            , stco_(find_item("/stco"))
+            , stsc_(find_item("/stsc"), &stco_)
+            , stsz_(find_item("/stsz"), &stco_)
         {
             box.as<Mp4SampleTableBox>();
         }
@@ -37,7 +38,7 @@ namespace ppbox
             sample.dts = stts_.dts();
             sample.cts_delta = ctts_.cts_delta();
             sample.duration = stts_.duration();
-            sample.time = stsc_.offset(); // use time for offset
+            sample.time = stco_.offset(); // use time for offset
             sample.size = stsz_.size();
         }
 
@@ -47,8 +48,8 @@ namespace ppbox
             bool result = stts_.next() 
                 && ctts_.next() 
                 && stss_.next()
-                && stsc_.next(stsz_.size()) 
-                && stsz_.next();
+                && stsz_.next() // must call before stsc_.next()
+                && stsc_.next();
             if (result) {
                 ec.clear();
             } else {
@@ -61,14 +62,17 @@ namespace ppbox
             boost::uint64_t & time, // dts
             boost::system::error_code & ec)
         {
-            boost::uint32_t sample_index;
+            boost::uint32_t sample_index = 0;
+            boost::uint32_t sample_index2 = 0;
             bool result = stts_.seek(time, sample_index)
-                && stss_.sync(sample_index)
-                && stss_.seek(sample_index)
-                && ctts_.seek(sample_index)
-                && stss_.seek(sample_index)
-                && stsc_.seek(sample_index)
-                && stsz_.seek(sample_index);
+                && stss_.sync(sample_index);
+            if (result) {
+                result = stts_.seek(sample_index)
+                    && ctts_.seek(sample_index)
+                    && stss_.seek(sample_index)
+                    && stsc_.seek(sample_index, sample_index2)
+                    && stsz_.seek(sample_index, sample_index2);
+            }
             if (result) {
                 ec.clear();
             } else {
@@ -79,11 +83,24 @@ namespace ppbox
 
         void Mp4SampleTable::rewind()
         {
+            boost::uint32_t sample_index2 = 0;
             stss_.seek(0);
             ctts_.seek(0);
             stss_.seek(0);
-            stsc_.seek(0);
-            stsz_.seek(0);
+            stsc_.seek(0, sample_index2);
+            stsz_.seek(0, sample_index2);
+        }
+
+        bool Mp4SampleTable::limit(
+            boost::uint64_t offset, 
+            boost::uint64_t & time, // dts
+            boost::system::error_code & ec) const
+        {
+            Mp4SampleToChunkBox::Entry index;
+            return stco_.limit(offset, index)
+                && stsc_.limit(offset, index)
+                && stsz_.limit(offset, index)
+                && stts_.seek(index.sample_description_index, time);
         }
 
     } // namespace avformat
