@@ -15,6 +15,8 @@ namespace ppbox
 
         Mp4Box::id_type const Mp4AudioSampleEntryBox::codings[] = {
             MAKE_FOURC_TYPE('m', 'p', '4', 'a'), 
+            MAKE_FOURC_TYPE('a', 'c', '-', '3'), 
+            MAKE_FOURC_TYPE('e', 'c', '-', '3'), 
             0, 
         };
 

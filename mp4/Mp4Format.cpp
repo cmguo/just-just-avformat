@@ -16,13 +16,15 @@ namespace ppbox
 
         CodecInfo const Mp4Format::codecs_[] = {
             {StreamType::VIDE,  MpegObjectType::MPEG4_VISUAL,           VideoSubType::MP4V, StreamFormatType::none,     0}, 
-            {StreamType::VIDE,  MpegObjectType::MPEG4_PART10_VISUAL,    VideoSubType::AVC1, AvcFormatType::packet,      0}, 
+            {StreamType::VIDE,  MAKE_FOURC_TYPE('a', 'v', 'c', '1'),    VideoSubType::AVC1, AvcFormatType::packet,      0}, 
             {StreamType::AUDI,  MpegObjectType::MPEG4_AUDIO,            AudioSubType::MP4A, AacFormatType::raw,         0}, 
             {StreamType::AUDI,  MpegObjectType::MPEG2_AAC_AUDIO_MAIN,   AudioSubType::MP4A, AacFormatType::raw,         0}, 
             {StreamType::AUDI,  MpegObjectType::MPEG2_AAC_AUDIO_LC,     AudioSubType::MP4A, AacFormatType::raw,         0}, 
             {StreamType::AUDI,  MpegObjectType::MPEG2_AAC_AUDIO_SSRP,   AudioSubType::MP4A, AacFormatType::raw,         0}, 
             {StreamType::AUDI,  MpegObjectType::MPEG2_PART3_AUDIO,      AudioSubType::MP2A, StreamFormatType::none,     0}, 
             {StreamType::AUDI,  MpegObjectType::MPEG1_AUDIO,            AudioSubType::MP1A, StreamFormatType::none,     0}, 
+            {StreamType::AUDI,  MAKE_FOURC_TYPE('a', 'c', '-', '3'),    AudioSubType::AC3,  StreamFormatType::none,     0}, 
+            {StreamType::AUDI,  MAKE_FOURC_TYPE('e', 'c', '-', '3'),    AudioSubType::EAC3, StreamFormatType::none,     0}, 
         };
 
         Mp4Format::Mp4Format()

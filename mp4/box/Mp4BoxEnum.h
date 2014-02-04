@@ -59,7 +59,6 @@ namespace ppbox
                 MPEG4_SYSTEM_COR     = 0x02, 
                 MPEG4_TEXT           = 0x08, 
                 MPEG4_VISUAL         = 0x20, 
-                MPEG4_PART10_VISUAL  = 0x21,  //AVC
                 MPEG4_AUDIO          = 0x40, 
                 MPEG2_VISUAL_SIMPLE  = 0x60, 
                 MPEG2_VISUAL_MAIN    = 0x61, 
