@@ -174,8 +174,9 @@ namespace ppbox
             if (!data_)
                 return true;
             std::vector<boost::uint32_t>::const_iterator iter = 
-                std::lower_bound(data_->table.begin(), data_->table.end(), index + 1);
-            index =  *iter - 1;
+                std::upper_bound(data_->table.begin(), data_->table.end(), index + 1);
+            if (iter != data_->table.begin())
+                index =  *(--iter) - 1;
             return true;
         }
 
