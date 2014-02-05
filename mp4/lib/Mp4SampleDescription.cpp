@@ -84,5 +84,17 @@ namespace ppbox
             }
         }
 
+        static void delete_entry(
+            Mp4SampleEntry * entry)
+        {
+            delete entry;
+        }
+
+        Mp4SampleDescriptionTable::~Mp4SampleDescriptionTable()
+        {
+            std::for_each(entries_.begin(), entries_.end(), delete_entry);
+            entries_.clear();
+        }
+
     } // namespace avformat
 } // namespace ppbox

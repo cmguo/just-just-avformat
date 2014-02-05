@@ -25,5 +25,10 @@ namespace ppbox
             return movie_.parse(ec);
         }
 
+        void Mp4File::close()
+        {
+            movie_.close();
+        }
+
     } // namespace avformat
 } // namespace ppbox

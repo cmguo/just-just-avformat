@@ -33,5 +33,18 @@ namespace ppbox
             return true;
         }
 
+        static void delete_track(
+            Mp4Track * track)
+        {
+            delete track;
+        }
+
+        void Mp4Movie::close()
+        {
+            std::for_each(tracks_.begin(), tracks_.end(), delete_track);
+            tracks_.clear();
+            header_ = NULL;
+        }
+
     } // namespace avformat
 } // namespace ppbox

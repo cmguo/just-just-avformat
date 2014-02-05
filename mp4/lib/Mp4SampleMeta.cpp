@@ -37,7 +37,6 @@ namespace ppbox
             boost::uint64_t sample_time, 
             boost::uint32_t & sample_index) const
         {
-            boost::uint64_t sample_time2 = sample_time;
             sample_index = 0;
             size_t table_index = 0;
             Mp4TimeToSampleBox::Entry entry = data_->table[table_index];
@@ -71,6 +70,7 @@ namespace ppbox
                 }
             }
             sample_time += (boost::uint64_t)entry.sample_delta * sample_index;
+            return true;
         }
 
         bool Mp4TimeToSampleTable::seek(

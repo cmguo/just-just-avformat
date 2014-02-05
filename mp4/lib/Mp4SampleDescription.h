@@ -42,7 +42,7 @@ namespace ppbox
             Mp4SampleEntry(
                 Mp4SampleEntryBoxBase * box);
 
-            ~Mp4SampleEntry();
+            virtual ~Mp4SampleEntry();
 
         public:
             Mp4EsDescription const * es_description() const
@@ -104,6 +104,8 @@ namespace ppbox
         public:
             Mp4SampleDescriptionTable(
                 Mp4Box * box);
+
+            ~Mp4SampleDescriptionTable();
 
         public:
             Mp4SampleEntry const & description(

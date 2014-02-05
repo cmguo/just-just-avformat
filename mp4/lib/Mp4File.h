@@ -26,6 +26,8 @@ namespace ppbox
             bool parse(
                 boost::system::error_code & ec);
 
+            void close();
+
         public:
             Mp4Movie & movie()
             {

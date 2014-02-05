@@ -23,6 +23,8 @@ namespace ppbox
             bool parse(
                 boost::system::error_code & ec);
 
+            void close();
+
         public:
             std::vector<Mp4Track *> & tracks()
             {
