@@ -21,6 +21,14 @@ namespace ppbox
                 Mp4Box & box);
 
         public:
+            bool merge(
+                Mp4Track const & track, 
+                boost::system::error_code & ec);
+
+            void shift(
+                boost::int64_t offset);
+
+        public:
             boost::uint32_t type() const;
 
             boost::uint32_t timescale() const;

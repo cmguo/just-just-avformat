@@ -22,6 +22,22 @@ namespace ppbox
             offset_ = data_->table[index_];
         }
 
+        bool Mp4ChunkOffseTable::merge(
+            Mp4ChunkOffseTable const & table)
+        {
+            std::vector<boost::uint32_t> & l(data_->table);
+            std::vector<boost::uint32_t> const & r(table.data_->table);
+            l.insert(l.end(), r.begin(), r.end());
+            return true;
+        }
+
+        void Mp4ChunkOffseTable::shift(
+            boost::int64_t offset)
+        {
+            std::transform(data_->table.begin(), data_->table.end(), 
+                data_->table.begin(), std::bind2nd(std::plus<boost::uint32_t>(), (boost::uint32_t)offset));
+        }
+
         bool Mp4ChunkOffseTable::next()
         {
             ++index_;
@@ -83,6 +99,32 @@ namespace ppbox
             }
             chunk_->seek(entry_.first_chunk - 1);
             samples_per_chunk_ = entry_.samples_per_chunk;
+        }
+
+        bool Mp4SampleToChunkTable::merge(
+            Mp4SampleToChunkTable const & table)
+        {
+            std::vector<Mp4SampleToChunkBox::Entry> & l(data_->table);
+            std::vector<Mp4SampleToChunkBox::Entry> const & r(table.data_->table);
+            if (r.empty()) {
+                return true;
+            }
+            if (l.empty()) {
+                l = r;
+                return true;
+            }
+            std::vector<Mp4SampleToChunkBox::Entry>::const_iterator ir(r.begin());
+            if (l.back().samples_per_chunk == r.front().samples_per_chunk
+                && l.back().sample_description_index == r.front().sample_description_index) {
+                    ++ir;
+            }
+            size_t n = l.size();
+            l.insert(l.end(), r.begin(), r.end());
+            boost::uint32_t cn(chunk_->count());
+            for (; n < l.size(); ++n) {
+                l[n].first_chunk += cn;
+            }
+            return true;
         }
 
         bool Mp4SampleToChunkTable::next()
@@ -181,6 +223,15 @@ namespace ppbox
         {
             entry_ = data_->sample_size 
                 ? data_->sample_size : data_->table[index_];
+        }
+
+        bool Mp4SampleSizeTable::merge(
+            Mp4SampleSizeTable const & table)
+        {
+            std::vector<boost::uint32_t> & l(data_->table);
+            std::vector<boost::uint32_t> const & r(table.data_->table);
+            l.insert(l.end(), r.begin(), r.end());
+            return true;
         }
 
         bool Mp4SampleSizeTable::next()

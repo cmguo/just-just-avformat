@@ -24,6 +24,21 @@ namespace ppbox
             Mp4BoxVector::find_item_as<Mp4SoundMediaHeaderBox>(box, "/mdia/minf/smhd");
         }
 
+        bool Mp4Track::merge(
+            Mp4Track const & track, 
+            boost::system::error_code & ec)
+        {
+            tkhd_->duration += track.tkhd_->duration;
+            mdhd_->duration += track.mdhd_->duration;
+            return table_.merge(track.table_, ec);
+        }
+
+        void Mp4Track::shift(
+            boost::int64_t offset)
+        {
+            table_.shift(offset);
+        }
+
         boost::uint32_t Mp4Track::type() const
         {
             return hdlr_ ? hdlr_->handler_type : 0;

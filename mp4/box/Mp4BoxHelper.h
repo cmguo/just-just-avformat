@@ -24,7 +24,7 @@ namespace ppbox
             {
                 ctx_->path.append(1, '/');
                 ctx_->path += ppbox::avbase::FourCC::to_string(h.header().type);
-                ctx_->stack.push_back(static_cast<Mp4Box *>(&h.header()));
+                ctx_->stack.push_back(&h.object());
                 ctx_->data_ends.push_back(h.data_end());
             }
 

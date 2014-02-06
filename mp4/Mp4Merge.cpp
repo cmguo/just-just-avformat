@@ -2,8 +2,7 @@
 
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/mp4/Mp4Merge.h"
-#include "ppbox/avformat/mp4/Ap4Merge.h"
-#include "ppbox/avformat/mp4/Ap4Stream.h"
+#include "ppbox/avformat/mp4/lib/Mp4Error.h"
 
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
@@ -16,8 +15,8 @@ namespace ppbox
     {
 
         bool mp4_merge_head(
-            std::istream & is,
-            std::ostream & os, 
+            std::basic_istream<boost::uint8_t> & is,
+            std::basic_ostream<boost::uint8_t> & os, 
             std::vector<ppbox::data::SegmentInfo> & segment_infos,
             boost::system::error_code & ec)
         {
@@ -31,27 +30,68 @@ namespace ppbox
                 return true;
             }
 
-            AP4_File * file = NULL;
+            Mp4File * file = NULL;
             boost::uint64_t offset = 0;
-            // 第一段数据需要拷贝出来，最后写的时候会使用这些数据
-            std::string str(segment_infos[0].head_size, 0);
-            is.read(&str[0], str.size());
-            std::istringstream iss(str);
-            AP4_Stream first_stream(iss, segment_infos[0]);
             for (boost::uint32_t i = 0; i < segment_infos.size(); ++i) {
                 is.seekg(offset, std::ios::beg);
-                AP4_Stream stream(is, segment_infos[i]);
-                if (!ap4_merge(file, i == 0 ? first_stream : stream, segment_infos[i], ec))
+                LOG_DEBUG("[mp4_merge_head] segment: " << i << "head_size: " << segment_infos[i].head_size);
+                if (!mp4_merge(file, is, segment_infos[i], ec))
                     break;
                 offset += segment_infos[i].head_size;
             }
 
             if (!ec) {
-                AP4_Stream stream(os);
-                ap4_write(file, stream, ec);
+                LOG_DEBUG("[mp4_merge_head] write");
+                mp4_write(file, os, ec);
             }
 
             return !ec;
+        }
+
+        bool mp4_merge(
+            Mp4File *& file, 
+            std::basic_istream<boost::uint8_t> & is, 
+            ppbox::data::SegmentInfo const & segment, 
+            boost::system::error_code & ec)
+        {
+            Mp4BoxIArchive ia(*is.rdbuf());
+
+            std::auto_ptr<Mp4File> file2(new Mp4File);
+            if (!file2->open(ia, ec))
+                return false;
+
+            Mp4Box * box = file2->boxes().back();
+            if (box->type != Mp4BoxType::mdat 
+                || box->head_size() + segment.size != box->byte_size() + segment.head_size) {
+                    ec = mp4_error::invalid_mp4_head;
+                    return false;
+            }
+
+            if (file == NULL) {
+                file = file2.release();
+                return file->merge_begin(ec);
+            } else {
+                boost::uint32_t flags = 0;
+                return file->merge(*file2, ec);
+            }
+        }
+
+        bool mp4_write(
+            Mp4File *& file, 
+            std::basic_ostream<boost::uint8_t> & os,
+            boost::system::error_code & ec)
+        {
+            if (!file->merge_end(ec))
+                return false;
+
+            Mp4BoxOArchive oa(*os.rdbuf());
+            file->close(oa);
+
+            delete file;
+            file = NULL;
+
+            ec.clear();
+            return true;
         }
 
     } // namespace avformat

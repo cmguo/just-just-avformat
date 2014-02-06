@@ -109,9 +109,9 @@ namespace ppbox
             }
 
             void data_size(
-                boost::uint64_t size)
+                boost::uint64_t sz)
             {
-                largesize = size + 8;
+                largesize = sz + 8;
                 size = (boost::uint32_t)largesize;
                 if (size != largesize) {
                     size = 1;

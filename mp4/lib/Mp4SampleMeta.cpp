@@ -20,6 +20,27 @@ namespace ppbox
             entry_ = data_->table[index_];
         }
 
+        bool Mp4TimeToSampleTable::merge(
+            Mp4TimeToSampleTable const & table)
+        {
+            std::vector<Mp4TimeToSampleBox::Entry> & l(data_->table);
+            std::vector<Mp4TimeToSampleBox::Entry> const & r(table.data_->table);
+            if (r.empty()) {
+                return true;
+            }
+            if (l.empty()) {
+                l = r;
+                return true;
+            }
+            if (l.back().sample_delta == r.back().sample_delta) {
+                l.back().sample_count += r.back().sample_count;
+                l.insert(l.end(), r.begin() + 1, r.end());
+            } else {
+                l.insert(l.end(), r.begin(), r.end());
+            }
+            return true;
+        }
+
         bool Mp4TimeToSampleTable::next()
         {
             value_ += entry_.sample_delta;
@@ -115,6 +136,29 @@ namespace ppbox
             entry_ = data_ ? data_->table[index_] : entry;
         }
 
+        bool Mp4CompositionOffsetTable::merge(
+            Mp4CompositionOffsetTable const & table)
+        {
+            if (data_ == NULL && table.data_ == NULL)
+                return true;
+            std::vector<Mp4CompositionOffsetBox::Entry> & l(data_->table);
+            std::vector<Mp4CompositionOffsetBox::Entry> const & r(table.data_->table);
+            if (r.empty()) {
+                return true;
+            }
+            if (l.empty()) {
+                l = r;
+                return true;
+            }
+            if (l.back().sample_offset == r.back().sample_offset) {
+                l.back().sample_count += r.back().sample_count;
+                l.insert(l.end(), r.begin() + 1, r.end());
+            } else {
+                l.insert(l.end(), r.begin(), r.end());
+            }
+            return true;
+        }
+
         bool Mp4CompositionOffsetTable::next()
         {
             if (--entry_.sample_count == 0) {
@@ -156,6 +200,22 @@ namespace ppbox
             , index_(0)
         {
             entry_ = data_ ? data_->table[index_] : 0;
+        }
+
+        bool Mp4SyncSampleTable::merge(
+            boost::uint32_t sample_count, 
+            Mp4SyncSampleTable const & table)
+        {
+            if (data_ == NULL && table.data_ == NULL)
+                return true;
+            std::vector<boost::uint32_t> & l(data_->table);
+            std::vector<boost::uint32_t> const & r(table.data_->table);
+            size_t n = l.size();
+            l.insert(l.end(), r.begin(), r.end());
+            for (; n < l.size(); ++n) {
+                l[n] += sample_count;
+            }
+            return true;
         }
 
         bool Mp4SyncSampleTable::next()

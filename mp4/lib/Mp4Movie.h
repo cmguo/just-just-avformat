@@ -19,11 +19,15 @@ namespace ppbox
             Mp4Movie(
                 Mp4Box & box);
 
+            ~Mp4Movie();
+
         public:
-            bool parse(
+            bool merge(
+                Mp4Movie const & movie, 
                 boost::system::error_code & ec);
 
-            void close();
+            void shift(
+                boost::int64_t offset);
 
         public:
             std::vector<Mp4Track *> & tracks()

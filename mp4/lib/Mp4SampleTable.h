@@ -23,6 +23,14 @@ namespace ppbox
                 Mp4Box & box);
 
         public:
+            bool merge(
+                Mp4SampleTable const & table, 
+                boost::system::error_code & ec);
+
+            void shift(
+                boost::int64_t offset);
+
+        public:
             boost::uint32_t count() const;
 
             void get(

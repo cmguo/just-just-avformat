@@ -86,7 +86,7 @@ namespace ppbox
                     if (i) {
                         c |= 0x80;
                     }
-                    n1[4 - i] = c;
+                    n1[3 - i] = c;
                     ++i;
                     if (n == 0 || i == 4) {
                         break;

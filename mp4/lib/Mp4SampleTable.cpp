@@ -23,6 +23,30 @@ namespace ppbox
             box.as<Mp4SampleTableBox>();
         }
 
+        bool Mp4SampleTable::merge(
+            Mp4SampleTable const & table, 
+            boost::system::error_code & ec)
+        {
+            bool result = stts_.merge(table.stts_)
+                && ctts_.merge(table.ctts_)
+                && stss_.merge(count(), table.stss_)
+                && stsc_.merge(table.stsc_) // must before stco_.merge, depends on stco_'s old entry count
+                && stco_.merge(table.stco_)
+                && stsz_.merge(table.stsz_);
+            if (result) {
+                ec.clear();
+            } else {
+                ec = framework::system::logic_error::out_of_range;
+            }
+            return result;
+        }
+
+        void Mp4SampleTable::shift(
+            boost::int64_t offset)
+        {
+            stco_.shift(offset);
+        }
+
         boost::uint32_t Mp4SampleTable::count() const
         {
             boost::uint32_t n = stsz_.count();

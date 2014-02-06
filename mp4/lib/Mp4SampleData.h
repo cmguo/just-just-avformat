@@ -18,6 +18,14 @@ namespace ppbox
             Mp4ChunkOffseTable(
                 Mp4Box * box);
 
+        public:
+            bool merge(
+                Mp4ChunkOffseTable const & table);
+
+            void shift(
+                boost::int64_t offset);
+
+        public:
             // next chunk
             bool next();
 
@@ -31,6 +39,12 @@ namespace ppbox
             bool limit(
                 boost::uint64_t & offset, 
                 Mp4SampleToChunkBox::Entry  & index) const;
+
+        public:
+            boost::uint32_t count() const
+            {
+                return data_->table.size();
+            }
 
             boost::uint64_t offset() const
             {
@@ -50,6 +64,11 @@ namespace ppbox
                 Mp4Box * box, 
                 Mp4ChunkOffseTable * chunk);
 
+        public:
+            bool merge(
+                Mp4SampleToChunkTable const & table);
+
+        public:
             bool next();
 
             // out sample_index2 sample index in current chunk
@@ -61,6 +80,7 @@ namespace ppbox
                 boost::uint64_t & offset, 
                 Mp4SampleToChunkBox::Entry  & index) const;
 
+        public:
             boost::uint32_t description() const
             {
                 return entry_.sample_description_index - 1;
@@ -82,6 +102,11 @@ namespace ppbox
                 Mp4Box * box, 
                 Mp4ChunkOffseTable * chunk);
 
+        public:
+            bool merge(
+                Mp4SampleSizeTable const & table);
+
+        public:
             bool next();
 
             bool seek(
@@ -92,6 +117,7 @@ namespace ppbox
                 boost::uint64_t & offset, 
                 Mp4SampleToChunkBox::Entry  & index) const;
 
+        public:
             boost::uint32_t count() const
             {
                 return data_->table.size();

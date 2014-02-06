@@ -18,6 +18,10 @@ namespace ppbox
             Mp4TimeToSampleTable(
                 Mp4Box * box);
 
+        public:
+            bool merge(
+                Mp4TimeToSampleTable const & table);
+
             bool next();
 
             bool seek(
@@ -31,6 +35,7 @@ namespace ppbox
             bool seek(
                 boost::uint32_t sample_index);
 
+        public:
             boost::uint32_t count() const;
 
             boost::uint64_t dts() const
@@ -56,11 +61,16 @@ namespace ppbox
             Mp4CompositionOffsetTable(
                 Mp4Box * box);
 
+        public:
+            bool merge(
+                Mp4CompositionOffsetTable const & table);
+
             bool next();
 
             bool seek(
                 boost::uint32_t sample_index);
 
+        public:
             boost::uint32_t cts_delta() const
             {
                 return entry_.sample_offset;
@@ -78,6 +88,11 @@ namespace ppbox
             Mp4SyncSampleTable(
                 Mp4Box * box);
 
+        public:
+            bool merge(
+                boost::uint32_t sample_count, 
+                Mp4SyncSampleTable const & table);
+
             bool next();
 
             bool sync(
@@ -86,6 +101,7 @@ namespace ppbox
             bool seek(
                 boost::uint32_t sample_index);
 
+        public:
             bool is_sync() const
             {
                 return entry_ == 1;
