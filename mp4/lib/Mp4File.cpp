@@ -118,7 +118,7 @@ namespace ppbox
             Mp4File & file, 
             boost::system::error_code & ec)
         {
-            file.movie_->shift(file.mdat_->data_size() - file.head_size());
+            file.movie_->shift((boost::int64_t)(mdat_->data_size() - file.head_size()));
             mdat_->data_size(mdat_->data_size() + file.mdat_->data_size());
             return movie_->merge(*file.movie_, ec);
         }

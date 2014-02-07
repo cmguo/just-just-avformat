@@ -113,13 +113,13 @@ namespace ppbox
                 l = r;
                 return true;
             }
-            std::vector<Mp4SampleToChunkBox::Entry>::const_iterator ir(r.begin());
+            size_t n = l.size();
             if (l.back().samples_per_chunk == r.front().samples_per_chunk
                 && l.back().sample_description_index == r.front().sample_description_index) {
-                    ++ir;
+                    l.insert(l.end(), r.begin() + 1, r.end());
+            } else {
+                l.insert(l.end(), r.begin(), r.end());
             }
-            size_t n = l.size();
-            l.insert(l.end(), r.begin(), r.end());
             boost::uint32_t cn(chunk_->count());
             for (; n < l.size(); ++n) {
                 l[n].first_chunk += cn;

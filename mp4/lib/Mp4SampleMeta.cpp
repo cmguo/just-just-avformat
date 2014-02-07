@@ -32,8 +32,8 @@ namespace ppbox
                 l = r;
                 return true;
             }
-            if (l.back().sample_delta == r.back().sample_delta) {
-                l.back().sample_count += r.back().sample_count;
+            if (l.back().sample_delta == r.front().sample_delta) {
+                l.back().sample_count += r.front().sample_count;
                 l.insert(l.end(), r.begin() + 1, r.end());
             } else {
                 l.insert(l.end(), r.begin(), r.end());
@@ -150,8 +150,8 @@ namespace ppbox
                 l = r;
                 return true;
             }
-            if (l.back().sample_offset == r.back().sample_offset) {
-                l.back().sample_count += r.back().sample_count;
+            if (l.back().sample_offset == r.front().sample_offset) {
+                l.back().sample_count += r.front().sample_count;
                 l.insert(l.end(), r.begin() + 1, r.end());
             } else {
                 l.insert(l.end(), r.begin(), r.end());

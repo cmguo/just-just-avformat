@@ -59,7 +59,6 @@ namespace ppbox
                 return *movie_;
             }
 
-        private:
             boost::uint64_t head_size() const;
 
         private:

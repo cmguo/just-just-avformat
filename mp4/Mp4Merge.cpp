@@ -34,7 +34,7 @@ namespace ppbox
             boost::uint64_t offset = 0;
             for (boost::uint32_t i = 0; i < segment_infos.size(); ++i) {
                 is.seekg(offset, std::ios::beg);
-                LOG_DEBUG("[mp4_merge_head] segment: " << i << "head_size: " << segment_infos[i].head_size);
+                LOG_DEBUG("[mp4_merge_head] segment: " << i << ", head_size: " << segment_infos[i].head_size);
                 if (!mp4_merge(file, is, segment_infos[i], ec))
                     break;
                 offset += segment_infos[i].head_size;
@@ -62,6 +62,7 @@ namespace ppbox
 
             Mp4Box * box = file2->boxes().back();
             if (box->type != Mp4BoxType::mdat 
+                || file2->head_size() != segment.head_size
                 || box->head_size() + segment.size != box->byte_size() + segment.head_size) {
                     ec = mp4_error::invalid_mp4_head;
                     return false;
@@ -81,12 +82,15 @@ namespace ppbox
             std::basic_ostream<boost::uint8_t> & os,
             boost::system::error_code & ec)
         {
+            LOG_DEBUG("[mp4_write] merge_end");
             if (!file->merge_end(ec))
                 return false;
 
+            LOG_DEBUG("[mp4_write] write");
             Mp4BoxOArchive oa(*os.rdbuf());
             file->close(oa);
 
+            LOG_DEBUG("[mp4_write] finish");
             delete file;
             file = NULL;
 
