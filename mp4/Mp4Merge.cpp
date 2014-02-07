@@ -72,7 +72,6 @@ namespace ppbox
                 file = file2.release();
                 return file->merge_begin(ec);
             } else {
-                boost::uint32_t flags = 0;
                 return file->merge(*file2, ec);
             }
         }

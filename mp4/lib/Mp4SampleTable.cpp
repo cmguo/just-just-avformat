@@ -3,6 +3,7 @@
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/mp4/lib/Mp4SampleTable.h"
 #include "ppbox/avformat/mp4/box/Mp4Box.hpp"
+#include "ppbox/avformat/mp4/box/Mp4BoxVector.hpp"
 
 namespace ppbox
 {
@@ -20,7 +21,6 @@ namespace ppbox
             , stsc_(find_item("/stsc"), &stco_)
             , stsz_(find_item("/stsz"), &stco_)
         {
-            box.as<Mp4SampleTableBox>();
         }
 
         bool Mp4SampleTable::merge(

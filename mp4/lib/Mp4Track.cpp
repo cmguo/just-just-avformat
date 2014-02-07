@@ -3,6 +3,7 @@
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/mp4/lib/Mp4Track.h"
 #include "ppbox/avformat/mp4/box/Mp4Box.hpp"
+#include "ppbox/avformat/mp4/box/Mp4BoxVector.hpp"
 
 namespace ppbox
 {

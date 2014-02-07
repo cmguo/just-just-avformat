@@ -38,7 +38,7 @@ namespace ppbox
 
             bool limit(
                 boost::uint64_t & offset, 
-                Mp4SampleToChunkBox::Entry  & index) const;
+                Mp4SampleToChunkBox::Entry & index) const;
 
         public:
             boost::uint32_t count() const

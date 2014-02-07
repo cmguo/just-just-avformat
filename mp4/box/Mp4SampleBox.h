@@ -5,6 +5,7 @@
 
 #include "ppbox/avformat/mp4/box/Mp4BoxEnum.h"
 #include "ppbox/avformat/mp4/box/Mp4FullBox.h"
+#include "ppbox/avformat/mp4/box/Mp4BoxVector.h"
 
 namespace ppbox
 {
