@@ -77,16 +77,6 @@ namespace ppbox
                 }
             }
 
-            void clear()
-            {
-                size = 0;
-            }
-
-            bool empty() const
-            {
-                return size == 0;
-            }
-
             boost::uint32_t id() const
             {
                 return type;

@@ -3,11 +3,10 @@
 #ifndef _PPBOX_AVFORMAT_MP4_LIB_MP4_TRACK_H_
 #define _PPBOX_AVFORMAT_MP4_LIB_MP4_TRACK_H_
 
-#include "ppbox/avformat/mp4/box/Mp4Box.h"
-#include "ppbox/avformat/mp4/box/Mp4BoxEnum.h"
+#include "ppbox/avformat/mp4/lib/Mp4BoxWrapper.h"
+#include "ppbox/avformat/mp4/lib/Mp4SampleTable.h"
 #include "ppbox/avformat/mp4/box/Mp4TrackBox.h"
 #include "ppbox/avformat/mp4/box/Mp4MediaBox.h"
-#include "ppbox/avformat/mp4/lib/Mp4SampleTable.h"
 
 namespace ppbox
 {
@@ -15,6 +14,7 @@ namespace ppbox
     {
 
         class Mp4Track
+            : public Mp4BoxWrapper2<Mp4TrackBox>
         {
         public:
             Mp4Track(
@@ -41,7 +41,6 @@ namespace ppbox
             }
 
         private:
-            Mp4Box & box_;
             Mp4TrackHeaderBox * tkhd_;
             Mp4MediaHeaderBox * mdhd_;
             Mp4HandlerBox * hdlr_;

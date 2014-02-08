@@ -128,10 +128,10 @@ namespace ppbox
             : Mp4BoxVector
         {
         public:
-            Mp4BoxContainer()
-            {
-                (void)&reg;
-            }
+            Mp4BoxContainer();
+
+        private:
+            Mp4BoxVectorRegister<T, type> const * reg_;
 
         private:
             static Mp4BoxVectorRegister<T, type> const reg;

@@ -18,12 +18,13 @@ namespace ppbox
             , decoder_config_(NULL)
             , decoder_info_(NULL)
         {
+            box_->descriptor.is<Mp4EsDescriptor>();
             Mp4EsDescriptor const & es_desc(box_->descriptor.as<Mp4EsDescriptor>());
             for (size_t i = 0; i < es_desc.sub_descriptors.size(); ++i) {
-                if (es_desc.sub_descriptors[i].Tag == Mp4DescriptorType::DECODER_CONFIG) {
+                if (es_desc.sub_descriptors[i].is<Mp4DecoderConfigDescriptor>()) {
                     decoder_config_ = &es_desc.sub_descriptors[i].as<Mp4DecoderConfigDescriptor>();
                     for (size_t i = 0; i < decoder_config_->sub_descriptors.size(); ++i) {
-                        if (decoder_config_->sub_descriptors[i].Tag == Mp4DescriptorType::DECODER_SPECIFIC_INFO) {
+                        if (decoder_config_->sub_descriptors[i].is<Mp4DecoderSpecificInfoDescriptor>()) {
                             decoder_info_ = &decoder_config_->sub_descriptors[i].as<Mp4DecoderSpecificInfoDescriptor>();
                         }
                     }

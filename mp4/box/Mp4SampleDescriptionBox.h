@@ -63,11 +63,11 @@ namespace ppbox
         struct Mp4SampleEntryBox
             : Mp4SampleEntryBoxBase
         {
-            static Mp4SampleEntryBoxConfig<T> obj_def;
+            static Mp4SampleEntryBoxConfig<T> const obj_def;
         };
 
         template <typename T>
-        Mp4SampleEntryBoxConfig<T> Mp4SampleEntryBox<T>::obj_def;
+        Mp4SampleEntryBoxConfig<T> const Mp4SampleEntryBox<T>::obj_def;
 
         struct Mp4PixelAspectRatioBox
             : Mp4BoxData<Mp4PixelAspectRatioBox, Mp4BoxType::pasp>

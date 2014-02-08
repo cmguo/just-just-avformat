@@ -5,6 +5,8 @@
 
 #include "ppbox/avformat/mp4/box/Mp4BoxVector.h"
 
+#include <stdio.h>
+
 namespace ppbox
 {
     namespace avformat
@@ -17,7 +19,7 @@ namespace ppbox
         {
             Mp4Box * b = find_item(path);
             if (b) {
-                return &b->as<T>();
+                return b->is<T>() ? &b->as<T>() : NULL;
             } else {
                 return NULL;
             }
@@ -29,7 +31,7 @@ namespace ppbox
         {
             Mp4Box const * b = find_item(path);
             if (b) {
-                return &b->as<T>();
+                return b->is<T>() ? &b->as<T>() : NULL;
             } else {
                 return NULL;
             }
@@ -42,7 +44,7 @@ namespace ppbox
         {
             Mp4Box * b = find_item(box, path);
             if (b) {
-                return &b->as<T>();
+                return b->is<T>() ? &b->as<T>() : NULL;
             } else {
                 return NULL;
             }
@@ -55,7 +57,7 @@ namespace ppbox
         {
             Mp4Box * b = find_item(box, path);
             if (b) {
-                return &b->as<T>();
+                return b->is<T>() ? &b->as<T>() : NULL;
             } else {
                 return NULL;
             }
@@ -68,6 +70,7 @@ namespace ppbox
         >
         Mp4BoxVectorRegister<T, type>::Mp4BoxVectorRegister()
         {
+            printf("Mp4BoxVectorRegister<T, %u>\n", type);
             Mp4BoxVector::reg_box(type, get_vec);
         }
 
@@ -86,6 +89,15 @@ namespace ppbox
             typename Mp4BoxHeader::id_type type
         >
         Mp4BoxVectorRegister<T, type> const Mp4BoxContainer<T, type>::reg;
+
+        template <
+            typename T, 
+            typename Mp4BoxHeader::id_type type
+        >
+        Mp4BoxContainer<T, type>::Mp4BoxContainer()
+        {
+            reg_ = &reg;
+        }
 
     } // namespace avformat
 } // namespace ppbox

@@ -12,13 +12,14 @@ namespace ppbox
 
         Mp4Track::Mp4Track(
             Mp4Box & box)
-            : box_(box)
+            : Mp4BoxWrapper2<Mp4TrackBox>(box)
             , tkhd_(Mp4BoxVector::find_item_as<Mp4TrackHeaderBox>(box, "/tkhd"))
             , mdhd_(Mp4BoxVector::find_item_as<Mp4MediaHeaderBox>(box, "/mdia/mdhd"))
             , hdlr_(Mp4BoxVector::find_item_as<Mp4HandlerBox>(box, "/mdia/hdlr"))
             , table_(*Mp4BoxVector::find_item(box, "/mdia/minf/stbl"))
         {
-            box.as<Mp4TrackBox>();
+            box.is<Mp4MediaBox>();
+            box.is<Mp4MediaInformationBox>();
             Mp4BoxVector::find_item_as<Mp4MediaBox>(box, "/mdia");
             Mp4BoxVector::find_item_as<Mp4MediaInformationBox>(box, "/mdia/minf");
             Mp4BoxVector::find_item_as<Mp4VideoMediaHeaderBox>(box, "/mdia/minf/vmhd");

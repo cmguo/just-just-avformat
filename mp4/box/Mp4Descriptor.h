@@ -6,6 +6,8 @@
 #include "ppbox/avformat/mp4/box/Mp4BoxTraits.h"
 #include "ppbox/avformat/mp4/box/Mp4Vector.h"
 
+#include <ppbox/avbase/object/ObjectData.h>
+
 #include <util/serialization/Serialization.h>
 #include <util/serialization/SplitMember.h>
 #include <util/serialization/NumberBits24.h>
@@ -74,7 +76,7 @@ namespace ppbox
                 typename Archive
             >
             void save(
-            Archive & ar) const
+                Archive & ar) const
             {
                 ar & Tag;
                 boost::uint32_t n = Size;
@@ -99,7 +101,7 @@ namespace ppbox
                 typename Archive
             >
             void load(
-            Archive & ar)
+                Archive & ar)
             {
                 ar & Tag;
                 boost::uint8_t c = 0x80;

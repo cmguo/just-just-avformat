@@ -4,6 +4,7 @@
 #include "ppbox/avformat/mp4/lib/Mp4File.h"
 #include "ppbox/avformat/mp4/box/Mp4FileBox.h"
 #include "ppbox/avformat/mp4/box/Mp4Box.hpp"
+#include "ppbox/avformat/mp4/box/Mp4BoxVector.hpp"
 #include "ppbox/avformat/Error.h"
 
 #include <util/buffers/NullBuffer.h>
@@ -60,6 +61,9 @@ namespace ppbox
             boost::system::error_code & ec)
         {
             boxes_.push_back(box);
+            box->is<Mp4FileTypeBox>();
+            box->is<Mp4MovieBox>();
+            box->is<Mp4MediaDataBox>();
             switch (box->type) {
                 case Mp4BoxType::ftyp:
                     ftyp_ = box;

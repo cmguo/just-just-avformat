@@ -17,14 +17,14 @@ namespace ppbox
             Mp4BoxWrapper(
                 Mp4Box & box)
                 : box_(&box)
-                , data_(&box.as<T>())
+                , data_(box.is<T>() ? &box.as<T>() : NULL)
             {
             }
 
             Mp4BoxWrapper(
                 Mp4Box * box)
                 : box_(box)
-                , data_(box ? &box->as<T>() : NULL)
+                , data_((box && box->is<T>()) ? &box->as<T>() : NULL)
             {
             }
 
