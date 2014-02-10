@@ -61,7 +61,8 @@ namespace ppbox
             CodecInfo const * codec = ppbox::avbase::type_map_find(codecs_, 
                 &CodecInfo::stream_type, stream_type);
             if (codec == NULL) {
-                TsContext const * tsc = (TsContext const *)context;                TsContext const * tsc2 = NULL;
+                TsContext const * tsc = (TsContext const *)context;
+                TsContext const * tsc2 = NULL;
                 if (tsc->regd_type) {
                     tsc2 = ppbox::avbase::type_map_find(
                         ts_contexts, 
