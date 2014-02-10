@@ -52,6 +52,17 @@ namespace ppbox
             };
         };
 
+        struct Mp4CodecType
+        {
+            enum Enum {
+                avc1 = MAKE_FOURC_TYPE('a', 'v', 'c', '1'), 
+                mp4v = MAKE_FOURC_TYPE('m', 'p', '4', 'v'), 
+                mp4a = MAKE_FOURC_TYPE('m', 'p', '4', 'a'), 
+                ac_3 = MAKE_FOURC_TYPE('a', 'c', '-', '3'), 
+                ec_3 = MAKE_FOURC_TYPE('e', 'c', '-', '3'), 
+            };
+        };
+
         struct MpegObjectType
         {
             enum {

@@ -88,7 +88,7 @@ namespace ppbox
                 type = id;
             }
 
-            boost::uint64_t head_size() const
+            boost::uint32_t head_size() const
             {
                 return (size == 1) ? 16 : 8;
             }

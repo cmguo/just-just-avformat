@@ -18,8 +18,25 @@ namespace ppbox
             Mp4Box * box)
             : Mp4BoxWrapper<Mp4ChunkOffsetBox>(box)
             , index_(0)
+            , offset_(0)
         {
-            offset_ = data_->table[index_];
+            if (!data_->table.empty())
+                offset_ = data_->table[index_];
+        }
+
+        bool Mp4ChunkOffseTable::put(
+            boost::uint64_t offset)
+        {
+            if (offset_ != offset) {
+                data_->table.push_back(offset);
+                offset_ = offset;
+            }
+            return true;
+        }
+
+        bool Mp4ChunkOffseTable::put_eos()
+        {
+            return true;
         }
 
         bool Mp4ChunkOffseTable::merge(
@@ -92,13 +109,59 @@ namespace ppbox
             , chunk_(chunk)
             , index_(0)
             , first_chunk_(0)
+            , samples_per_chunk_(0)
         {
-            entry_ = data_->table[index_];
-            if (index_ + 1 < data_->table.size()) {
-                first_chunk_ = data_->table[index_ + 1].first_chunk;
+            if (data_->table.empty()) {
+                entry_.first_chunk = 0;
+                entry_.samples_per_chunk = 0;
+                entry_.sample_description_index = 10; // make diff when compare with sample_description_index the first time
+                first_chunk_ = 0;
+            } else {
+                entry_ = data_->table[index_];
+                if (index_ + 1 < data_->table.size()) {
+                    first_chunk_ = data_->table[index_ + 1].first_chunk;
+                }
+                chunk_->seek(entry_.first_chunk - 1);
+                samples_per_chunk_ = entry_.samples_per_chunk;
             }
-            chunk_->seek(entry_.first_chunk - 1);
-            samples_per_chunk_ = entry_.samples_per_chunk;
+        }
+
+        bool Mp4SampleToChunkTable::put(
+            boost::uint32_t sample_description_index)
+        {
+            if (first_chunk_ != chunk_->count()) {
+                if (samples_per_chunk_ != entry_.samples_per_chunk 
+                    || sample_description_index != entry_.sample_description_index) {
+                        if (first_chunk_ == 0) {
+                            entry_.first_chunk = chunk_->count();
+                            entry_.sample_description_index = sample_description_index;
+                        } else if (first_chunk_ == 1) {
+                            entry_.samples_per_chunk = samples_per_chunk_;
+                        } else {
+                            ++entry_.sample_description_index;
+                            data_->table.push_back(entry_);
+                            entry_.first_chunk = first_chunk_;
+                            entry_.samples_per_chunk = samples_per_chunk_;
+                            entry_.sample_description_index = sample_description_index;
+                        }
+                }
+                first_chunk_ = chunk_->count();
+                samples_per_chunk_ = 0;
+            }
+            ++samples_per_chunk_;
+            return true;
+        }
+
+        bool Mp4SampleToChunkTable::put_eos()
+        {
+            ++entry_.sample_description_index;
+            if (samples_per_chunk_ != entry_.samples_per_chunk) {
+                data_->table.push_back(entry_);
+                entry_.first_chunk = chunk_->count();
+                entry_.samples_per_chunk = samples_per_chunk_;
+            }
+            data_->table.push_back(entry_);
+            return true;
         }
 
         bool Mp4SampleToChunkTable::merge(
@@ -222,7 +285,32 @@ namespace ppbox
             , index_(0)
         {
             entry_ = data_->sample_size 
-                ? data_->sample_size : data_->table[index_];
+                ? data_->sample_size : (data_->table.empty() ? 0 : data_->table[index_]);
+        }
+
+        bool Mp4SampleSizeTable::put(
+            boost::uint32_t size)
+        {
+            if (entry_ == 0) {
+                if (data_->sample_size = 0) {
+                    data_->sample_size = size;
+                } else if (data_->sample_size != size) {
+                    data_->table.resize(index_, data_->sample_size);
+                    data_->sample_size = 0;
+                    data_->table.push_back(size);
+                    entry_ = size;
+                }
+            } else {
+                data_->table.push_back(size);
+            }
+            chunk_->next(size);
+            ++index_;
+            return true;
+        }
+
+        bool Mp4SampleSizeTable::put_eos()
+        {
+            return true;
         }
 
         bool Mp4SampleSizeTable::merge(

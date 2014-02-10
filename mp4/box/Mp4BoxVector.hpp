@@ -5,13 +5,47 @@
 
 #include "ppbox/avformat/mp4/box/Mp4BoxVector.h"
 
-#include <stdio.h>
-
 namespace ppbox
 {
     namespace avformat
     {
 
+
+        template <typename T>
+        T * Mp4BoxVector::find_item_as(
+            boost::uint32_t type)
+        {
+            Mp4Box * b = find_item(type);
+            if (b) {
+                return b->is<T>() ? &b->as<T>() : NULL;
+            } else {
+                return NULL;
+            }
+        }
+
+        template <typename T>
+        T const * Mp4BoxVector::find_item_as(
+            boost::uint32_t type) const
+        {
+            Mp4Box const * b = find_item(type);
+            if (b) {
+                return b->is<T>() ? &b->as<T>() : NULL;
+            } else {
+                return NULL;
+            }
+        }
+
+        template <typename T>
+        T * Mp4BoxVector::create_item_as(
+            boost::uint32_t type)
+        {
+            Mp4Box * b = create_item(type);
+            if (b) {
+                return b->is<T>() ? &b->as<T>() : NULL;
+            } else {
+                return NULL;
+            }
+        }
 
         template <typename T>
         T * Mp4BoxVector::find_item_as(
@@ -38,31 +72,16 @@ namespace ppbox
         }
 
         template <typename T>
-        T * Mp4BoxVector::find_item_as(
-            Mp4Box & box, 
+        T * Mp4BoxVector::create_item_as(
             std::string const & path)
         {
-            Mp4Box * b = find_item(box, path);
+            Mp4Box * b = create_item(path);
             if (b) {
                 return b->is<T>() ? &b->as<T>() : NULL;
             } else {
                 return NULL;
             }
         }
-
-        template <typename T>
-        T const * Mp4BoxVector::find_item_as(
-            Mp4Box const & box, 
-            std::string const & path)
-        {
-            Mp4Box * b = find_item(box, path);
-            if (b) {
-                return b->is<T>() ? &b->as<T>() : NULL;
-            } else {
-                return NULL;
-            }
-        }
-
 
         template <
             typename T, 
@@ -70,7 +89,6 @@ namespace ppbox
         >
         Mp4BoxVectorRegister<T, type>::Mp4BoxVectorRegister()
         {
-            printf("Mp4BoxVectorRegister<T, %u>\n", type);
             Mp4BoxVector::reg_box(type, get_vec);
         }
 

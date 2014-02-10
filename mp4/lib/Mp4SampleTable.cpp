@@ -23,6 +23,53 @@ namespace ppbox
         {
         }
 
+        Mp4SampleTable::Mp4SampleTable(
+            Mp4Box & box, 
+            create_new_t)
+            : Mp4BoxWrapper2<Mp4SampleTableBox>(box)
+            , stsd_(create_item("/stsd"))
+            , stts_(create_item("/stts"))
+            , ctts_(NULL)
+            , stss_(NULL)
+            , stco_(create_item("/stco"))
+            , stsc_(create_item("/stsc"), &stco_)
+            , stsz_(create_item("/stsz"), &stco_)
+        {
+        }
+
+        bool Mp4SampleTable::put(
+            ppbox::avbase::Sample const & sample)
+        {
+            if (ctts_.null() && sample.cts_delta) {
+                ctts_.assign(create_item("/ctts"));
+            }
+            if (stss_.null() && (sample.flags & sample.f_sync) == 0) {
+                stss_.assign(create_item("/stss"));
+            }
+            std::cout << "sample track = " << sample.itrack 
+                << ", dts = " << sample.dts 
+                << ", cts_delta = " << sample.cts_delta 
+                << ", size = " << sample.size 
+                << ", offset = " << sample.time
+                << std::endl;
+            return stts_.put(sample.dts)
+                && ctts_.put(sample.cts_delta)
+                && stss_.put(sample.flags & sample.f_sync)
+                && stco_.put(sample.time)
+                && stsc_.put(0) // sample_description_index
+                && stsz_.put(sample.size);
+        }
+
+        bool Mp4SampleTable::put_eos()
+        {
+            return stts_.put_eos()
+                && ctts_.put_eos()
+                && stss_.put_eos()
+                && stco_.put_eos()
+                && stsc_.put_eos()
+                && stsz_.put_eos();
+        }
+
         bool Mp4SampleTable::merge(
             Mp4SampleTable const & table, 
             boost::system::error_code & ec)
@@ -64,6 +111,12 @@ namespace ppbox
             sample.duration = stts_.duration();
             sample.time = stco_.offset(); // use time for offset
             sample.size = stsz_.size();
+            std::cout << "sample track = " << sample.itrack 
+                << ", dts = " << sample.dts 
+                << ", cts_delta = " << sample.cts_delta 
+                << ", size = " << sample.size 
+                << ", offset = " << sample.time
+                << std::endl;
         }
 
         bool Mp4SampleTable::next(

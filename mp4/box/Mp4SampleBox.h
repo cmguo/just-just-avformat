@@ -123,6 +123,8 @@ namespace ppbox
             std::vector<boost::uint32_t> table;
 
             Mp4SampleSizeBox()
+                : sample_size(0)
+                , sample_count(0)
             {
             }
 

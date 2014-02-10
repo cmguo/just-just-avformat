@@ -20,6 +20,11 @@ namespace ppbox
             Mp4Track(
                 Mp4Box & box);
 
+            Mp4Track(
+                Mp4Box & box, 
+                boost::uint32_t id, 
+                boost::uint32_t type); // create new
+
         public:
             bool merge(
                 Mp4Track const & track, 
@@ -29,11 +34,27 @@ namespace ppbox
                 boost::int64_t offset);
 
         public:
-            boost::uint32_t type() const;
+            boost::uint32_t width() const;
+
+            boost::uint32_t height() const;
 
             boost::uint32_t timescale() const;
 
             boost::uint64_t duration() const;
+
+            boost::uint32_t type() const;
+
+            void width(
+                boost::uint32_t n);
+
+            void height(
+                boost::uint32_t n);
+
+            void timescale(
+                boost::uint32_t n);
+
+            void duration(
+                boost::uint64_t n);
 
             Mp4SampleTable & sample_table()
             {
@@ -44,6 +65,8 @@ namespace ppbox
             Mp4TrackHeaderBox * tkhd_;
             Mp4MediaHeaderBox * mdhd_;
             Mp4HandlerBox * hdlr_;
+            Mp4VideoMediaHeaderBox * vmhd_;
+            Mp4SoundMediaHeaderBox * smhd_;
             Mp4SampleTable table_;
         };
 

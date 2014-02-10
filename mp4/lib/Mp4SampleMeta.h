@@ -12,16 +12,23 @@ namespace ppbox
     {
 
         class Mp4TimeToSampleTable
-            : Mp4BoxWrapper<Mp4TimeToSampleBox>
+            : public Mp4BoxWrapper<Mp4TimeToSampleBox>
         {
         public:
             Mp4TimeToSampleTable(
                 Mp4Box * box);
 
         public:
+            bool put(
+                boost::uint64_t dts);
+
+            bool put_eos();
+
+        public:
             bool merge(
                 Mp4TimeToSampleTable const & table);
 
+        public:
             bool next();
 
             bool seek(
@@ -55,16 +62,23 @@ namespace ppbox
         };
 
         class Mp4CompositionOffsetTable
-            : Mp4BoxWrapper<Mp4CompositionOffsetBox>
+            : public Mp4BoxWrapper<Mp4CompositionOffsetBox>
         {
         public:
             Mp4CompositionOffsetTable(
                 Mp4Box * box);
 
         public:
+            bool put(
+                boost::uint32_t cts_delta);
+
+            bool put_eos();
+
+        public:
             bool merge(
                 Mp4CompositionOffsetTable const & table);
 
+        public:
             bool next();
 
             bool seek(
@@ -82,17 +96,24 @@ namespace ppbox
         };
 
         class Mp4SyncSampleTable
-            : Mp4BoxWrapper<Mp4SyncSampleBox>
+            : public Mp4BoxWrapper<Mp4SyncSampleBox>
         {
         public:
             Mp4SyncSampleTable(
                 Mp4Box * box);
 
         public:
+            bool put(
+                bool is_sync);
+
+            bool put_eos();
+
+        public:
             bool merge(
                 boost::uint32_t sample_count, 
                 Mp4SyncSampleTable const & table);
 
+        public:
             bool next();
 
             bool sync(

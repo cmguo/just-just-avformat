@@ -22,6 +22,16 @@ namespace ppbox
             Mp4SampleTable(
                 Mp4Box & box);
 
+            Mp4SampleTable(
+                Mp4Box & box, 
+                create_new_t);
+
+        public:
+            bool put(
+                ppbox::avbase::Sample const & sample);
+
+            bool put_eos();
+
         public:
             bool merge(
                 Mp4SampleTable const & table, 
@@ -31,8 +41,29 @@ namespace ppbox
                 boost::int64_t offset);
 
         public:
+            bool next(
+                boost::system::error_code & ec);
+
+            bool seek(
+                boost::uint64_t & time, // dts
+                boost::system::error_code & ec);
+
+            void rewind();
+
+            bool limit(
+                boost::uint64_t offset, 
+                boost::uint64_t & time, // dts
+                boost::system::error_code & ec) const;
+
+        public:
             boost::uint32_t count() const;
 
+            Mp4SampleDescriptionTable & description_table()
+            {
+                return stsd_;
+            }
+
+        public:
             void get(
                 ppbox::avbase::Sample & sample) const;
 
@@ -51,7 +82,7 @@ namespace ppbox
                 return stss_.is_sync();
             }
 
-            Mp4SampleEntry const & description() const
+            Mp4SampleEntry const * description() const
             {
                 return stsd_.description(stsc_.description());
             }
@@ -60,21 +91,6 @@ namespace ppbox
             {
                 return stco_.offset();
             }
-
-        public:
-            bool next(
-                boost::system::error_code & ec);
-
-            bool seek(
-                boost::uint64_t & time, // dts
-                boost::system::error_code & ec);
-
-            void rewind();
-
-            bool limit(
-                boost::uint64_t offset, 
-                boost::uint64_t & time, // dts
-                boost::system::error_code & ec) const;
 
         private:
             Mp4SampleDescriptionTable stsd_;

@@ -12,18 +12,47 @@ namespace ppbox
     namespace avformat
     {
 
+        struct Mp4FourCCVector
+            : std::vector<boost::uint32_t>
+        {
+            SERIALIZATION_SPLIT_MEMBER();
+
+            template <typename Archive>
+            void load(
+                Archive & ar)
+            {
+                Mp4BoxContext * ctx = (Mp4BoxContext *)ar.context();
+                std::streampos data_end = ctx->data_ends.back();
+                size_t n = data_end - ar.tellg();
+                resize(n / sizeof(boost::uint32_t));
+                if (!empty())
+                    ar >> make_array((char *)&at(0), size() * 4);
+            }
+
+            template <typename Archive>
+            void save(
+                Archive & ar) const
+            {
+                if (!empty())
+                    ar << make_array((char const *)&at(0), size() * 4);
+            }
+        };
+
         struct Mp4FileTypeBox
             : Mp4BoxData<Mp4FileTypeBox, Mp4BoxType::ftyp>
         {
-            boost::uint32_t major_brand;
+            union {
+                boost::uint32_t major_brand;
+                char major_brand_str[4];
+            };
             boost::uint32_t minor_version;
-            Mp4Vector<boost::uint32_t> compatible_brands;
+            Mp4FourCCVector compatible_brands;
 
             template <typename Archive>
             void serialize(
                 Archive & ar)
             {
-                ar & major_brand
+                ar & make_array(major_brand_str)
                     & minor_version
                     & compatible_brands;
             }

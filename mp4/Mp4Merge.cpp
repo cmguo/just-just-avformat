@@ -57,7 +57,7 @@ namespace ppbox
             Mp4BoxIArchive ia(*is.rdbuf());
 
             std::auto_ptr<Mp4File> file2(new Mp4File);
-            if (!file2->open(ia, ec))
+            if (!file2->load(ia, ec))
                 return false;
 
             Mp4Box * box = file2->boxes().back();
@@ -87,7 +87,7 @@ namespace ppbox
 
             LOG_DEBUG("[mp4_write] write");
             Mp4BoxOArchive oa(*os.rdbuf());
-            file->close(oa);
+            file->save(oa);
 
             LOG_DEBUG("[mp4_write] finish");
             delete file;

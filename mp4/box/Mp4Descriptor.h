@@ -37,6 +37,13 @@ namespace ppbox
             boost::uint8_t Tag;
             boost::uint32_t Size;
 
+            Mp4DescriptorHeader(
+                boost::uint8_t tag = 0)
+                : Tag(tag)
+                , Size(0)
+            {
+            }
+
             boost::uint8_t id() const
             {
                 return Tag;
@@ -320,6 +327,20 @@ namespace ppbox
                 Archive & ar)
             {
                 ar & Info;
+            }
+        };
+
+        struct Mp4EsDescriptionBox
+            : Mp4FullBoxData<Mp4EsDescriptionBox, Mp4BoxType::esds>
+        {
+            Mp4Descriptor descriptor;
+
+            template <typename Archive>
+            void serialize(
+                Archive & ar)
+            {
+                Mp4FullBoxHeader::serialize(ar);
+                ar & descriptor;
             }
         };
 

@@ -21,6 +21,13 @@ namespace ppbox
             {
             }
 
+            Mp4Vector & operator=(
+                std::vector<_Ty> const & v)
+            {
+                (std::vector<_Ty> &)(*this) = v;
+                return *this;
+            }
+
             SERIALIZATION_SPLIT_MEMBER();
 
             template <typename Archive>

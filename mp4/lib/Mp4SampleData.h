@@ -11,12 +11,18 @@ namespace ppbox
     namespace avformat
     {
 
-        struct Mp4ChunkOffseTable
-            : Mp4BoxWrapper<Mp4ChunkOffsetBox>
+        class Mp4ChunkOffseTable
+            : public Mp4BoxWrapper<Mp4ChunkOffsetBox>
         {
         public:
             Mp4ChunkOffseTable(
                 Mp4Box * box);
+
+        public:
+            bool put(
+                boost::uint64_t offset);
+
+            bool put_eos();
 
         public:
             bool merge(
@@ -56,13 +62,19 @@ namespace ppbox
             boost::uint64_t offset_;
         };
 
-        struct Mp4SampleToChunkTable
-            : Mp4BoxWrapper<Mp4SampleToChunkBox>
+        class Mp4SampleToChunkTable
+            : public Mp4BoxWrapper<Mp4SampleToChunkBox>
         {
         public:
             Mp4SampleToChunkTable(
                 Mp4Box * box, 
                 Mp4ChunkOffseTable * chunk);
+
+        public:
+            bool put(
+                boost::uint32_t sample_description_index);
+
+            bool put_eos();
 
         public:
             bool merge(
@@ -94,13 +106,19 @@ namespace ppbox
             boost::uint32_t first_chunk_; // next first_chunk_
         };
 
-        struct Mp4SampleSizeTable
-            : Mp4BoxWrapper<Mp4SampleSizeBox>
+        class Mp4SampleSizeTable
+            : public Mp4BoxWrapper<Mp4SampleSizeBox>
         {
         public:
             Mp4SampleSizeTable(
                 Mp4Box * box, 
                 Mp4ChunkOffseTable * chunk);
+
+        public:
+            bool put(
+                boost::uint32_t size);
+
+            bool put_eos();
 
         public:
             bool merge(

@@ -20,17 +20,21 @@ namespace ppbox
 
         public:
             bool open(
-                Mp4BoxIArchive & ia, 
-                boost::system::error_code & ec);
-
-            bool open(
                 Mp4Box * box, 
                 boost::system::error_code & ec);
 
-            void close(
-                Mp4BoxOArchive & oa);
+            bool create(
+                boost::system::error_code & ec);
 
             void close();
+
+        public:
+            bool load(
+                Mp4BoxIArchive & ia, 
+                boost::system::error_code & ec);
+
+            void save(
+                Mp4BoxOArchive & oa);
 
         public:
             bool merge_begin(

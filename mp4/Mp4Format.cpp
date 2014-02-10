@@ -3,10 +3,12 @@
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/mp4/Mp4Format.h"
 #include "ppbox/avformat/mp4/box/Mp4BoxEnum.h"
+#include "ppbox/avformat/Error.h"
 
 #include <ppbox/avcodec/avc/AvcFormatType.h>
 #include <ppbox/avcodec/aac/AacFormatType.h>
 
+#include <ppbox/avbase/TypeMap.h>
 using namespace ppbox::avcodec;
 
 namespace ppbox
@@ -15,21 +17,43 @@ namespace ppbox
     {
 
         CodecInfo const Mp4Format::codecs_[] = {
-            {StreamType::VIDE,  MpegObjectType::MPEG4_VISUAL,           VideoSubType::MP4V, StreamFormatType::none,     0}, 
-            {StreamType::VIDE,  MAKE_FOURC_TYPE('a', 'v', 'c', '1'),    VideoSubType::AVC1, AvcFormatType::packet,      0}, 
-            {StreamType::AUDI,  MpegObjectType::MPEG4_AUDIO,            AudioSubType::MP4A, AacFormatType::raw,         0}, 
-            {StreamType::AUDI,  MpegObjectType::MPEG2_AAC_AUDIO_MAIN,   AudioSubType::MP4A, AacFormatType::raw,         0}, 
-            {StreamType::AUDI,  MpegObjectType::MPEG2_AAC_AUDIO_LC,     AudioSubType::MP4A, AacFormatType::raw,         0}, 
-            {StreamType::AUDI,  MpegObjectType::MPEG2_AAC_AUDIO_SSRP,   AudioSubType::MP4A, AacFormatType::raw,         0}, 
-            {StreamType::AUDI,  MpegObjectType::MPEG2_PART3_AUDIO,      AudioSubType::MP2A, StreamFormatType::none,     0}, 
-            {StreamType::AUDI,  MpegObjectType::MPEG1_AUDIO,            AudioSubType::MP1A, StreamFormatType::none,     0}, 
-            {StreamType::AUDI,  MAKE_FOURC_TYPE('a', 'c', '-', '3'),    AudioSubType::AC3,  StreamFormatType::none,     0}, 
-            {StreamType::AUDI,  MAKE_FOURC_TYPE('e', 'c', '-', '3'),    AudioSubType::EAC3, StreamFormatType::none,     0}, 
+            {StreamType::VIDE,  Mp4CodecType::avc1, VideoSubType::AVC1, AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::mp4v, VideoSubType::MP4V, StreamFormatType::none, 0,  (void*)MpegObjectType::MPEG4_VISUAL}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     0,  (void*)MpegObjectType::MPEG4_AUDIO}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     0,  (void*)MpegObjectType::MPEG2_AAC_AUDIO_MAIN}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     0,  (void*)MpegObjectType::MPEG2_AAC_AUDIO_LC}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     0,  (void*)MpegObjectType::MPEG2_AAC_AUDIO_SSRP}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP2A, StreamFormatType::none, 0,  (void*)MpegObjectType::MPEG2_PART3_AUDIO}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP1A, StreamFormatType::none, 0,  (void*)MpegObjectType::MPEG1_AUDIO}, 
+            {StreamType::AUDI,  Mp4CodecType::ac_3, AudioSubType::AC3,  StreamFormatType::none, 0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::AUDI,  Mp4CodecType::ec_3, AudioSubType::EAC3, StreamFormatType::none, 0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
         };
 
         Mp4Format::Mp4Format()
             : Format(codecs_, sizeof(codecs_) / sizeof(CodecInfo))
         {
+        }
+
+        CodecInfo const * Mp4Format::codec_from_stream(
+            boost::uint32_t category, 
+            boost::uint32_t stream_type, 
+            void const * context, 
+            boost::system::error_code & ec)
+        {
+            if (context && (intptr_t)context < 256) {
+                CodecInfo const * codec = ppbox::avbase::type_map_find(
+                    codecs_, ncodec_, 
+                    &CodecInfo::category, category, 
+                    &CodecInfo::stream_type, stream_type, 
+                    &CodecInfo::context, context);
+                if (codec == codecs_ + sizeof(codecs_) / sizeof(codecs_[0])) {
+                    ec = error::codec_not_support;
+                } else {
+                    ec.clear();
+                }
+                return codec;
+            }
+            return Format::codec_from_stream(category, stream_type, context, ec);
         }
 
     } // namespace avformat

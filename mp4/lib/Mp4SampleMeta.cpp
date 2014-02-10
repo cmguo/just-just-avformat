@@ -17,7 +17,39 @@ namespace ppbox
             , index_(0)
             , value_(0)
         {
-            entry_ = data_->table[index_];
+            if (data_->table.empty()) {
+                entry_.sample_count = 0;
+                entry_.sample_delta = 0;
+            } else {
+                entry_ = data_->table[index_];
+            }
+        }
+
+        bool Mp4TimeToSampleTable::put(
+            boost::uint64_t dts)
+        {
+            if (dts < value_)
+                return false;
+            if (entry_.sample_count == 0) {
+            } else if (entry_.sample_count == 1) {
+                entry_.sample_delta = (boost::uint32_t)(dts - value_);
+            } else if (value_ + entry_.sample_delta == dts) {
+            } else {
+                --entry_.sample_count;
+                data_->table.push_back(entry_);
+                entry_.sample_count = 1;
+                entry_.sample_delta = (boost::uint32_t)(dts - value_);
+            }
+            value_ = dts;
+            ++entry_.sample_count;
+            return true;
+        }
+
+        bool Mp4TimeToSampleTable::put_eos()
+        {
+            data_->table.push_back(entry_);
+            entry_.sample_count = 0;
+            return true;
         }
 
         bool Mp4TimeToSampleTable::merge(
@@ -133,7 +165,28 @@ namespace ppbox
             , index_(0)
         {
             Mp4CompositionOffsetBox::Entry entry = {0, 0};
-            entry_ = data_ ? data_->table[index_] : entry;
+            entry_ = (data_ && !data_->table.empty()) ? data_->table[index_] : entry;
+        }
+
+        bool Mp4CompositionOffsetTable::put(
+            boost::uint32_t cts_delta)
+        {
+            if (entry_.sample_count == 0) {
+                entry_.sample_offset = cts_delta;
+            } else if (entry_.sample_offset != cts_delta) {
+                data_->table.push_back(entry_);
+                entry_.sample_count = 0;
+                entry_.sample_offset = cts_delta;
+            }
+            ++entry_.sample_count;
+            return true;
+        }
+
+        bool Mp4CompositionOffsetTable::put_eos()
+        {
+            if (data_)
+                data_->table.push_back(entry_);
+            return true;
         }
 
         bool Mp4CompositionOffsetTable::merge(
@@ -199,7 +252,30 @@ namespace ppbox
             : Mp4BoxWrapper<Mp4SyncSampleBox>(box)
             , index_(0)
         {
-            entry_ = data_ ? data_->table[index_] : 0;
+            entry_ = data_ ? data_->table[index_] : 1;
+        }
+
+        bool Mp4SyncSampleTable::put(
+            bool is_sync)
+        {
+            if (data_ == NULL && is_sync) {
+                ++index_;
+                ++entry_;
+                return true;
+            }
+            while (data_->table.size() < index_) {
+                data_->table.push_back((boost::uint32_t)data_->table.size() + 1);
+            }
+            if (is_sync) {
+                data_->table.push_back(entry_);
+            }
+            ++entry_;
+            return true;
+        }
+
+        bool Mp4SyncSampleTable::put_eos()
+        {
+            return true;
         }
 
         bool Mp4SyncSampleTable::merge(
@@ -220,6 +296,8 @@ namespace ppbox
 
         bool Mp4SyncSampleTable::next()
         {
+            if (!data_)
+                return true;
             if (--entry_ == 0) {
                 if (++index_ < data_->table.size()) {
                     entry_ = data_->table[index_] - data_->table[index_ - 1];

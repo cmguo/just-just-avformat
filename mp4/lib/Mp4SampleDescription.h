@@ -6,6 +6,7 @@
 #include "ppbox/avformat/mp4/lib/Mp4BoxWrapper.h"
 #include "ppbox/avformat/mp4/box/Mp4SampleBox.h"
 #include "ppbox/avformat/mp4/box/Mp4SampleDescriptionBox.h"
+#include "ppbox/avformat/mp4/box/Mp4Descriptor.h"
 
 namespace ppbox
 {
@@ -13,12 +14,27 @@ namespace ppbox
     {
 
         class Mp4EsDescription
+            : public Mp4BoxWrapper<Mp4EsDescriptionBox>
         {
         public:
             Mp4EsDescription(
-                Mp4EsDescriptionBox const * box);
+                Mp4Box * box);
+
+            Mp4EsDescription(
+                Mp4Box * box, 
+                create_new_t);
 
         public:
+            Mp4DecoderConfigDescriptor * decoder_config()
+            {
+                return decoder_config_;
+            }
+
+            Mp4DecoderSpecificInfoDescriptor * decoder_info()
+            {
+                return decoder_info_;
+            }
+
             Mp4DecoderConfigDescriptor const * decoder_config() const
             {
                 return decoder_config_;
@@ -30,13 +46,12 @@ namespace ppbox
             }
 
         private:
-            Mp4EsDescriptionBox const * box_;
-            Mp4DecoderConfigDescriptor const * decoder_config_;
-            Mp4DecoderSpecificInfoDescriptor const * decoder_info_;
+            Mp4DecoderConfigDescriptor * decoder_config_;
+            Mp4DecoderSpecificInfoDescriptor * decoder_info_;
         };
 
         class Mp4SampleEntry
-            : public Mp4BoxVectorWrapper<Mp4SampleEntryBoxBase>
+            : public Mp4BoxVectorWrapper
         {
         public:
             Mp4SampleEntry(
@@ -50,8 +65,10 @@ namespace ppbox
                 return es_description_;
             }
 
+            Mp4EsDescription * create_es_description();
+
         protected:
-            Mp4EsDescription const * es_description_;
+            Mp4EsDescription * es_description_;
         };
 
         class Mp4VisualSampleEntry
@@ -99,7 +116,7 @@ namespace ppbox
         };
 
         class Mp4SampleDescriptionTable
-            : public Mp4BoxWrapper<Mp4SampleDescriptionBox>
+            : public Mp4BoxWrapper2<Mp4SampleDescriptionBox>
         {
         public:
             Mp4SampleDescriptionTable(
@@ -108,11 +125,14 @@ namespace ppbox
             ~Mp4SampleDescriptionTable();
 
         public:
-            Mp4SampleEntry const & description(
+            Mp4SampleEntry const * description(
                 boost::uint32_t index) const
             {
-                return *entries_.at(index);
+                return entries_.at(index);
             }
+
+            Mp4SampleEntry * create_description(
+                boost::uint32_t codec);
 
         private:
             template <typename T>

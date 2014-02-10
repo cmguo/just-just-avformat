@@ -28,6 +28,68 @@ namespace ppbox
         }
 
         bool Mp4File::open(
+            Mp4Box * box, 
+            boost::system::error_code & ec)
+        {
+            boxes_.push_back(box);
+            box->is<Mp4FileTypeBox>();
+            box->is<Mp4MovieBox>();
+            box->is<Mp4MediaDataBox>();
+            switch (box->type) {
+                case Mp4BoxType::ftyp:
+                    ftyp_ = box;
+                    ftyp_->as<Mp4FileTypeBox>();
+                    break;
+                case Mp4BoxType::moov:
+                    moov_ = box;
+                    movie_ = new Mp4Movie(*moov_);
+                    break;
+                case Mp4BoxType::mdat:
+                    mdat_ = box;
+                    mdat_->as<Mp4MediaDataBox>();
+                    break;
+            }
+            ec.clear();
+            if (ftyp_ && moov_ && mdat_)
+                return true;
+            return false;
+        }
+
+        bool Mp4File::create(
+            boost::system::error_code & ec)
+        {
+            Mp4FileTypeBox file_type;
+            file_type.major_brand = MAKE_FOURC_TYPE('i', 's', 'o', 'm');
+            file_type.minor_version = 1;
+            file_type.compatible_brands.push_back(file_type.major_brand);
+            file_type.compatible_brands.push_back(file_type.major_brand);
+            ftyp_ = new Mp4Box(file_type);
+            boxes_.push_back(ftyp_);
+            mdat_ = new Mp4Box(Mp4MediaDataBox());
+            boxes_.push_back(mdat_);
+            moov_ = new Mp4Box(Mp4MovieBox());
+            boxes_.push_back(moov_);
+            movie_ = new Mp4Movie(*moov_, create_new_t());
+            ec.clear();
+            return true;
+        }
+
+        void Mp4File::close()
+        {
+            if (movie_) {
+                delete movie_;
+                movie_ = NULL;
+            }
+            mdat_ = NULL;
+            moov_ = NULL;
+            ftyp_ = NULL;
+            for (size_t i = 0; i < boxes_.size(); ++i) {
+                delete boxes_[i];
+            }
+            boxes_.clear();
+        }
+
+        bool Mp4File::load(
             Mp4BoxIArchive & ia, 
             boost::system::error_code & ec)
         {
@@ -56,58 +118,19 @@ namespace ppbox
             return false;
         }
 
-        bool Mp4File::open(
-            Mp4Box * box, 
-            boost::system::error_code & ec)
-        {
-            boxes_.push_back(box);
-            box->is<Mp4FileTypeBox>();
-            box->is<Mp4MovieBox>();
-            box->is<Mp4MediaDataBox>();
-            switch (box->type) {
-                case Mp4BoxType::ftyp:
-                    ftyp_ = box;
-                    ftyp_->as<Mp4FileTypeBox>();
-                    break;
-                case Mp4BoxType::moov:
-                    moov_ = box;
-                    movie_ = new Mp4Movie(*moov_);
-                    break;
-                case Mp4BoxType::mdat:
-                    mdat_ = box;
-                    mdat_->as<Mp4MediaDataBox>();
-                    break;
-            }
-            ec.clear();
-            if (ftyp_ && moov_ && mdat_)
-                return true;
-            return false;
-        }
-
-        void Mp4File::close(
+        void Mp4File::save(
             Mp4BoxOArchive & oa)
         {
             Mp4BoxContext ctx;
             oa.context(&ctx);
             for (size_t i = 0; i < boxes_.size(); ++i) {
-                oa << *boxes_[i];
+                if (boxes_[i]->type == Mp4BoxType::mdat) {
+                    oa << (Mp4BoxHeader const &)*boxes_[i];
+                    break;
+                } else {
+                    oa << *boxes_[i];
+                }
             }
-            close();
-        }
-
-        void Mp4File::close()
-        {
-            if (movie_) {
-                delete movie_;
-                movie_ = NULL;
-            }
-            mdat_ = NULL;
-            moov_ = NULL;
-            ftyp_ = NULL;
-            for (size_t i = 0; i < boxes_.size(); ++i) {
-                delete boxes_[i];
-            }
-            boxes_.clear();
         }
 
         bool Mp4File::merge_begin(

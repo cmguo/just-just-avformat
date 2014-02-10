@@ -19,7 +19,15 @@ namespace ppbox
             Mp4Movie(
                 Mp4Box & box);
 
+            Mp4Movie(
+                Mp4Box & box, 
+                create_new_t);
+
             ~Mp4Movie();
+
+        public:
+            Mp4Track * create_track(
+                boost::uint32_t type);
 
         public:
             bool merge(
@@ -37,16 +45,22 @@ namespace ppbox
 
             boost::uint32_t time_scale() const
             {
-                return header_->timescale;
+                return mvhd_->timescale;
             }
 
             boost::uint64_t duration() const
             {
-                return header_->duration;
+                return mvhd_->duration;
             }
 
+            void time_scale(
+                boost::uint32_t n);
+
+            void duration(
+                boost::uint64_t n);
+
         private:
-            Mp4MovieHeaderBox * header_;
+            Mp4MovieHeaderBox * mvhd_;
             std::vector<Mp4Track *> tracks_;
         };
 

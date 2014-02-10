@@ -6,7 +6,6 @@
 #include "ppbox/avformat/mp4/box/Mp4BoxEnum.h"
 #include "ppbox/avformat/mp4/box/Mp4FullBox.h"
 #include "ppbox/avformat/mp4/box/Mp4BoxVector.h"
-#include "ppbox/avformat/mp4/box/Mp4Descriptor.h"
 
 namespace ppbox
 {
@@ -160,6 +159,7 @@ namespace ppbox
                 , pre_defined3(0)
             {
                 pre_defined2[0] = pre_defined2[1] = pre_defined2[2] = 0;
+                memset(compressorname, 0, sizeof(compressorname));
             }
 
             template <typename Archive>
@@ -256,20 +256,6 @@ namespace ppbox
                 Mp4FullBoxHeader::serialize(ar);
                 ar & entry_count;
                 Mp4BoxVector::serialize(ar);
-            }
-        };
-
-        struct Mp4EsDescriptionBox
-            : Mp4FullBoxData<Mp4EsDescriptionBox, Mp4BoxType::esds>
-        {
-            Mp4Descriptor descriptor;
-
-            template <typename Archive>
-            void serialize(
-                Archive & ar)
-            {
-                Mp4FullBoxHeader::serialize(ar);
-                ar & descriptor;
             }
         };
 

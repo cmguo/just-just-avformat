@@ -2,6 +2,7 @@
 
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/mp4/box/Mp4SampleDescriptionBox.h"
+#include "ppbox/avformat/mp4/box/Mp4BoxEnum.h"
 
 namespace ppbox
 {
@@ -9,14 +10,14 @@ namespace ppbox
     {
 
         Mp4Box::id_type const Mp4VisualSampleEntryBox::codings[] = {
-            MAKE_FOURC_TYPE('a', 'v', 'c', '1'), 
+            Mp4CodecType::avc1, 
             0, 
         };
 
         Mp4Box::id_type const Mp4AudioSampleEntryBox::codings[] = {
-            MAKE_FOURC_TYPE('m', 'p', '4', 'a'), 
-            MAKE_FOURC_TYPE('a', 'c', '-', '3'), 
-            MAKE_FOURC_TYPE('e', 'c', '-', '3'), 
+            Mp4CodecType::mp4a, 
+            Mp4CodecType::ac_3, 
+            Mp4CodecType::ec_3, 
             0, 
         };
 
