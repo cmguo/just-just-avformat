@@ -79,6 +79,14 @@ namespace ppbox
             Mp4VisualSampleEntry(
                 Mp4Box & box);
 
+        public:
+            void width(
+                boost::uint16_t n);
+
+            void height(
+                boost::uint16_t n);
+
+        public:
             boost::uint16_t width() const
             {
                 return data().width;
@@ -99,9 +107,19 @@ namespace ppbox
                 Mp4Box & box);
 
         public:
-            boost::uint32_t sample_rate() const
+            void channel_count(
+                boost::uint16_t n);
+
+            void sample_size(
+                boost::uint16_t n);
+
+            void sample_rate(
+                boost::uint32_t n);
+
+        public:
+            boost::uint16_t channel_count() const
             {
-                return data().samplerate;
+                return data().channelcount;
             }
 
             boost::uint16_t sample_size() const
@@ -109,9 +127,9 @@ namespace ppbox
                 return data().samplesize;
             }
 
-            boost::uint16_t channel_count() const
+            boost::uint32_t sample_rate() const
             {
-                return data().channelcount;
+                return data().samplerate >> 16;
             }
         };
 

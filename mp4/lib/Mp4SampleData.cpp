@@ -27,10 +27,10 @@ namespace ppbox
         bool Mp4ChunkOffseTable::put(
             boost::uint64_t offset)
         {
-            if (offset_ != offset) {
+            //if (offset_ != offset) {
                 data_->table.push_back(offset);
                 offset_ = offset;
-            }
+            //}
             return true;
         }
 
@@ -154,6 +154,9 @@ namespace ppbox
 
         bool Mp4SampleToChunkTable::put_eos()
         {
+            if (first_chunk_ == 1) {
+                entry_.samples_per_chunk = samples_per_chunk_;
+            }
             ++entry_.sample_description_index;
             if (samples_per_chunk_ != entry_.samples_per_chunk) {
                 data_->table.push_back(entry_);

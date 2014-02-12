@@ -26,6 +26,9 @@ namespace ppbox
             bool create(
                 boost::system::error_code & ec);
 
+            bool fixup(
+                boost::system::error_code & ec);
+
             void close();
 
         public:

@@ -46,12 +46,12 @@ namespace ppbox
             if (stss_.null() && (sample.flags & sample.f_sync) == 0) {
                 stss_.assign(create_item("/stss"));
             }
-            std::cout << "sample track = " << sample.itrack 
-                << ", dts = " << sample.dts 
-                << ", cts_delta = " << sample.cts_delta 
-                << ", size = " << sample.size 
-                << ", offset = " << sample.time
-                << std::endl;
+            //std::cout << "sample track = " << sample.itrack 
+            //    << ", dts = " << sample.dts 
+            //    << ", cts_delta = " << sample.cts_delta 
+            //    << ", size = " << sample.size 
+            //    << ", offset = " << sample.time
+            //    << std::endl;
             return stts_.put(sample.dts)
                 && ctts_.put(sample.cts_delta)
                 && stss_.put(sample.flags & sample.f_sync)
@@ -102,6 +102,11 @@ namespace ppbox
             return n;
         }
 
+        boost::uint64_t Mp4SampleTable::duration() const
+        {
+            return stts_.total_duration();
+        }
+
         void Mp4SampleTable::get(
             ppbox::avbase::Sample & sample) const
         {
@@ -111,12 +116,12 @@ namespace ppbox
             sample.duration = stts_.duration();
             sample.time = stco_.offset(); // use time for offset
             sample.size = stsz_.size();
-            std::cout << "sample track = " << sample.itrack 
-                << ", dts = " << sample.dts 
-                << ", cts_delta = " << sample.cts_delta 
-                << ", size = " << sample.size 
-                << ", offset = " << sample.time
-                << std::endl;
+            //std::cout << "sample track = " << sample.itrack 
+            //    << ", dts = " << sample.dts 
+            //    << ", cts_delta = " << sample.cts_delta 
+            //    << ", size = " << sample.size 
+            //    << ", offset = " << sample.time
+            //    << std::endl;
         }
 
         bool Mp4SampleTable::next(

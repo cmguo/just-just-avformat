@@ -24,6 +24,7 @@ namespace ppbox
                 ES                      = 0x03, 
                 DECODER_CONFIG          = 0x04, 
                 DECODER_SPECIFIC_INFO   = 0x05, 
+                SL_CONFIG               = 0x06, 
                 ES_ID_INC               = 0x0E, 
                 ES_ID_REF               = 0x0F, 
             };
@@ -97,7 +98,7 @@ namespace ppbox
                     }
                     n1[3 - i] = c;
                     ++i;
-                    if (n == 0 || i == 4) {
+                    if (i == 4) {
                         break;
                     }
                 }
@@ -210,7 +211,8 @@ namespace ppbox
             Mp4Vector<Mp4Descriptor> sub_descriptors;
 
             Mp4EsDescriptor()
-                : byte(0)
+                : ES_ID(0)
+                , byte(0)
                 , DependsOn(0)
                 , OcrEsId(0)
             {
@@ -280,7 +282,9 @@ namespace ppbox
 #ifdef BOOST_BIG_ENDIAN
                     boost::uint8_t StreamType : 6;
                     boost::uint8_t StreamPriority : 1;
+                    boost::uint8_t unused : 1;
 #else
+                    boost::uint8_t unused : 1;
                     boost::uint8_t StreamPriority : 1;
                     boost::uint8_t StreamType : 6;
 #endif
@@ -294,7 +298,7 @@ namespace ppbox
 
             Mp4DecoderConfigDescriptor()
                 : ObjectTypeIndication(0)
-                , byte(0)
+                , byte(1) // unused = 1
                 , MaxBitrate(0)
                 , AverageBitrate(0)
             {
@@ -327,6 +331,24 @@ namespace ppbox
                 Archive & ar)
             {
                 ar & Info;
+            }
+        };
+
+        struct Mp4SLConfigDescriptor
+            : Mp4DescriptorData<Mp4SLConfigDescriptor, Mp4DescriptorType::SL_CONFIG>
+        {
+            boost::uint8_t Predefined;
+
+            Mp4SLConfigDescriptor()
+                : Predefined(2)
+            {
+            }
+
+            template <typename Archive>
+            void serialize(
+                Archive & ar)
+            {
+                ar & Predefined;
             }
         };
 

@@ -62,7 +62,7 @@ namespace ppbox
             file_type.major_brand = MAKE_FOURC_TYPE('i', 's', 'o', 'm');
             file_type.minor_version = 1;
             file_type.compatible_brands.push_back(file_type.major_brand);
-            file_type.compatible_brands.push_back(file_type.major_brand);
+            file_type.compatible_brands.push_back(MAKE_FOURC_TYPE('a', 'v', 'c', '1'));
             ftyp_ = new Mp4Box(file_type);
             boxes_.push_back(ftyp_);
             mdat_ = new Mp4Box(Mp4MediaDataBox());
@@ -72,6 +72,12 @@ namespace ppbox
             movie_ = new Mp4Movie(*moov_, create_new_t());
             ec.clear();
             return true;
+        }
+
+        bool Mp4File::fixup(
+            boost::system::error_code & ec)
+        {
+            return movie_->fixup(ec);
         }
 
         void Mp4File::close()

@@ -26,6 +26,11 @@ namespace ppbox
                 boost::uint32_t type); // create new
 
         public:
+            bool fixup(
+                boost::uint32_t timescale, 
+                boost::system::error_code & ec);
+
+        public:
             bool merge(
                 Mp4Track const & track, 
                 boost::system::error_code & ec);
@@ -34,6 +39,8 @@ namespace ppbox
                 boost::int64_t offset);
 
         public:
+            boost::uint64_t track_duration() const;
+
             boost::uint32_t width() const;
 
             boost::uint32_t height() const;

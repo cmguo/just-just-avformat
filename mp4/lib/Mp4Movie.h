@@ -29,6 +29,9 @@ namespace ppbox
             Mp4Track * create_track(
                 boost::uint32_t type);
 
+            bool fixup(
+                boost::system::error_code & ec);
+
         public:
             bool merge(
                 Mp4Movie const & movie, 

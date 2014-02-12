@@ -58,6 +58,8 @@ namespace ppbox
         public:
             boost::uint32_t count() const;
 
+            boost::uint64_t duration() const;
+
             Mp4SampleDescriptionTable & description_table()
             {
                 return stsd_;

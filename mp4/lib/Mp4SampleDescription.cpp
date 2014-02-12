@@ -41,9 +41,10 @@ namespace ppbox
         {
             data_->descriptor.reset(Mp4EsDescriptor());
             Mp4EsDescriptor & es_desc(data_->descriptor.as<Mp4EsDescriptor>());
-            es_desc.sub_descriptors.push_back(Mp4Descriptor(Mp4DecoderConfigDescriptor::static_id));
+            es_desc.sub_descriptors.push_back(Mp4DecoderConfigDescriptor());
+            es_desc.sub_descriptors.push_back(Mp4SLConfigDescriptor());
             decoder_config_ = &es_desc.sub_descriptors[0].as<Mp4DecoderConfigDescriptor>();
-            decoder_config_->sub_descriptors.push_back(Mp4Descriptor(Mp4DecoderSpecificInfoDescriptor::static_id));
+            decoder_config_->sub_descriptors.push_back(Mp4DecoderSpecificInfoDescriptor());
             decoder_info_ = &decoder_config_->sub_descriptors[0].as<Mp4DecoderSpecificInfoDescriptor>();
         }
 
@@ -81,6 +82,17 @@ namespace ppbox
         {
         }
 
+        void Mp4VisualSampleEntry::width(
+            boost::uint16_t n)
+        {
+            data_->width = n;
+        }
+
+        void Mp4VisualSampleEntry::height(
+            boost::uint16_t n)
+        {
+            data_->height = n;
+        }
 
         // Mp4AudioSampleEntry
 
@@ -89,6 +101,24 @@ namespace ppbox
             : Mp4BoxWrapper<Mp4AudioSampleEntryBox>(box)
             , Mp4SampleEntry(&data())
         {
+        }
+
+        void Mp4AudioSampleEntry::channel_count(
+            boost::uint16_t n)
+        {
+            data_->channelcount = n;
+        }
+
+        void Mp4AudioSampleEntry::sample_size(
+            boost::uint16_t n)
+        {
+            data_->samplesize = n;
+        }
+
+        void Mp4AudioSampleEntry::sample_rate(
+            boost::uint32_t n)
+        {
+            data_->samplerate = n << 16;
         }
 
         // Mp4SampleDescriptionTable

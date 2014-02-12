@@ -45,6 +45,9 @@ namespace ppbox
         public:
             boost::uint32_t count() const;
 
+            boost::uint64_t total_duration() const;
+
+        public:
             boost::uint64_t dts() const
             {
                 return value_;

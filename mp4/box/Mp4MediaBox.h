@@ -27,18 +27,19 @@ namespace ppbox
             boost::uint64_t duration;
             // bit(1) pad = 0;
             // unsigned int(5)[3] language;
-            union {
-                struct {
-#ifdef BOOST_BIG_ENDIAN
-                    boost::uint16_t language : 15;
-                    boost::uint16_t pad : 1;
-#else
-                    boost::uint16_t pad : 1;
-                    boost::uint16_t language : 15;
-#endif
-                };
-                boost::uint16_t word;
-            };
+//            union {
+//                struct {
+//#ifdef BOOST_BIG_ENDIAN
+//                    boost::uint16_t language : 15;
+//                    boost::uint16_t pad : 1;
+//#else
+//                    boost::uint16_t pad : 1;
+//                    boost::uint16_t language : 15;
+//#endif
+//                };
+//                boost::uint16_t word;
+//            };
+            char language[3];
             boost::uint16_t pre_defined; // = 0;
 
             Mp4MediaHeaderBox()
@@ -46,9 +47,9 @@ namespace ppbox
                 , modification_time(0)
                 , timescale(0)
                 , duration(0)
-                , word(0)
                 , pre_defined(0)
             {
+                language[0] = language[1] = language[2] = 0;
             }
 
             template <typename Archive>
@@ -73,7 +74,15 @@ namespace ppbox
                     modification_time = modification_time32;
                     duration = duration32;
                 }
+                boost::uint16_t word = 0;
+                for (int i = 0; i < 3; ++i) {
+                    word = (word << 5) | ((language[i] - 0x60) & 0x1f);
+                }
                 ar & word;
+                for (int i = 0; i < 3; ++i) {
+                    language[2 - i] = (word & 0x1f) + 0x60;
+                    word >>= 5;
+                }
                 ar & pre_defined;
             }
         };

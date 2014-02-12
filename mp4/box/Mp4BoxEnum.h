@@ -66,6 +66,7 @@ namespace ppbox
         struct MpegObjectType
         {
             enum {
+                FORBIDDEN            = 0x00, 
                 MPEG4_SYSTEM         = 0x01, 
                 MPEG4_SYSTEM_COR     = 0x02, 
                 MPEG4_TEXT           = 0x08, 
@@ -84,6 +85,22 @@ namespace ppbox
                 MPEG1_VISUAL         = 0x6A, 
                 MPEG1_AUDIO          = 0x6B, 
                 JPEG                 = 0x6C, 
+            };
+        };
+
+        struct MpegStreamType
+        {
+            enum {
+                FORBIDDEN           = 0x00, 
+                OBJECT_DESCRIPTOR   = 0x01, 
+                CLOCK_REFERENCE     = 0x02, 
+                SCENE_DESCRIPTION   = 0x03, 
+                VISUAL              = 0x04, 
+                AUDIO               = 0x05, 
+                MPEG7               = 0x06, 
+                IPMP                = 0x07, 
+                OBJECT_CONTENT_INFO = 0x08, 
+                MPEGJ               = 0x09, 
             };
         };
 

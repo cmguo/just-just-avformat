@@ -57,9 +57,21 @@ namespace ppbox
             // media
             mdhd_->creation_time = tkhd_->creation_time;
             mdhd_->modification_time = mdhd_->creation_time;
-            //mdhd_->language = 
+            mdhd_->language[0] = 'u'; // "und"
+            mdhd_->language[1] = 'n';
+            mdhd_->language[2] = 'd';
             if (vmhd_)
                 vmhd_->flags = 1;
+        }
+
+        bool Mp4Track::fixup(
+            boost::uint32_t timescale, 
+            boost::system::error_code & ec)
+        {
+            if (mdhd_->duration == 0)
+                mdhd_->duration = table_.duration();
+            tkhd_->duration = mdhd_->duration * timescale / mdhd_->timescale;
+            return true;
         }
 
         bool Mp4Track::merge(
@@ -77,14 +89,19 @@ namespace ppbox
             table_.shift(offset);
         }
 
+        boost::uint64_t Mp4Track::track_duration() const
+        {
+            return tkhd_ ? tkhd_->duration: 0;
+        }
+
         boost::uint32_t Mp4Track::width() const
         {
-            return tkhd_ ? tkhd_->width : 0;
+            return tkhd_ ? (tkhd_->width >> 16) : 0;
         }
 
         boost::uint32_t Mp4Track::height() const
         {
-            return tkhd_ ? tkhd_->height : 0;
+            return tkhd_ ? (tkhd_->height >> 16) : 0;
         }
 
         boost::uint32_t Mp4Track::timescale() const
@@ -105,25 +122,25 @@ namespace ppbox
         void Mp4Track::width(
             boost::uint32_t n)
         {
-            tkhd_->width  = n;
+            tkhd_->width = n << 16;
         }
 
         void Mp4Track::height(
             boost::uint32_t n)
         {
-            tkhd_->height  = n;
+            tkhd_->height = n << 16;
         }
 
         void Mp4Track::timescale(
             boost::uint32_t n)
         {
-            mdhd_->timescale  = n;
+            mdhd_->timescale = n;
         }
 
         void Mp4Track::duration(
             boost::uint64_t n)
         {
-            mdhd_->duration  = n;
+            mdhd_->duration = n;
         }
 
     } // namespace avformat

@@ -19,14 +19,14 @@ namespace ppbox
         CodecInfo const Mp4Format::codecs_[] = {
             {StreamType::VIDE,  Mp4CodecType::avc1, VideoSubType::AVC1, AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
             {StreamType::VIDE,  Mp4CodecType::mp4v, VideoSubType::MP4V, StreamFormatType::none, 0,  (void*)MpegObjectType::MPEG4_VISUAL}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     0,  (void*)MpegObjectType::MPEG4_AUDIO}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     0,  (void*)MpegObjectType::MPEG2_AAC_AUDIO_MAIN}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     0,  (void*)MpegObjectType::MPEG2_AAC_AUDIO_LC}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     0,  (void*)MpegObjectType::MPEG2_AAC_AUDIO_SSRP}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP2A, StreamFormatType::none, 0,  (void*)MpegObjectType::MPEG2_PART3_AUDIO}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP1A, StreamFormatType::none, 0,  (void*)MpegObjectType::MPEG1_AUDIO}, 
-            {StreamType::AUDI,  Mp4CodecType::ac_3, AudioSubType::AC3,  StreamFormatType::none, 0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
-            {StreamType::AUDI,  Mp4CodecType::ec_3, AudioSubType::EAC3, StreamFormatType::none, 0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     1,  (void*)MpegObjectType::MPEG4_AUDIO}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     1,  (void*)MpegObjectType::MPEG2_AAC_AUDIO_MAIN}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     1,  (void*)MpegObjectType::MPEG2_AAC_AUDIO_LC}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     1,  (void*)MpegObjectType::MPEG2_AAC_AUDIO_SSRP}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP2A, StreamFormatType::none, 1,  (void*)MpegObjectType::MPEG2_PART3_AUDIO}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP1A, StreamFormatType::none, 1,  (void*)MpegObjectType::MPEG1_AUDIO}, 
+            {StreamType::AUDI,  Mp4CodecType::ac_3, AudioSubType::AC3,  StreamFormatType::none, 1,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::AUDI,  Mp4CodecType::ec_3, AudioSubType::EAC3, StreamFormatType::none, 1,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
         };
 
         Mp4Format::Mp4Format()
@@ -46,7 +46,7 @@ namespace ppbox
                     &CodecInfo::category, category, 
                     &CodecInfo::stream_type, stream_type, 
                     &CodecInfo::context, context);
-                if (codec == codecs_ + sizeof(codecs_) / sizeof(codecs_[0])) {
+                if (codec == NULL) {
                     ec = error::codec_not_support;
                 } else {
                     ec.clear();

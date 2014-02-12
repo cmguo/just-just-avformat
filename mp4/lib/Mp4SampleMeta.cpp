@@ -157,6 +157,14 @@ namespace ppbox
             return n;
         }
 
+        boost::uint64_t Mp4TimeToSampleTable::total_duration() const
+        {
+            boost::uint64_t n = 0;
+            for (size_t i = 0; i < data_->table.size(); ++i)
+                n += (boost::uint64_t)data_->table[i].sample_delta * data_->table[i].sample_count;
+            return n;
+        }
+
         // Mp4CompositionOffsetTable
 
         Mp4CompositionOffsetTable::Mp4CompositionOffsetTable(

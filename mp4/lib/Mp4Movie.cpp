@@ -57,7 +57,25 @@ namespace ppbox
             boost::uint32_t type)
         {
             Mp4Track * track = new Mp4Track(*create_item("/trak"), mvhd_->next_track_ID++, type);
+            tracks_.push_back(track);
             return track;
+        }
+
+        bool Mp4Movie::fixup(
+            boost::system::error_code & ec)
+        {
+            for (size_t i = 0; i < tracks_.size(); ++i) {
+                if (!tracks_[i]->fixup(mvhd_->timescale, ec))
+                    return false;
+            }
+            if (mvhd_->duration == 0) {
+                for (size_t i = 0; i < tracks_.size(); ++i) {
+                    boost::uint64_t d = tracks_[i]->track_duration();
+                    if (mvhd_->duration < d)
+                        mvhd_->duration = d;
+                }
+            }
+            return true;
         }
 
         bool Mp4Movie::merge(
