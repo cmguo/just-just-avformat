@@ -27,10 +27,10 @@ namespace ppbox
         bool Mp4ChunkOffseTable::put(
             boost::uint64_t offset)
         {
-            //if (offset_ != offset) {
+            if (offset_ != offset) {
                 data_->table.push_back(offset);
                 offset_ = offset;
-            //}
+            }
             return true;
         }
 

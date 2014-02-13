@@ -25,8 +25,8 @@ namespace ppbox
             {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     1,  (void*)MpegObjectType::MPEG2_AAC_AUDIO_SSRP}, 
             {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP2A, StreamFormatType::none, 1,  (void*)MpegObjectType::MPEG2_PART3_AUDIO}, 
             {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP1A, StreamFormatType::none, 1,  (void*)MpegObjectType::MPEG1_AUDIO}, 
-            {StreamType::AUDI,  Mp4CodecType::ac_3, AudioSubType::AC3,  StreamFormatType::none, 1,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
-            {StreamType::AUDI,  Mp4CodecType::ec_3, AudioSubType::EAC3, StreamFormatType::none, 1,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::AUDI,  Mp4CodecType::ac_3, AudioSubType::AC3,  StreamFormatType::none, 1,  0}, 
+            {StreamType::AUDI,  Mp4CodecType::ec_3, AudioSubType::EAC3, StreamFormatType::none, 1,  0}, 
         };
 
         Mp4Format::Mp4Format()

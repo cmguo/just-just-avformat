@@ -102,7 +102,8 @@ namespace ppbox
                     return false;
                 }
             }
-            sample_index += (boost::uint32_t)(sample_time / entry_.sample_delta);
+            if (sample_time)
+                sample_index += (boost::uint32_t)(sample_time / entry_.sample_delta);
             return true;
         }
 

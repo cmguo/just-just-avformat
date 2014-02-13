@@ -226,7 +226,7 @@ namespace ppbox
                         Element & elem2 = elem.items[i];
                         ar_.seekg(elem2.offset + elem2.head_size(), std::ios::beg);
                         (EBML_ElementHeader &)v = elem2;
-                        _Traits::load(ar_, v.value(), elem2.Size);
+                        _Traits::load(ar_, v.value(), (size_t)elem2.Size);
                     }
                 }
             }
