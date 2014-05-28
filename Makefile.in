@@ -54,7 +54,6 @@ PROJECT_LINK_FLAGS		:= $(PROJECT_LINK_FLAGS)
 
 PROJECT_DEPENDS			:= \
 				/ppbox/avcodec \
-				/bento4 \
 				/thirdparty/ffmpeg-1.2 \
 				$(PROJECT_DEPENDS)
 
