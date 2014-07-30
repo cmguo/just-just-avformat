@@ -5,7 +5,7 @@
 
 #include "ppbox/avformat/flv/FlvArchive.h"
 
-#include <util/protocol/rtmp/RmtpAmfType.h>
+#include <util/protocol/rtmp/RtmpAmfType.h>
 
 namespace ppbox
 {
