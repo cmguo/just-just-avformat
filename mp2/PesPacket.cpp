@@ -1,7 +1,7 @@
 // PesPacket.cpp
 
 #include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/ts/PesPacket.h"
+#include "ppbox/avformat/mp2/PesPacket.h"
 
 namespace ppbox
 {

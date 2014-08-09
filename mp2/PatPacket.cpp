@@ -1,8 +1,8 @@
 // PatPacket.cpp
 
 #include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/ts/PatPacket.h"
-#include "ppbox/avformat/ts/TsEnum.h"
+#include "ppbox/avformat/mp2/PatPacket.h"
+#include "ppbox/avformat/mp2/Mp2Enum.h"
 
 namespace ppbox
 {

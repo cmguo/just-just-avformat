@@ -63,7 +63,7 @@ namespace ppbox
             };
         };
 
-        struct MpegObjectType
+        struct Mp4ObjectType
         {
             enum {
                 FORBIDDEN            = 0x00, 
@@ -88,7 +88,7 @@ namespace ppbox
             };
         };
 
-        struct MpegStreamType
+        struct Mp4StreamType
         {
             enum {
                 FORBIDDEN           = 0x00, 

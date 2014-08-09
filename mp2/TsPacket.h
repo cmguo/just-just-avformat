@@ -1,9 +1,10 @@
 // TsPacket.h
 
-#ifndef _PPBOX_AVFORMAT_TS_TS_PACKET_H_
-#define _PPBOX_AVFORMAT_TS_TS_PACKET_H_
+#ifndef _PPBOX_AVFORMAT_MP2_TS_PACKET_H_
+#define _PPBOX_AVFORMAT_MP2_TS_PACKET_H_
 
-#include "ppbox/avformat/ts/TsArchive.h"
+#include "ppbox/avformat/mp2/Mp2Archive.h"
+#include "ppbox/avformat/mp2/Mp2Enum.h"
 
 namespace ppbox
 {
@@ -230,7 +231,7 @@ namespace ppbox
                     ar & adaptation;
             }
 
-            static boost::uint32_t const TIME_SCALE = 90000;
+            static boost::uint32_t const TIME_SCALE = Mp2::TIME_SCALE;
             static boost::uint8_t const PACKET_SIZE = 188;
             static boost::uint8_t const PAYLOAD_SIZE = PACKET_SIZE - 4;
 
@@ -239,4 +240,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_TS_TS_PACKET_H_
+#endif // _PPBOX_AVFORMAT_MP2_TS_PACKET_H_

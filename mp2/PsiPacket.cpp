@@ -1,7 +1,7 @@
 // PsiFormat.cpp
 
 #include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/ts/PsiPacket.h"
+#include "ppbox/avformat/mp2/PsiPacket.h"
 
 namespace ppbox
 {

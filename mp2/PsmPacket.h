@@ -1,12 +1,11 @@
 // PsmPacket.h
 
-#ifndef _PPBOX_AVFORMAT_TS_PSM_PACKET_H_
-#define _PPBOX_AVFORMAT_TS_PSM_PACKET_H_
+#ifndef _PPBOX_AVFORMAT_MP2_PSM_PACKET_H_
+#define _PPBOX_AVFORMAT_MP2_PSM_PACKET_H_
 
-#include "ppbox/avformat/ts/TsArchive.h"
-#include "ppbox/avformat/ts/TsVector.h"
-#include "ppbox/avformat/ts/TsDescriptor.h"
-#include "ppbox/avformat/ts/CrcBuffer.h"
+#include "ppbox/avformat/mp2/Mp2Vector.h"
+#include "ppbox/avformat/mp2/Mp2Descriptor.h"
+#include "ppbox/avformat/mp2/Mp2CrcBuffer.h"
 
 namespace ppbox
 {
@@ -18,7 +17,7 @@ namespace ppbox
             boost::uint8_t stream_type;
             boost::uint8_t elementary_stream_id;
             boost::uint16_t elementary_stream_info_length;
-            TsVector<TsDescriptor> descriptor;
+            Mp2Vector<Mp2Descriptor> descriptor;
 
             PsmStream()
                 : stream_type(0)
@@ -77,10 +76,10 @@ namespace ppbox
             };
 
             boost::uint16_t program_stream_info_length;
-            TsVector<TsDescriptor> descriptor;
+            Mp2Vector<Mp2Descriptor> descriptor;
 
             boost::uint16_t elementary_stream_map_length;
-            TsVector<PsmStream> elems;
+            Mp2Vector<PsmStream> elems;
 
             boost::uint32_t crc;
 
@@ -126,4 +125,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_TS_PSM_PACKET_H_
+#endif // _PPBOX_AVFORMAT_MP2_PSM_PACKET_H_

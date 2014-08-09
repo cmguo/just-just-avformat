@@ -1,10 +1,9 @@
 // PsiPacket.h
 
-#ifndef _PPBOX_AVFORMAT_TS_PSI_PACKET_H_
-#define _PPBOX_AVFORMAT_TS_PSI_PACKET_H_
+#ifndef _PPBOX_AVFORMAT_MP2_PSI_PACKET_H_
+#define _PPBOX_AVFORMAT_MP2_PSI_PACKET_H_
 
-#include "ppbox/avformat/ts/TsPacket.h"
-#include "ppbox/avformat/ts/CrcBuffer.h"
+#include "ppbox/avformat/mp2/TsPacket.h"
 
 #include <boost/asio/buffer.hpp>
 
@@ -93,4 +92,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_TS_PSI_PACKET_H_
+#endif // _PPBOX_AVFORMAT_MP2_PSI_PACKET_H_

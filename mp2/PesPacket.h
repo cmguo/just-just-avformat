@@ -1,10 +1,9 @@
-// PesFormat.h
+// PesPacket.h
 
-#ifndef _PPBOX_AVFORMAT_TS_PES_FORMAT_H_
-#define _PPBOX_AVFORMAT_TS_PES_FORMAT_H_
+#ifndef _PPBOX_AVFORMAT_MP2_PES_PACKET_H_
+#define _PPBOX_AVFORMAT_MP2_PES_PACKET_H_
 
-#include "ppbox/avformat/ts/TsFormat.h"
-#include "ppbox/avformat/ts/TsEnum.h"
+#include "ppbox/avformat/mp2/Mp2Enum.h"
 
 #include <util/serialization/SplitMember.h>
 
@@ -249,7 +248,7 @@ namespace ppbox
 
             bool special() const
             {
-                return stream_id == TsStreamId::private_stream_2;
+                return stream_id == Mp2StreamId::private_stream_2;
             }
 
             boost::uint32_t payload_length() const
@@ -280,7 +279,7 @@ namespace ppbox
                 Archive & ar, 
                 boost::mpl::true_)
             {
-                util::serialization::save_collection(ar, stuffing_byte, stuffing_byte.size());
+                ar & framework::container::make_array(&stuffing_byte.front(), stuffing_byte.size());
             }
 
             template <typename Archive>
@@ -294,7 +293,7 @@ namespace ppbox
                 if (packet_start_code_prefix1 != 0 
                     || packet_start_code_prefix2 != 0
                     || packet_start_code_prefix3 != 1
-                    || stream_id < TsStreamId::program_stream_map) {
+                    || stream_id < Mp2StreamId::program_stream_map) {
                         ar.fail();
                         return;
                 }
@@ -382,14 +381,14 @@ namespace ppbox
 
             bool special() const
             {
-                return stream_id == TsStreamId::program_stream_map
-                    || stream_id == TsStreamId::padding_stream
-                    || stream_id == TsStreamId::private_stream_2
-                    || stream_id == TsStreamId::ecm_stream
-                    || stream_id == TsStreamId::emm_stream
-                    || stream_id == TsStreamId::dsmcc_stream
-                    || stream_id == TsStreamId::itu_t_rec_h_222_1_E
-                    || stream_id == TsStreamId::program_stream_directory;
+                return stream_id == Mp2StreamId::program_stream_map
+                    || stream_id == Mp2StreamId::padding_stream
+                    || stream_id == Mp2StreamId::private_stream_2
+                    || stream_id == Mp2StreamId::ecm_stream
+                    || stream_id == Mp2StreamId::emm_stream
+                    || stream_id == Mp2StreamId::dsmcc_stream
+                    || stream_id == Mp2StreamId::itu_t_rec_h_222_1_E
+                    || stream_id == Mp2StreamId::program_stream_directory;
             }
 
             boost::uint32_t payload_length() const
@@ -429,7 +428,7 @@ namespace ppbox
                 if (packet_start_code_prefix1 != 0 
                     || packet_start_code_prefix2 != 0
                     || packet_start_code_prefix3 != 1
-                    || stream_id < TsStreamId::program_stream_map) {
+                    || stream_id < Mp2StreamId::program_stream_map) {
                         ar.fail();
                         return;
                 }
@@ -472,4 +471,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_TS_PES_FORMAT_H_
+#endif // _PPBOX_AVFORMAT_MP2_PES_PACKET_H_

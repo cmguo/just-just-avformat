@@ -1,7 +1,7 @@
-// TsFormat.h
+// Mp2Format.h
 
-#ifndef _PPBOX_AVFORMAT_TS_TS_FORMAT_H_
-#define _PPBOX_AVFORMAT_TS_TS_FORMAT_H_
+#ifndef _PPBOX_AVFORMAT_MP2_MP2_FORMAT_H_
+#define _PPBOX_AVFORMAT_MP2_MP2_FORMAT_H_
 
 #include "ppbox/avformat/Format.h"
 
@@ -10,18 +10,18 @@ namespace ppbox
     namespace avformat
     {
 
-        struct TsContext
+        struct Mp2Context
         {
             boost::uint8_t hdmv_type;
             boost::uint8_t misc_type;
             boost::uint32_t regd_type;
         };
 
-        class TsFormat
+        class Mp2Format
             : public Format
         {
         public:
-            TsFormat();
+            Mp2Format();
 
         public:
             virtual  CodecInfo const * codec_from_stream(
@@ -34,10 +34,10 @@ namespace ppbox
             static CodecInfo const codecs_[];
         };
 
-        PPBOX_REGISTER_FORMAT("ts", TsFormat);
+        PPBOX_REGISTER_FORMAT("ts", Mp2Format);
 
     } // namespace avformat
 } // namespace ppbox
 
 
-#endif // _PPBOX_AVFORMAT_TS_TS_FORMAT_H_
+#endif // _PPBOX_AVFORMAT_MP2_MP2_FORMAT_H_

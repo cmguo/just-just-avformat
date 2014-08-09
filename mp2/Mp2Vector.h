@@ -1,9 +1,9 @@
-// TsVector.h
+// Mp2Vector.h
 
-#ifndef _PPBOX_AVFORMAT_TS_TS_VECTOR_H_
-#define _PPBOX_AVFORMAT_TS_TS_VECTOR_H_
+#ifndef _PPBOX_AVFORMAT_MP2_MP2_VECTOR_H_
+#define _PPBOX_AVFORMAT_MP2_MP2_VECTOR_H_
 
-#include "ppbox/avformat/ts/TsArchive.h"
+#include "ppbox/avformat/mp2/Mp2Archive.h"
 
 namespace ppbox
 {
@@ -13,10 +13,10 @@ namespace ppbox
         // size == 0 时，由数组元素自己检查是否已经到最后一个，此时ar置为failed状态，TsVector会将流回退到最后成功的位置。
 
         template <typename _Ty>
-        struct TsVector
+        struct Mp2Vector
             : std::vector<_Ty>
         {
-            TsVector()
+            Mp2Vector()
                 : has_suffer_(false)
                 , size_(0)
             {
@@ -81,8 +81,8 @@ namespace ppbox
             {
                 boost::uint64_t byte_cur = (boost::uint64_t)ar.tellp();
                 boost::uint64_t byte_end = byte_cur + size_;
-                typename TsVector::const_iterator iter = this->begin();
-                typename TsVector::const_iterator iend = this->end();
+                typename Mp2Vector::const_iterator iter = this->begin();
+                typename Mp2Vector::const_iterator iend = this->end();
                 while (size_ == 0 || byte_cur < byte_end && iter != iend) {
                     ar << *iter;
                     if (ar) {
@@ -110,4 +110,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_TS_TS_VECTOR_H_
+#endif // _PPBOX_AVFORMAT_MP2_MP2_VECTOR_H_

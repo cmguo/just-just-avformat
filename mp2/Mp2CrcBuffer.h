@@ -1,7 +1,7 @@
-// CrcBuffer.h
+// Mp2CrcBuffer.h
 
-#ifndef _PPBOX_AVFORMAT_TS_CRC_BUFFER_H_
-#define _PPBOX_AVFORMAT_TS_CRC_BUFFER_H_
+#ifndef _PPBOX_AVFORMAT_MP2_MP2_CRC_BUFFER_H_
+#define _PPBOX_AVFORMAT_MP2_MP2_CRC_BUFFER_H_
 
 #include <streambuf>
 
@@ -10,10 +10,10 @@ namespace ppbox
     namespace avformat
     {
 
-        class PsiCrc
+        class Mp2Crc
         {
         public:
-            PsiCrc();
+            Mp2Crc();
 
         public:
             boost::uint32_t value() const
@@ -36,11 +36,11 @@ namespace ppbox
             boost::uint32_t crc_;
         };
 
-        class CrcBuffer
+        class Mp2CrcBuffer
             : public std::basic_streambuf<boost::uint8_t>
         {
         public:
-            CrcBuffer(
+            Mp2CrcBuffer(
                 std::basic_streambuf<boost::uint8_t> & next_layer);
 
         public:
@@ -84,14 +84,14 @@ namespace ppbox
             std::basic_streambuf<boost::uint8_t> & next_layer_;
             char_type byte_in_;
             char_type byte_out_;
-            PsiCrc crc_in_;
-            PsiCrc crc_out_;
+            Mp2Crc crc_in_;
+            Mp2Crc crc_out_;
         };
 
         template <typename Archive>
-        struct AutoCrc
+        struct Mp2AutoCrc
         {
-            AutoCrc(
+            Mp2AutoCrc(
                 Archive & ar, 
                 boost::uint32_t & crc)
                 : ar_(ar)
@@ -101,7 +101,7 @@ namespace ppbox
                 ar_.rdbuf(&buf_);
             }
 
-            ~AutoCrc()
+            ~Mp2AutoCrc()
             {
                 ar_.rdbuf(&buf_.next_layer());
                 check((typename Archive::is_saving *)0);
@@ -129,10 +129,10 @@ namespace ppbox
         private:
             Archive & ar_;
             boost::uint32_t & crc_;
-            CrcBuffer buf_;
+            Mp2CrcBuffer buf_;
         };
 
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_TS_CRC_BUFFER_H_
+#endif // _PPBOX_AVFORMAT_MP2_MP2_CRC_BUFFER_H_

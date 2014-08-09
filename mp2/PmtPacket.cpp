@@ -1,8 +1,8 @@
 // PmtPacket.cpp
 
 #include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/ts/PmtPacket.h"
-#include "ppbox/avformat/ts/TsEnum.h"
+#include "ppbox/avformat/mp2/PmtPacket.h"
+#include "ppbox/avformat/mp2/Mp2Enum.h"
 
 namespace ppbox
 {
@@ -13,7 +13,7 @@ namespace ppbox
             boost::uint8_t tag, 
             std::vector<boost::uint8_t> const & descriptor)
         {
-            TsDescriptor d;
+            Mp2Descriptor d;
             d.descriptor_tag = tag;
             d.descriptor_length = (boost::uint8_t)descriptor.size();
             d.descriptor = descriptor;
@@ -34,7 +34,7 @@ namespace ppbox
             boost::uint8_t tag, 
             std::vector<boost::uint8_t> const & descriptor)
         {
-            TsDescriptor d;
+            Mp2Descriptor d;
             d.descriptor_tag = tag;
             d.descriptor_length = (boost::uint8_t)descriptor.size();
             d.descriptor = descriptor;

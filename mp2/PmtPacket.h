@@ -1,11 +1,11 @@
 // PmtPacket.h
 
-#ifndef _PPBOX_AVFORMAT_TS_PMT_PACKET_H_
-#define _PPBOX_AVFORMAT_TS_PMT_PACKET_H_
+#ifndef _PPBOX_AVFORMAT_MP2_PMT_PACKET_H_
+#define _PPBOX_AVFORMAT_MP2_PMT_PACKET_H_
 
-#include "ppbox/avformat/ts/PsiPacket.h"
-#include "ppbox/avformat/ts/TsVector.h"
-#include "ppbox/avformat/ts/TsDescriptor.h"
+#include "ppbox/avformat/mp2/PsiPacket.h"
+#include "ppbox/avformat/mp2/Mp2Vector.h"
+#include "ppbox/avformat/mp2/Mp2Descriptor.h"
 
 namespace ppbox
 {
@@ -44,7 +44,7 @@ namespace ppbox
             //for (i = 0; i < N; i++) {
             //    descriptor()
             //}
-            TsVector<TsDescriptor> descriptor;
+            Mp2Vector<Mp2Descriptor> descriptor;
 
             PmtStream()
                 : stream_type(0)
@@ -117,9 +117,9 @@ namespace ppbox
             //for (i = 0; i < N; i++) {
             //    descriptor()
             //}
-            TsVector<TsDescriptor> descriptor;
+            Mp2Vector<Mp2Descriptor> descriptor;
 
-            TsVector<PmtStream> streams;
+            Mp2Vector<PmtStream> streams;
 
             boost::uint32_t crc;
 
@@ -146,7 +146,7 @@ namespace ppbox
             void serialize(
                 Archive & ar)
             {
-                AutoCrc<Archive> ac(ar, crc);
+                Mp2AutoCrc<Archive> ac(ar, crc);
 
                 PsiTable::serialize(ar);
                 ar & byte12;
@@ -163,7 +163,7 @@ namespace ppbox
         struct PmtPayload
         {
             boost::uint8_t pointer;
-            TsVector<PmtSection> sections;
+            Mp2Vector<PmtSection> sections;
 
             PmtPayload(
                 TsPacket & packet)
@@ -210,4 +210,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_TS_PMT_PACKET_H_
+#endif // _PPBOX_AVFORMAT_MP2_PMT_PACKET_H_

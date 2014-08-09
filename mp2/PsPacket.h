@@ -1,10 +1,10 @@
 // PsPacket.h
 
-#ifndef _PPBOX_AVFORMAT_TS_PS_PACKET_H_
-#define _PPBOX_AVFORMAT_TS_PS_PACKET_H_
+#ifndef _PPBOX_AVFORMAT_MP2_PS_PACKET_H_
+#define _PPBOX_AVFORMAT_MP2_PS_PACKET_H_
 
-#include "ppbox/avformat/ts/TsArchive.h"
-#include "ppbox/avformat/ts/TsVector.h"
+#include "ppbox/avformat/mp2/Mp2Vector.h"
+#include "ppbox/avformat/mp2/Mp2Enum.h"
 
 namespace ppbox
 {
@@ -101,7 +101,7 @@ namespace ppbox
                 }
             };
 
-            TsVector<Stream> streams;
+            Mp2Vector<Stream> streams;
 
             PsSystemHeader()
                 : system_header_start_code(0)
@@ -129,7 +129,7 @@ namespace ppbox
             }
         };
 
-        // MPEG-1 Pack Header
+        // MP2-1 Pack Header
         // http://stnsoft.com/DVD/packhdr.html
 
         struct PsPacketHeader1
@@ -173,7 +173,7 @@ namespace ppbox
                 };
                 boost::uint32_t four_bytes2;
             };
-            TsVector<PsSystemHeader> system_headers;
+            Mp2Vector<PsSystemHeader> system_headers;
 
             PsPacketHeader1()
                 : pack_start_code(0)
@@ -206,7 +206,7 @@ namespace ppbox
             }
         };
 
-        // MPEG-2 Pack Header
+        // MP2-2 Pack Header
 
         struct PsPacketHeader
             : PsPacketHeader1
@@ -323,10 +323,10 @@ namespace ppbox
         struct PsPacket
             : PsPacketHeader
         {
-            static boost::uint32_t const TIME_SCALE = 90000;
+            static boost::uint32_t const TIME_SCALE = Mp2::TIME_SCALE;
         };
 
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_TS_PS_PACKET_H_
+#endif // _PPBOX_AVFORMAT_MP2_PS_PACKET_H_

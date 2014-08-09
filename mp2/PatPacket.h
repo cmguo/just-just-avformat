@@ -1,10 +1,11 @@
 // PatPacket.h
 
-#ifndef _PPBOX_AVFORMAT_TS_PAT_PACKET_H_
-#define _PPBOX_AVFORMAT_TS_PAT_PACKET_H_
+#ifndef _PPBOX_AVFORMAT_MP2_PAT_PACKET_H_
+#define _PPBOX_AVFORMAT_MP2_PAT_PACKET_H_
 
-#include "ppbox/avformat/ts/PsiPacket.h"
-#include "ppbox/avformat/ts/TsVector.h"
+#include "ppbox/avformat/mp2/PsiPacket.h"
+#include "ppbox/avformat/mp2/Mp2Vector.h"
+#include "ppbox/avformat/mp2/Mp2CrcBuffer.h"
 
 namespace ppbox
 {
@@ -53,7 +54,7 @@ namespace ppbox
         struct PatSection
             : PsiTable
         {
-            TsVector<PatProgram> programs;
+            Mp2Vector<PatProgram> programs;
 
             boost::uint32_t crc;
 
@@ -70,7 +71,7 @@ namespace ppbox
             void serialize(
                 Archive & ar)
             {
-                AutoCrc<Archive> ac(ar, crc);
+                Mp2AutoCrc<Archive> ac(ar, crc);
 
                 PsiTable::serialize(ar);
                 programs.set_byte_size(body_size());
@@ -81,7 +82,7 @@ namespace ppbox
         struct PatPayload
         {
             boost::uint8_t pointer;
-            TsVector<PatSection> sections;
+            Mp2Vector<PatSection> sections;
 
             PatPayload(
                 TsPacket & packet)
@@ -128,4 +129,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_TS_PAT_PACKET_H_
+#endif // _PPBOX_AVFORMAT_MP2_PAT_PACKET_H_

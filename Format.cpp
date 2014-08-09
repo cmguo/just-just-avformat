@@ -8,7 +8,7 @@
 #include "ppbox/avformat/mp4/Mp4Format.h"
 #include "ppbox/avformat/flv/FlvFormat.h"
 #include "ppbox/avformat/asf/AsfFormat.h"
-#include "ppbox/avformat/ts/TsFormat.h"
+#include "ppbox/avformat/mp2/Mp2Format.h"
 #include "ppbox/avformat/mkv/MkvFormat.h"
 #ifndef PPBOX_DISABLE_FFMPEG
 #  include "ppbox/avformat/ffmpeg/FFMpegFormat.h"

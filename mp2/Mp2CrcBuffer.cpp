@@ -1,25 +1,25 @@
-// CrcBuffer.cpp
+// Mp2CrcBuffer.cpp
 
 #include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/ts/CrcBuffer.h"
+#include "ppbox/avformat/mp2/Mp2CrcBuffer.h"
 
 namespace ppbox
 {
     namespace avformat
     {
 
-        PsiCrc::PsiCrc()
+        Mp2Crc::Mp2Crc()
             : crc_(0xFFFFFFFF)
         {
         }
 
-        void PsiCrc::put(
+        void Mp2Crc::put(
             boost::uint8_t c)
         {
             crc_ = (crc_ << 8) ^ crc_table[((crc_ >> 24) ^ c) & 0xFF];
         }
 
-        void PsiCrc::put(
+        void Mp2Crc::put(
             boost::uint8_t * buf, 
             size_t size)
         {
@@ -28,7 +28,7 @@ namespace ppbox
             }
         }
 
-        CrcBuffer::CrcBuffer(
+        Mp2CrcBuffer::Mp2CrcBuffer(
             std::basic_streambuf<boost::uint8_t> & next_layer)
             : next_layer_(next_layer)
             , byte_in_(0)
@@ -38,7 +38,7 @@ namespace ppbox
             this->setp(NULL, NULL);
         }
 
-        CrcBuffer::int_type CrcBuffer::underflow()
+        Mp2CrcBuffer::int_type Mp2CrcBuffer::underflow()
         {
             int_type c = next_layer_.sbumpc();
             if (c != traits_type::eof()) {
@@ -49,7 +49,7 @@ namespace ppbox
             return c;
         }
 
-        CrcBuffer::int_type CrcBuffer::overflow(
+        Mp2CrcBuffer::int_type Mp2CrcBuffer::overflow(
             int_type c)
         {
             byte_out_ = traits_type::to_char_type(c);
@@ -57,7 +57,7 @@ namespace ppbox
             return next_layer_.sputc(traits_type::to_char_type(c));
         }
 
-        boost::uint32_t const PsiCrc::crc_table[256] = {
+        boost::uint32_t const Mp2Crc::crc_table[256] = {
             0x00000000, 0x04c11db7, 0x09823b6e, 0x0d4326d9, 0x130476dc, 0x17c56b6b,
             0x1a864db2, 0x1e475005, 0x2608edb8, 0x22c9f00f, 0x2f8ad6d6, 0x2b4bcb61,
             0x350c9b64, 0x31cd86d3, 0x3c8ea00a, 0x384fbdbd, 0x4c11db70, 0x48d0c6c7,

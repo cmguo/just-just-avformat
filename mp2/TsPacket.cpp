@@ -1,7 +1,7 @@
 // TsPacket.cpp
 
 #include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/ts/TsPacket.h"
+#include "ppbox/avformat/mp2/TsPacket.h"
 
 namespace ppbox
 {

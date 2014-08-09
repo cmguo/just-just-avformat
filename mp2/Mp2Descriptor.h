@@ -1,20 +1,20 @@
-// TsDescriptor.h
+// Mp2Descriptor.h
 
-#ifndef _PPBOX_AVFORMAT_TS_TS_DESCRIPTOR_H_
-#define _PPBOX_AVFORMAT_TS_TS_DESCRIPTOR_H_
+#ifndef _PPBOX_AVFORMAT_MP2_MP2_DESCRIPTOR_H_
+#define _PPBOX_AVFORMAT_MP2_MP2_DESCRIPTOR_H_
 
 namespace ppbox
 {
     namespace avformat
     {
 
-        struct TsDescriptor
+        struct Mp2Descriptor
         {
             boost::uint8_t descriptor_tag;
             boost::uint8_t descriptor_length;
             std::vector<boost::uint8_t> descriptor;
 
-            TsDescriptor()
+            Mp2Descriptor()
                 : descriptor_tag(0)
                 , descriptor_length(0)
             {
@@ -34,4 +34,4 @@ namespace ppbox
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_TS_TS_DESCRIPTOR_H_
+#endif // _PPBOX_AVFORMAT_MP2_MP2_DESCRIPTOR_H_

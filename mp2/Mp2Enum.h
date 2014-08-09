@@ -1,7 +1,7 @@
 // TsEnum.h
 
-#ifndef _PPBOX_AVFORMAT_TS_TS_ENUM_H_
-#define _PPBOX_AVFORMAT_TS_TS_ENUM_H_
+#ifndef _PPBOX_AVFORMAT_MP2_MP2_ENUM_H_
+#define _PPBOX_AVFORMAT_MP2_MP2_ENUM_H_
 
 namespace ppbox
 {
@@ -35,7 +35,7 @@ namespace ppbox
             };
         };
 
-        struct TsStreamId
+        struct Mp2StreamId
         {
             enum Enum
             {
@@ -62,7 +62,7 @@ namespace ppbox
             };
         };
 
-        struct TsStreamType
+        struct Mp2StreamType
         {
             enum Enum
             {
@@ -77,7 +77,12 @@ namespace ppbox
             };
         };
 
+        struct Mp2
+        {
+            static boost::uint32_t const TIME_SCALE = 90000;
+        };
+
     } // namespace avformat
 } // namespace ppbox
 
-#endif // _PPBOX_AVFORMAT_TS_TS_ENUM_H_
+#endif // _PPBOX_AVFORMAT_MP2_MP2_ENUM_H_
