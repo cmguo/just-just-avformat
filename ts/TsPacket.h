@@ -33,13 +33,13 @@ namespace ppbox
             union {
                 struct {
 #ifdef   BOOST_BIG_ENDIAN
-                    boost::uint8_t  transport_scrambling_control : 2;
-                    boost::uint8_t  adaptat_field_control : 2;
-                    boost::uint8_t  continuity_counter : 4;
+                    boost::uint8_t transport_scrambling_control : 2;
+                    boost::uint8_t adaptat_field_control : 2;
+                    boost::uint8_t continuity_counter : 4;
 #else
-                    boost::uint8_t  continuity_counter : 4;
-                    boost::uint8_t  adaptat_field_control : 2;
-                    boost::uint8_t  transport_scrambling_control : 2;
+                    boost::uint8_t continuity_counter : 4;
+                    boost::uint8_t adaptat_field_control : 2;
+                    boost::uint8_t transport_scrambling_control : 2;
 #endif
                 };
                 boost::uint8_t one_byte;

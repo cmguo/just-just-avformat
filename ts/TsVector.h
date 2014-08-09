@@ -10,6 +10,8 @@ namespace ppbox
     namespace avformat
     {
 
+        // size == 0 时，由数组元素自己检查是否已经到最后一个，此时ar置为failed状态，TsVector会将流回退到最后成功的位置。
+
         template <typename _Ty>
         struct TsVector
             : std::vector<_Ty>
@@ -41,8 +43,9 @@ namespace ppbox
                 Archive & ar)
             {
                 this->clear();
-                boost::uint64_t byte_end = (boost::uint64_t)ar.tellg() + size_;
-                while ((boost::uint64_t)ar.tellg() < byte_end) {
+                boost::uint64_t byte_cur = (boost::uint64_t)ar.tellg();
+                boost::uint64_t byte_end = byte_cur + size_;
+                while (size_ == 0 || byte_cur < byte_end) {
                     if (has_suffer_) {
                         std::basic_streambuf<boost::uint8_t> * buf = ar.rdbuf();
                         if (buf->sgetc() == 0xff) {
@@ -53,41 +56,50 @@ namespace ppbox
                     ar >> t;
                     if (ar) {
                         this->push_back(t);
+                        byte_cur = (boost::uint64_t)ar.tellg();
                     } else {
+                        if (size_ == 0 && ar.failed()) {
+                            ar.clear();
+                            ar.seekg(byte_cur, std::ios::beg);
+                        }
                         break;
                     }
                 }
                 if (has_suffer_) {
-                    while ((boost::uint64_t)ar.tellg() < byte_end) {
+                    while (byte_cur < byte_end) {
                         boost::uint8_t suffer(0xff);
                         ar >> suffer;
+                        ++byte_cur;
                     }
                 }
-                assert(!ar || (boost::uint64_t)ar.tellg() == byte_end);
+                assert(!ar || size_ == 0 || byte_cur == byte_end);
             }
 
             template <typename Archive>
             void save(
                 Archive & ar) const
             {
-                boost::uint64_t byte_end = (boost::uint64_t)ar.tellp() + size_;
+                boost::uint64_t byte_cur = (boost::uint64_t)ar.tellp();
+                boost::uint64_t byte_end = byte_cur + size_;
                 typename TsVector::const_iterator iter = this->begin();
                 typename TsVector::const_iterator iend = this->end();
-                while ((boost::uint64_t)ar.tellp() < byte_end && iter != iend) {
+                while (size_ == 0 || byte_cur < byte_end && iter != iend) {
                     ar << *iter;
                     if (ar) {
+                        byte_cur = (boost::uint64_t)ar.tellp();
                         ++iter;
                     } else {
                         break;
                     }
                 }
                 if (has_suffer_) {
-                    while ((boost::uint64_t)ar.tellp() < byte_end) {
+                    while (byte_cur < byte_end) {
                         boost::uint8_t suffer(0xff);
                         ar << suffer;
+                        ++byte_cur;
                     }
                 }
-                assert(!ar || ((boost::uint64_t)ar.tellp() == byte_end && iter == iend));
+                assert(!ar || size_ == 0 || (byte_cur == byte_end && iter == iend));
             }
 
         private:

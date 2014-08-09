@@ -46,7 +46,19 @@ namespace ppbox
                 audio_base          = 0xc0, 
                 video_base          = 0xe0, 
                 ecm_stream          = 0xf0, 
-                emm_stream          = 0xf1
+                emm_stream          = 0xf1, 
+                dsmcc_stream        = 0xf2, 
+                iec_13552_stream    = 0xf3, 
+                itu_t_rec_h_222_1_A = 0xf4, 
+                itu_t_rec_h_222_1_B = 0xf5, 
+                itu_t_rec_h_222_1_C = 0xf6, 
+                itu_t_rec_h_222_1_D = 0xf7, 
+                itu_t_rec_h_222_1_E = 0xf8, 
+                ancillary_stream    = 0xf9, 
+                iso_14496_1_sl_packetized_stream = 0xfa, 
+                iso_14496_1_flex_mux_stream = 0xfb, 
+                reserved_data_stream_base = 0xfc, 
+                program_stream_directory = 0xff, 
             };
         };
 

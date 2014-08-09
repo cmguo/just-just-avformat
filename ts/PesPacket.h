@@ -4,6 +4,9 @@
 #define _PPBOX_AVFORMAT_TS_PES_FORMAT_H_
 
 #include "ppbox/avformat/ts/TsFormat.h"
+#include "ppbox/avformat/ts/TsEnum.h"
+
+#include <util/serialization/SplitMember.h>
 
 #include <framework/container/Array.h>
 
@@ -12,7 +15,48 @@ namespace ppbox
     namespace avformat
     {
 
-        struct Bits33
+        struct StdBuffer
+        {
+            union {
+                struct {
+#ifdef   BOOST_BIG_ENDIAN
+                    boost::uint16_t flag : 2;
+                    boost::uint16_t scale : 1;
+                    boost::uint16_t size : 13;
+#else
+                    boost::uint16_t size : 13;
+                    boost::uint16_t scale : 1;
+                    boost::uint16_t flag : 2;
+#endif
+                };
+                struct {
+#ifdef   BOOST_BIG_ENDIAN
+                    boost::uint8_t byte1;
+                    boost::uint8_t byte2;
+#else
+                    boost::uint8_t byte2;
+                    boost::uint8_t byte1;
+#endif
+                };
+                boost::uint16_t byte12;
+            };
+
+            StdBuffer()
+                : byte12(0)
+            {
+            }
+
+            static boost::uint8_t const SIZE = 2;
+
+            template <typename Archive>
+            void serialize(
+                Archive & ar)
+            {
+                ar & byte12;
+            }
+        };
+
+        struct PtsDts
         {
             union {
                 struct {
@@ -55,14 +99,14 @@ namespace ppbox
                 boost::uint16_t byte45;
             };
 
-            Bits33()
+            PtsDts()
                 : byte1(0)
                 , byte23(0)
                 , byte45(0)
             {
             }
 
-            Bits33(
+            PtsDts(
                 boost::uint8_t flag, 
                 boost::uint64_t value)
                 : byte1((flag << 4) | ((boost::uint8_t)(value >> 29) & 0x0e) | 1)
@@ -76,6 +120,8 @@ namespace ppbox
                 return (boost::uint64_t)bits_32_30 << 30 | (boost::uint64_t)bits_29_15 << 15 | bits_14_0;
             }
 
+            static boost::uint8_t const SIZE = 5;
+
             template <typename Archive>
             void serialize(
                 Archive & ar)
@@ -86,7 +132,86 @@ namespace ppbox
             }
         };
 
-        struct PesPacket
+        struct OneByte
+        {
+            boost::uint8_t byte1;
+
+            OneByte()
+                : byte1(0)
+            {
+            }
+
+            static boost::uint8_t const SIZE = 1;
+
+            template <typename Archive>
+            void serialize(
+                Archive & ar)
+            {
+                ar & byte1;
+            }
+        };
+
+        template <typename T, boost::uint8_t F>
+        struct FlagField
+            : public T
+        {
+
+            FlagField()
+            {
+            }
+
+            template <typename A1>
+            FlagField(A1 a1)
+                : T(a1)
+            {
+            }
+
+            template <typename A1, typename A2>
+            FlagField(A1 a1, A2 a2)
+                : T(a1, a2)
+            {
+            }
+
+            template <typename A1, typename A2, typename A3>
+            FlagField(A1 a1, A2 a2, A3 a3)
+                : T(a1, a2, a3)
+            {
+            }
+
+            SERIALIZATION_SPLIT_MEMBER();
+
+            template <typename Archive>
+            void load(
+                Archive & ar)
+            {
+                boost::uint8_t next = ar.rdbuf()->sgetc();
+                if ((next & F) == F) {
+                    T::serialize(ar);
+                } else {
+                    T::byte1 = 0;
+                }
+            }
+
+            template <typename Archive>
+            void save(
+                Archive & ar) const
+            {
+                if ((T::byte1 & F) == F) {
+                    const_cast<FlagField *>(this)->T::serialize(ar);
+                }
+            }
+
+            boost::uint8_t size() const
+            {
+                if ((T::byte1 & F) == F) {
+                    return T::SIZE;
+                } else {
+                    return 0;
+                }
+            }
+        };
+
+        struct PesPacket1
         {
             boost::uint8_t packet_start_code_prefix1;
             boost::uint8_t packet_start_code_prefix2;
@@ -94,6 +219,103 @@ namespace ppbox
             boost::uint8_t stream_id;
             boost::uint16_t packet_length;
 
+            std::vector<boost::uint8_t> stuffing_byte;
+
+            FlagField<StdBuffer, 0x40> std_buffer;
+            FlagField<PtsDts, 0x20> pts_bits;
+            PtsDts dts_bits;
+            boost::uint8_t  one_byte;
+
+            PesPacket1()
+                : packet_start_code_prefix1(0)
+                , packet_start_code_prefix2(0)
+                , packet_start_code_prefix3(0)
+                , stream_id(0)
+                , packet_length(0)
+                , one_byte(0)
+            {
+            }
+
+            PesPacket1(
+                boost::uint8_t stream_id, 
+                boost::uint32_t size, 
+                boost::uint64_t cts);
+
+            PesPacket1(
+                boost::uint8_t stream_id, 
+                boost::uint32_t size, 
+                boost::uint64_t cts, 
+                boost::uint64_t dts);
+
+            bool special() const
+            {
+                return stream_id == TsStreamId::private_stream_2;
+            }
+
+            boost::uint32_t payload_length() const
+            {
+                if (special()) {
+                    return packet_length;
+                }
+                boost::uint8_t header_size[] = {1, 0, 5, 10};
+                return packet_length 
+                    - stuffing_byte.size()
+                    - std_buffer.size() 
+                    - header_size[pts_bits.flag & 3];
+            }
+
+            template <typename Archive>
+            void serialize_suffing_byte(
+                Archive & ar, 
+                boost::mpl::false_)
+            {
+                stuffing_byte.clear();
+                FlagField<OneByte, 0xff> stuffing;
+                while ((ar & stuffing) && stuffing.byte1 == 0xff)
+                    stuffing_byte.push_back(stuffing.byte1);
+            }
+
+            template <typename Archive>
+            void serialize_suffing_byte(
+                Archive & ar, 
+                boost::mpl::true_)
+            {
+                util::serialization::save_collection(ar, stuffing_byte, stuffing_byte.size());
+            }
+
+            template <typename Archive>
+            void serialize(
+                Archive & ar)
+            {
+                ar & packet_start_code_prefix1;
+                ar & packet_start_code_prefix2;
+                ar & packet_start_code_prefix3;
+                ar & stream_id;
+                if (packet_start_code_prefix1 != 0 
+                    || packet_start_code_prefix2 != 0
+                    || packet_start_code_prefix3 != 1
+                    || stream_id < TsStreamId::program_stream_map) {
+                        ar.fail();
+                        return;
+                }
+                ar & packet_length;
+                if (special()) {
+                    return;
+                }
+                serialize_suffing_byte(ar, Archive::is_saving());
+                ar & std_buffer;
+                ar & pts_bits;
+                if (pts_bits.flag == 3) {
+                    ar & dts_bits;
+                } else if (pts_bits.flag == 0) {
+                    ar & one_byte;
+                }
+            }
+        };
+
+        struct PesPacket
+            : PesPacket1
+        {
             union {
                 struct {
 #ifdef   BOOST_BIG_ENDIAN
@@ -140,19 +362,10 @@ namespace ppbox
 
             boost::uint8_t header_data_length;
 
-            Bits33 pts_bits;
-            Bits33 dts_bits;
-
-            std::vector<boost::uint8_t> stuffing_byte;
-
             PesPacket()
-                : packet_start_code_prefix1(0)
-                , packet_start_code_prefix2(0)
-                , packet_start_code_prefix3(0)
-                , stream_id(0)
-                , packet_length(0)
-                , byte1(0)
+                : byte1(0)
                 , byte2(0)
+                , header_data_length(0)
             {
             }
 
@@ -167,9 +380,42 @@ namespace ppbox
                 boost::uint64_t cts, 
                 boost::uint64_t dts);
 
+            bool special() const
+            {
+                return stream_id == TsStreamId::program_stream_map
+                    || stream_id == TsStreamId::padding_stream
+                    || stream_id == TsStreamId::private_stream_2
+                    || stream_id == TsStreamId::ecm_stream
+                    || stream_id == TsStreamId::emm_stream
+                    || stream_id == TsStreamId::dsmcc_stream
+                    || stream_id == TsStreamId::itu_t_rec_h_222_1_E
+                    || stream_id == TsStreamId::program_stream_directory;
+            }
+
             boost::uint32_t payload_length() const
             {
+                if (special()) {
+                    return packet_length;
+                }
+                if (reserved != 2)
+                    return PesPacket1::payload_length();
                 return packet_length ? packet_length - 3 - header_data_length : 0;
+            }
+
+            template <typename Archive>
+            bool is_version1(
+                Archive & ar, 
+                boost::mpl::true_)
+            {
+                return reserved != 2;
+            }
+
+            template <typename Archive>
+            bool is_version1(
+                Archive & ar, 
+                boost::mpl::false_)
+            {
+                return (ar.rdbuf()->sgetc() & 0xC0) != 0x80;
             }
 
             template <typename Archive>
@@ -180,19 +426,41 @@ namespace ppbox
                 ar & packet_start_code_prefix2;
                 ar & packet_start_code_prefix3;
                 ar & stream_id;
+                if (packet_start_code_prefix1 != 0 
+                    || packet_start_code_prefix2 != 0
+                    || packet_start_code_prefix3 != 1
+                    || stream_id < TsStreamId::program_stream_map) {
+                        ar.fail();
+                        return;
+                }
                 ar & packet_length;
+                if (special()) {
+                    return;
+                }
+                if (is_version1(ar, Archive::is_saving())) {
+                    serialize_suffing_byte(ar, Archive::is_saving());
+                    ar & std_buffer;
+                    ar & pts_bits;
+                    if (pts_bits.flag == 3) {
+                        ar & dts_bits;
+                    } else if (pts_bits.flag == 0) {
+                        ar & one_byte;
+                    }
+                    return;
+                }
                 ar & byte1;
                 ar & byte2;
                 ar & header_data_length;
                 boost::uint8_t l = header_data_length;
-                if (PTS_DTS_flags == 2) { // pts
-                    ar & pts_bits;
-                    l -= 5;
-                }
                 if (PTS_DTS_flags == 3) { // pts & dts
-                    ar & pts_bits;
-                    ar & dts_bits;
+                    ar & (PtsDts &)pts_bits;
+                    ar & (PtsDts &)dts_bits;
                     l -= 10;
+                } else if (PTS_DTS_flags == 2) { // pts
+                    ar & (PtsDts &)pts_bits;
+                    l -= 5;
+                } else {
+                    pts_bits.flag = 0;
                 }
                 if (l) {
                     stuffing_byte.resize(l);

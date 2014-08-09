@@ -58,7 +58,7 @@ namespace ppbox
             }
             streams.push_back(stream);
             streams.back().elementary_pid = pid;
-            section_length += stream.size();
+            section_length += (boost::uint16_t)stream.size();
         }
 
         PmtPayload::PmtPayload(

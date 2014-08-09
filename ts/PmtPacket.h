@@ -193,8 +193,6 @@ namespace ppbox
             : TsPacket
             , PmtPayload
         {
-            std::vector<PmtStream> streams;
-
             // construct pmt with only one section (default id)
             PmtPacket();
 

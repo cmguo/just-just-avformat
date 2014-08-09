@@ -60,33 +60,37 @@ namespace ppbox
         {
             CodecInfo const * codec = ppbox::avbase::type_map_find(codecs_, 
                 &CodecInfo::stream_type, stream_type);
-            if (codec == NULL) {
-                TsContext const * tsc = (TsContext const *)context;
-                TsContext const * tsc2 = NULL;
-                if (tsc->regd_type) {
-                    tsc2 = ppbox::avbase::type_map_find(
-                        ts_contexts, 
-                        &TsContext::regd_type, tsc->regd_type);
-                }
-                if (tsc2 == NULL && tsc->hdmv_type) {
-                    tsc2 = ppbox::avbase::type_map_find(
-                        ts_contexts, 
-                        &TsContext::hdmv_type, tsc->hdmv_type);
-                }
-                if (tsc2 == NULL) {
-                    tsc2 = ppbox::avbase::type_map_find(
-                        ts_contexts, 
-                        &TsContext::misc_type, (boost::uint8_t)stream_type);
-                }
-                if (tsc2 == NULL) {
-                    ec = error::codec_not_support;
-                } else {
-                    codec = ppbox::avbase::type_map_find(codecs_, 
-                        &CodecInfo::context, (void const *)tsc2);
-                    assert(codec);
-                    ec.clear();
-                }
+            if (codec) {
+                ec.clear();
+                return codec;
+            }
+            if (context == NULL) {
+                ec = error::codec_not_support;
+                return NULL;
+            }
+            TsContext const * tsc = (TsContext const *)context;
+            TsContext const * tsc2 = NULL;
+            if (tsc->regd_type) {
+                tsc2 = ppbox::avbase::type_map_find(
+                    ts_contexts, 
+                    &TsContext::regd_type, tsc->regd_type);
+            }
+            if (tsc2 == NULL && tsc->hdmv_type) {
+                tsc2 = ppbox::avbase::type_map_find(
+                    ts_contexts, 
+                    &TsContext::hdmv_type, tsc->hdmv_type);
+            }
+            if (tsc2 == NULL) {
+                tsc2 = ppbox::avbase::type_map_find(
+                    ts_contexts, 
+                    &TsContext::misc_type, (boost::uint8_t)stream_type);
+            }
+            if (tsc2 == NULL) {
+                ec = error::codec_not_support;
             } else {
+                codec = ppbox::avbase::type_map_find(codecs_, 
+                    &CodecInfo::context, (void const *)tsc2);
+                assert(codec);
                 ec.clear();
             }
             return codec;
