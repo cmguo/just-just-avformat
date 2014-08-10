@@ -200,7 +200,6 @@ namespace ppbox
                     return;
                 }
                 ar & four_bytes1;
-                ar & two_bytes;
                 ar & four_bytes2;
                 ar & system_headers;
             }

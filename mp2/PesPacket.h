@@ -301,7 +301,7 @@ namespace ppbox
                 if (special()) {
                     return;
                 }
-                serialize_suffing_byte(ar, Archive::is_saving());
+                serialize_suffing_byte(ar, typename Archive::is_saving());
                 ar & std_buffer;
                 ar & pts_bits;
                 if (pts_bits.flag == 3) {
@@ -436,8 +436,8 @@ namespace ppbox
                 if (special()) {
                     return;
                 }
-                if (is_version1(ar, Archive::is_saving())) {
-                    serialize_suffing_byte(ar, Archive::is_saving());
+                if (is_version1(ar, typename Archive::is_saving())) {
+                    serialize_suffing_byte(ar, typename Archive::is_saving());
                     ar & std_buffer;
                     ar & pts_bits;
                     if (pts_bits.flag == 3) {

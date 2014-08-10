@@ -100,7 +100,7 @@ namespace ppbox
             void serialize(
                 Archive & ar)
             {
-                AutoCrc<Archive> ac(ar, crc);
+                Mp2AutoCrc<Archive> ac(ar, crc);
 
                 ar & packet_start_code_prefix1;
                 ar & packet_start_code_prefix2;

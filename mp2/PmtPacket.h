@@ -5,6 +5,7 @@
 
 #include "ppbox/avformat/mp2/PsiPacket.h"
 #include "ppbox/avformat/mp2/Mp2Vector.h"
+#include "ppbox/avformat/mp2/Mp2CrcBuffer.h"
 #include "ppbox/avformat/mp2/Mp2Descriptor.h"
 
 namespace ppbox
