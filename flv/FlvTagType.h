@@ -137,6 +137,9 @@ namespace ppbox
                 if (CodecID == FlvVideoCodec::H264) {
                     ar & AVCPacketType;
                     ar & CompositionTime;
+                } else if (CodecID == FlvVideoCodec::H265) {
+                    ar & AVCPacketType;
+                    ar & CompositionTime;
                 } else {
                     AVCPacketType = 1;
                     CompositionTime = 0;

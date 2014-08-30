@@ -76,6 +76,7 @@ namespace ppbox
                 VP6A    = 5,
                 SCREEN2 = 6,
                 H264    = 7,
+                H265    = 10,
             };
         };
 

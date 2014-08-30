@@ -55,6 +55,8 @@ namespace ppbox
         struct Mp4CodecType
         {
             enum Enum {
+                hvc1 = MAKE_FOURC_TYPE('h', 'v', 'c', '1'), 
+                hev1 = MAKE_FOURC_TYPE('h', 'e', 'v', '1'), 
                 avc1 = MAKE_FOURC_TYPE('a', 'v', 'c', '1'), 
                 avc2 = MAKE_FOURC_TYPE('a', 'v', 'c', '2'), 
                 avc3 = MAKE_FOURC_TYPE('a', 'v', 'c', '3'), 

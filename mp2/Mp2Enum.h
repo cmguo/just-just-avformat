@@ -75,6 +75,8 @@ namespace ppbox
                 iso_13818_7_audio   = 0x0f, // AAC Audio with ADTS
                 iso_14496_2_video   = 0x10, // MPEG-4 video
                 iso_14496_10_video  = 0x1b, // AVC
+                iso_xxxxx_video     = 0x24, // HEVC
+                iso_xxxxx_video_2   = 0x27, // Scalable HEVC (SHVC)
             };
         };
 

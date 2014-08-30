@@ -17,6 +17,8 @@ namespace ppbox
     {
 
         CodecInfo const Mp4Format::codecs_[] = {
+            {StreamType::VIDE,  Mp4CodecType::hvc1, VideoSubType::HEVC, AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('h', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::hev1, VideoSubType::HEVC, AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('h', 'v', 'c', 'C')}, 
             {StreamType::VIDE,  Mp4CodecType::avc1, VideoSubType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
             {StreamType::VIDE,  Mp4CodecType::avc2, VideoSubType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
             {StreamType::VIDE,  Mp4CodecType::avc3, VideoSubType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 

@@ -14,6 +14,8 @@ namespace ppbox
             Mp4CodecType::avc2, 
             Mp4CodecType::avc3, 
             Mp4CodecType::avc4, 
+            Mp4CodecType::hvc1, 
+            Mp4CodecType::hev1, 
             0, 
         };
 
