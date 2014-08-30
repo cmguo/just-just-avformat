@@ -11,6 +11,9 @@ namespace ppbox
 
         Mp4Box::id_type const Mp4VisualSampleEntryBox::codings[] = {
             Mp4CodecType::avc1, 
+            Mp4CodecType::avc2, 
+            Mp4CodecType::avc3, 
+            Mp4CodecType::avc4, 
             0, 
         };
 

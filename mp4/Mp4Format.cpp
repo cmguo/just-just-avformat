@@ -17,12 +17,15 @@ namespace ppbox
     {
 
         CodecInfo const Mp4Format::codecs_[] = {
-            {StreamType::VIDE,  Mp4CodecType::avc1, VideoSubType::AVC1, AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::avc1, VideoSubType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::avc2, VideoSubType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::avc3, VideoSubType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::avc4, VideoSubType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
             {StreamType::VIDE,  Mp4CodecType::mp4v, VideoSubType::MP4V, StreamFormatType::none, 0,  (void*)Mp4ObjectType::MPEG4_VISUAL}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG4_AUDIO}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_MAIN}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_LC}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP4A, AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_SSRP}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG4_AUDIO}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_MAIN}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_LC}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_SSRP}, 
             {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP2A, StreamFormatType::none, 1,  (void*)Mp4ObjectType::MPEG2_PART3_AUDIO}, 
             {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP1A, StreamFormatType::none, 1,  (void*)Mp4ObjectType::MPEG1_AUDIO}, 
             {StreamType::AUDI,  Mp4CodecType::ac_3, AudioSubType::AC3,  StreamFormatType::none, 1,  0}, 

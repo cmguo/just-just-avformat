@@ -56,6 +56,9 @@ namespace ppbox
         {
             enum Enum {
                 avc1 = MAKE_FOURC_TYPE('a', 'v', 'c', '1'), 
+                avc2 = MAKE_FOURC_TYPE('a', 'v', 'c', '2'), 
+                avc3 = MAKE_FOURC_TYPE('a', 'v', 'c', '3'), 
+                avc4 = MAKE_FOURC_TYPE('a', 'v', 'c', '4'), 
                 mp4v = MAKE_FOURC_TYPE('m', 'p', '4', 'v'), 
                 mp4a = MAKE_FOURC_TYPE('m', 'p', '4', 'a'), 
                 ac_3 = MAKE_FOURC_TYPE('a', 'c', '-', '3'), 

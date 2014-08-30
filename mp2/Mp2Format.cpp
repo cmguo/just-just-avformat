@@ -29,9 +29,10 @@ namespace ppbox
         };
 
         CodecInfo const Mp2Format::codecs_[] = {
-            {StreamType::VIDE,  Mp2StreamType::iso_13818_video,    VideoSubType::AVC1, AvcFormatType::byte_stream, Mp2::TIME_SCALE}, 
-            {StreamType::VIDE,  Mp2StreamType::iso_13818_2_video,  VideoSubType::MP4V, StreamFormatType::none,     Mp2::TIME_SCALE}, 
-            {StreamType::AUDI,  Mp2StreamType::iso_13818_7_audio,  AudioSubType::MP4A, AacFormatType::adts,        Mp2::TIME_SCALE}, 
+            {StreamType::VIDE,  Mp2StreamType::iso_14496_10_video, VideoSubType::AVC,  AvcFormatType::byte_stream, Mp2::TIME_SCALE}, 
+            {StreamType::VIDE,  Mp2StreamType::iso_14496_2_video,  VideoSubType::MP4V, StreamFormatType::none,     Mp2::TIME_SCALE}, 
+            {StreamType::VIDE,  Mp2StreamType::iso_13818_2_video,  VideoSubType::MP2V, StreamFormatType::none,     Mp2::TIME_SCALE}, 
+            {StreamType::AUDI,  Mp2StreamType::iso_13818_7_audio,  AudioSubType::AAC,  AacFormatType::adts,        Mp2::TIME_SCALE}, 
             {StreamType::AUDI,  Mp2StreamType::iso_11172_audio,    AudioSubType::MP1A, StreamFormatType::none,     Mp2::TIME_SCALE}, 
             {StreamType::AUDI,  Mp2StreamType::iso_11172_audio,    AudioSubType::MP1,  StreamFormatType::none,     Mp2::TIME_SCALE}, 
             {StreamType::AUDI,  Mp2StreamType::iso_11172_audio,    AudioSubType::MP2,  StreamFormatType::none,     Mp2::TIME_SCALE}, 
