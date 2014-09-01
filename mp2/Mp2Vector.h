@@ -83,7 +83,7 @@ namespace ppbox
                 boost::uint64_t byte_end = byte_cur + size_;
                 typename Mp2Vector::const_iterator iter = this->begin();
                 typename Mp2Vector::const_iterator iend = this->end();
-                while (size_ == 0 || byte_cur < byte_end && iter != iend) {
+                while (size_ == 0 || (byte_cur < byte_end && iter != iend)) {
                     ar << *iter;
                     if (ar) {
                         byte_cur = (boost::uint64_t)ar.tellp();

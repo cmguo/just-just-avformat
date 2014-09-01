@@ -108,8 +108,8 @@ namespace ppbox
             : Mp4BoxWrapper<Mp4SampleToChunkBox>(box)
             , chunk_(chunk)
             , index_(0)
-            , first_chunk_(0)
             , samples_per_chunk_(0)
+            , first_chunk_(0)
         {
             if (data_->table.empty()) {
                 entry_.first_chunk = 0;
@@ -295,7 +295,7 @@ namespace ppbox
             boost::uint32_t size)
         {
             if (entry_ == 0) {
-                if (data_->sample_size = 0) {
+                if (data_->sample_size == 0) {
                     data_->sample_size = size;
                 } else if (data_->sample_size != size) {
                     data_->table.resize(index_, data_->sample_size);
