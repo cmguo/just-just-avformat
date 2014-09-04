@@ -4,6 +4,7 @@
 #include "ppbox/avformat/mkv/MkvFormat.h"
 #include "ppbox/avformat/Error.h"
 
+#include <ppbox/avcodec/hevc/HevcFormatType.h>
 #include <ppbox/avcodec/avc/AvcFormatType.h>
 #include <ppbox/avcodec/aac/AacFormatType.h>
 
@@ -17,6 +18,7 @@ namespace ppbox
     {
 
         CodecInfo const MkvFormat::codecs_[] = {
+            {StreamType::VIDE,  0,  VideoSubType::HEVC, HevcFormatType::packet,   1000, "V_MPEGH/ISO/HEVC"}, 
             {StreamType::VIDE,  0,  VideoSubType::AVC,  AvcFormatType::packet,    1000, "V_MPEG4/ISO/AVC"}, 
             {StreamType::AUDI,  1,  AudioSubType::AAC,  AacFormatType::raw,       1000, "A_AAC"}, 
             {StreamType::AUDI,  2,  AudioSubType::MP1,  StreamFormatType::none,   1000, "A_MPEG/L1"}, 
@@ -61,6 +63,7 @@ namespace ppbox
                 codecs_ + sizeof(codecs_) / sizeof(codecs_[0]), mkv_equal_type_str((char const *)context));
             if (codec == codecs_ + sizeof(codecs_) / sizeof(codecs_[0])) {
                 ec = error::codec_not_support;
+                codec = NULL;
             } else {
                 ec.clear();
             }
