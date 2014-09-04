@@ -343,6 +343,7 @@ namespace ppbox
                 }
             }
             entry -= sample_index;
+            entry_ = entry;
             index_ = table_index;
             return true;
         }
