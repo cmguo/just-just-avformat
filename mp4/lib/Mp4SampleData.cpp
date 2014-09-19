@@ -76,17 +76,17 @@ namespace ppbox
         bool Mp4ChunkOffseTable::seek(
             boost::uint32_t chunk_index)
         {
-            index_ = chunk_index;
-            if (index_ >= data_->table.size()) {
+            if (chunk_index >= data_->table.size()) {
                 return false;
             }
+            index_ = chunk_index;
             offset_ = data_->table[index_];
             return true;
         }
 
         bool Mp4ChunkOffseTable::limit(
             boost::uint64_t & offset, 
-            Mp4SampleToChunkBox::Entry  & index) const
+            Mp4SampleToChunkBox::Entry & index) const
         {
             std::vector<boost::uint32_t>::iterator iter = 
                 std::upper_bound(data_->table.begin(), data_->table.end(), offset);
@@ -222,7 +222,7 @@ namespace ppbox
                 first_chunk = data_->table[1].first_chunk;
             }
             Mp4SampleToChunkBox::Entry entry = data_->table[table_index];
-            while (entry.samples_per_chunk * (first_chunk - entry.first_chunk) < sample_index) {
+            while (entry.samples_per_chunk * (first_chunk - entry.first_chunk) <= sample_index) {
                 sample_index -= entry.samples_per_chunk * (first_chunk - entry.first_chunk);
                 if (++table_index < data_->table.size()) {
                     entry = data_->table[table_index];
@@ -241,7 +241,7 @@ namespace ppbox
             if (!chunk_->seek(entry.first_chunk - 1)) {
                 return false;
             }
-            entry_ =entry;
+            entry_ = entry;
             index_ = table_index;
             samples_per_chunk_ = entry.samples_per_chunk - sample_index;
             first_chunk_ = first_chunk;
@@ -266,7 +266,7 @@ namespace ppbox
 
         bool Mp4SampleToChunkTable::limit(
             boost::uint64_t & offset, 
-            Mp4SampleToChunkBox::Entry  & index) const
+            Mp4SampleToChunkBox::Entry & index) const
         {
             // calc sample index by chunk index, 
             Mp4SampleToChunkBox::Entry point = {index.first_chunk + 1, 0, 0};

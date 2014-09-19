@@ -93,7 +93,7 @@ namespace ppbox
             sample_index = 0;
             size_t table_index = 0;
             Mp4TimeToSampleBox::Entry entry = data_->table[table_index];
-            while (entry.sample_count * entry.sample_delta < sample_time) {
+            while (entry.sample_count * entry.sample_delta <= sample_time) {
                 sample_time -= (boost::uint64_t)entry.sample_delta * entry_.sample_count;
                 sample_index += entry.sample_count;
                 if (++table_index < data_->table.size()) {
@@ -114,7 +114,7 @@ namespace ppbox
             size_t table_index = 0;
             sample_time = 0;
             Mp4TimeToSampleBox::Entry entry = data_->table[table_index];
-            while (entry.sample_count < sample_index) {
+            while (entry.sample_count <= sample_index) {
                 sample_index -= entry.sample_count;
                 sample_time += (boost::uint64_t)entry.sample_delta * entry.sample_count;
                 if (++table_index < data_->table.size()) {
@@ -133,7 +133,7 @@ namespace ppbox
             size_t table_index = 0;
             boost::uint64_t sample_time = 0;
             Mp4TimeToSampleBox::Entry entry = data_->table[table_index];
-            while (entry.sample_count < sample_index) {
+            while (entry.sample_count <= sample_index) {
                 sample_index -= entry.sample_count;
                 sample_time += (boost::uint64_t)entry.sample_delta * entry.sample_count;
                 if (++table_index < data_->table.size()) {
@@ -240,7 +240,7 @@ namespace ppbox
                 return true;
             size_t table_index = 0;
             Mp4CompositionOffsetBox::Entry entry = data_->table[table_index];
-            while (entry.sample_count < sample_index) {
+            while (entry.sample_count <= sample_index) {
                 sample_index -= entry.sample_count;
                 if (++table_index < data_->table.size()) {
                     entry = data_->table[table_index];
