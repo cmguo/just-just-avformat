@@ -20,14 +20,14 @@ namespace ppbox
         CodecInfo const MkvFormat::codecs_[] = {
             {StreamType::VIDE,  0,  VideoSubType::HEVC, HevcFormatType::packet,   1000, "V_MPEGH/ISO/HEVC"}, 
             {StreamType::VIDE,  0,  VideoSubType::AVC,  AvcFormatType::packet,    1000, "V_MPEG4/ISO/AVC"}, 
-            {StreamType::AUDI,  1,  AudioSubType::AAC,  AacFormatType::raw,       1000, "A_AAC"}, 
-            {StreamType::AUDI,  2,  AudioSubType::MP1,  StreamFormatType::none,   1000, "A_MPEG/L1"}, 
-            {StreamType::AUDI,  3,  AudioSubType::MP2,  StreamFormatType::none,   1000, "A_MPEG/L2"}, 
-            {StreamType::AUDI,  4,  AudioSubType::MP3,  StreamFormatType::none,   1000, "A_MPEG/L3"}, 
-            {StreamType::AUDI,  4,  AudioSubType::MP1A, StreamFormatType::none,   1000, "A_MPEG/L3"}, 
-            {StreamType::AUDI,  4,  AudioSubType::MP2A, StreamFormatType::none,   1000, "A_MPEG/L3"}, 
-            {StreamType::AUDI,  5,  AudioSubType::AC3,  StreamFormatType::none,   1000, "A_AC3"}, 
-            {StreamType::AUDI,  5,  AudioSubType::EAC3, StreamFormatType::none,   1000, "A_EAC3"}, 
+            {StreamType::AUDI,  0,  AudioSubType::AAC,  AacFormatType::raw,       1000, "A_AAC"}, 
+            {StreamType::AUDI,  0,  AudioSubType::MP1,  StreamFormatType::none,   1000, "A_MPEG/L1"}, 
+            {StreamType::AUDI,  0,  AudioSubType::MP2,  StreamFormatType::none,   1000, "A_MPEG/L2"}, 
+            {StreamType::AUDI,  0,  AudioSubType::MP3,  StreamFormatType::none,   1000, "A_MPEG/L3"}, 
+            {StreamType::AUDI,  0,  AudioSubType::MP1A, StreamFormatType::none,   1000, "A_MPEG/L3"}, 
+            {StreamType::AUDI,  0,  AudioSubType::MP2A, StreamFormatType::none,   1000, "A_MPEG/L3"}, 
+            {StreamType::AUDI,  0,  AudioSubType::AC3,  StreamFormatType::none,   1000, "A_AC3"}, 
+            {StreamType::AUDI,  0,  AudioSubType::EAC3, StreamFormatType::none,   1000, "A_EAC3"}, 
         };
 
         MkvFormat::MkvFormat()
