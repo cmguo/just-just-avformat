@@ -37,18 +37,21 @@ namespace ppbox
         struct rtp_equal_type_str
         {
             rtp_equal_type_str(
+                boost::uint32_t cat, 
                 char const * str)
-                : str_(str)
+                : cat_(cat)
+                , str_(str)
             {
             }
 
             bool operator()(
                 CodecInfo const & l)
             {
-                return str_ == (char const *)l.context;
+                return cat_ == l.category && str_ == (char const *)l.context;
             }
 
         private:
+            boost::uint32_t cat_;
             std::string str_;
         };
 
@@ -59,7 +62,7 @@ namespace ppbox
             boost::system::error_code & ec)
         {
             CodecInfo const * codec = std::find_if(codecs_, 
-                codecs_ + sizeof(codecs_) / sizeof(codecs_[0]), rtp_equal_type_str((char const *)context));
+                codecs_ + sizeof(codecs_) / sizeof(codecs_[0]), rtp_equal_type_str(category, (char const *)context));
             if (codec == codecs_ + sizeof(codecs_) / sizeof(codecs_[0])) {
                 ec = error::codec_not_support;
                 codec = NULL;
