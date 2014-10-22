@@ -11,12 +11,13 @@ namespace ppbox
     namespace avformat
     {
 
-        class Mp4ChunkOffseTable
+        class Mp4ChunkOffsetTable
             : public Mp4BoxWrapper<Mp4ChunkOffsetBox>
         {
         public:
-            Mp4ChunkOffseTable(
-                Mp4Box * box);
+            Mp4ChunkOffsetTable(
+                Mp4Box * box,
+                Mp4Box * box2);
 
         public:
             bool put(
@@ -26,7 +27,7 @@ namespace ppbox
 
         public:
             bool merge(
-                Mp4ChunkOffseTable const & table);
+                Mp4ChunkOffsetTable const & table);
 
             void shift(
                 boost::int64_t offset);
@@ -49,7 +50,7 @@ namespace ppbox
         public:
             boost::uint32_t count() const
             {
-                return data_->table.size();
+                return data_ ? data_->table.size() : co64_->table.size();
             }
 
             boost::uint64_t offset() const
@@ -58,6 +59,7 @@ namespace ppbox
             }
 
         private:
+            Mp4BoxWrapper<Mp4ChunkLargeOffsetBox> co64_;
             size_t index_;
             boost::uint64_t offset_;
         };
@@ -68,7 +70,7 @@ namespace ppbox
         public:
             Mp4SampleToChunkTable(
                 Mp4Box * box, 
-                Mp4ChunkOffseTable * chunk);
+                Mp4ChunkOffsetTable * chunk);
 
         public:
             bool put(
@@ -99,7 +101,7 @@ namespace ppbox
             }
 
         private:
-            Mp4ChunkOffseTable * chunk_;
+            Mp4ChunkOffsetTable * chunk_;
             Mp4SampleToChunkBox::Entry entry_;
             size_t index_;
             boost::uint32_t samples_per_chunk_;
@@ -112,7 +114,7 @@ namespace ppbox
         public:
             Mp4SampleSizeTable(
                 Mp4Box * box, 
-                Mp4ChunkOffseTable * chunk);
+                Mp4ChunkOffsetTable * chunk);
 
         public:
             bool put(
@@ -147,7 +149,7 @@ namespace ppbox
             }
 
         private:
-            Mp4ChunkOffseTable * chunk_;
+            Mp4ChunkOffsetTable * chunk_;
             boost::uint32_t entry_;
             size_t index_;
         };

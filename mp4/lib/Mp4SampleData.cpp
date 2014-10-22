@@ -12,60 +12,97 @@ namespace ppbox
     namespace avformat
     {
 
-        // Mp4ChunkOffseTable
+        // Mp4ChunkOffsetTable
 
-        Mp4ChunkOffseTable::Mp4ChunkOffseTable(
-            Mp4Box * box)
+        Mp4ChunkOffsetTable::Mp4ChunkOffsetTable(
+            Mp4Box * box, 
+            Mp4Box * box2)
             : Mp4BoxWrapper<Mp4ChunkOffsetBox>(box)
+            , co64_(box2)
             , index_(0)
             , offset_(0)
         {
-            if (!data_->table.empty())
-                offset_ = data_->table[index_];
+            if (data_) {
+                if (!data_->table.empty())
+                    offset_ = data_->table[index_];
+            } else {
+                if (co64_->table.empty())
+                    offset_ = co64_->table[index_];
+            }
         }
 
-        bool Mp4ChunkOffseTable::put(
+        bool Mp4ChunkOffsetTable::put(
             boost::uint64_t offset)
         {
             if (offset_ != offset) {
-                data_->table.push_back(offset);
+                if (data_)
+                    data_->table.push_back(offset);
+                else
+                    co64_->table.push_back(offset);
                 offset_ = offset;
             }
             return true;
         }
 
-        bool Mp4ChunkOffseTable::put_eos()
+        bool Mp4ChunkOffsetTable::put_eos()
         {
             return true;
         }
 
-        bool Mp4ChunkOffseTable::merge(
-            Mp4ChunkOffseTable const & table)
+        template <typename T>
+        static void merge_vec(
+            std::vector<T> & l, 
+            std::vector<T> const & r)
         {
-            std::vector<boost::uint32_t> & l(data_->table);
-            std::vector<boost::uint32_t> const & r(table.data_->table);
             l.insert(l.end(), r.begin(), r.end());
+        }
+
+        bool Mp4ChunkOffsetTable::merge(
+            Mp4ChunkOffsetTable const & table)
+        {
+            if (data_) {
+                merge_vec(data_->table, table.data_->table);
+            } else {
+                merge_vec(co64_->table, table.co64_->table);
+            }
             return true;
         }
 
-        void Mp4ChunkOffseTable::shift(
+        template <typename T>
+        static void transform(
+            std::vector<T> & table, 
             boost::int64_t offset)
         {
-            std::transform(data_->table.begin(), data_->table.end(), 
-                data_->table.begin(), std::bind2nd(std::plus<boost::uint32_t>(), (boost::uint32_t)offset));
+            std::transform(table.begin(), table.end(), 
+                table.begin(), std::bind2nd(std::plus<boost::uint32_t>(), (boost::uint32_t)offset));
         }
 
-        bool Mp4ChunkOffseTable::next()
+        void Mp4ChunkOffsetTable::shift(
+            boost::int64_t offset)
+        {
+            if (data_) {
+                transform(data_->table, offset); 
+            } else {
+                transform(co64_->table, offset); 
+            }
+        }
+
+        bool Mp4ChunkOffsetTable::next()
         {
             ++index_;
-            if (index_ >= data_->table.size()) {
-                return false;
+            if (data_) {
+                if (index_ >= data_->table.size())
+                    return false;
+                offset_ = data_->table[index_];
+            } else {
+                if (index_ >= co64_->table.size())
+                    return false;
+                offset_ = co64_->table[index_];
             }
-            offset_ = data_->table[index_];
             return true;
         }
 
-        bool Mp4ChunkOffseTable::next(
+        bool Mp4ChunkOffsetTable::next(
             boost::uint32_t size)
         {
             offset_ += size;
@@ -73,30 +110,49 @@ namespace ppbox
         }
 
         // seek to chunk
-        bool Mp4ChunkOffseTable::seek(
+        bool Mp4ChunkOffsetTable::seek(
             boost::uint32_t chunk_index)
         {
-            if (chunk_index >= data_->table.size()) {
-                return false;
+            if (data_) {
+                if (chunk_index >= data_->table.size()) {
+                    return false;
+                }
+                index_ = chunk_index;
+                offset_ = data_->table[index_];
+            } else {
+                if (chunk_index >= co64_->table.size()) {
+                    return false;
+                }
+                index_ = chunk_index;
+                offset_ = co64_->table[index_];
             }
-            index_ = chunk_index;
-            offset_ = data_->table[index_];
             return true;
         }
 
-        bool Mp4ChunkOffseTable::limit(
+        template <typename T>
+        static boost::uint32_t limit_(
+            std::vector<T> const & table, 
+            boost::uint64_t & offset)
+        {
+            typename std::vector<T>::const_iterator iter = 
+                std::upper_bound(table.begin(), table.end(), offset);
+            boost::uint32_t first_chunk = std::distance(table.begin(), iter);
+            if (first_chunk == 0) {
+                offset = 0;
+            } else {
+                --first_chunk;
+                offset -= table[first_chunk];
+            }
+            return first_chunk;
+        }
+
+        bool Mp4ChunkOffsetTable::limit(
             boost::uint64_t & offset, 
             Mp4SampleToChunkBox::Entry & index) const
         {
-            std::vector<boost::uint32_t>::iterator iter = 
-                std::upper_bound(data_->table.begin(), data_->table.end(), offset);
-            index.first_chunk = std::distance(data_->table.begin(), iter);
-            if (index.first_chunk == 0) {
-                offset = 0;
-            } else {
-                --index.first_chunk;
-                offset -= data_->table[index.first_chunk];
-            }
+            index.first_chunk = data_
+                ? limit_(data_->table, offset)
+                : limit_(co64_->table, offset);
             return true;
         }
 
@@ -104,7 +160,7 @@ namespace ppbox
 
         Mp4SampleToChunkTable::Mp4SampleToChunkTable(
             Mp4Box * box, 
-            Mp4ChunkOffseTable * chunk)
+            Mp4ChunkOffsetTable * chunk)
             : Mp4BoxWrapper<Mp4SampleToChunkBox>(box)
             , chunk_(chunk)
             , index_(0)
@@ -282,7 +338,7 @@ namespace ppbox
 
         Mp4SampleSizeTable::Mp4SampleSizeTable(
             Mp4Box * box, 
-            Mp4ChunkOffseTable * chunk)
+            Mp4ChunkOffsetTable * chunk)
             : Mp4BoxWrapper<Mp4SampleSizeBox>(box)
             , chunk_(chunk)
             , index_(0)

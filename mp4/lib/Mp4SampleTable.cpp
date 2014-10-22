@@ -17,7 +17,7 @@ namespace ppbox
             , stts_(find_item("/stts"))
             , ctts_(find_item("/ctts"))
             , stss_(find_item("/stss"))
-            , stco_(find_item("/stco"))
+            , stco_(find_item("/stco"), find_item("/co64"))
             , stsc_(find_item("/stsc"), &stco_)
             , stsz_(find_item("/stsz"), &stco_)
         {
@@ -31,7 +31,7 @@ namespace ppbox
             , stts_(create_item("/stts"))
             , ctts_(NULL)
             , stss_(NULL)
-            , stco_(create_item("/stco"))
+            , stco_(create_item("/stco"), NULL)
             , stsc_(create_item("/stsc"), &stco_)
             , stsz_(create_item("/stsz"), &stco_)
         {

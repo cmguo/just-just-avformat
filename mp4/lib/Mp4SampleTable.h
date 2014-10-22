@@ -99,7 +99,7 @@ namespace ppbox
             Mp4TimeToSampleTable stts_;
             Mp4CompositionOffsetTable ctts_;
             Mp4SyncSampleTable stss_;
-            Mp4ChunkOffseTable stco_;
+            Mp4ChunkOffsetTable stco_;
             Mp4SampleToChunkTable stsc_;
             Mp4SampleSizeTable stsz_;
 
