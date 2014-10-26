@@ -17,7 +17,7 @@ namespace ppbox
         // http://www.iana.org/assignments/rtp-parameters/rtp-parameters.xhtml
 
         ppbox::avformat::CodecInfo const RtpFormat::codecs_[] = {
-            {StreamType::VIDE,  0,  VideoSubType::AVC,  StreamFormatType::none, 90000, "H264"},
+            {StreamType::VIDE,  0,  VideoSubType::AVC,  StreamFormatType::none, 90000,  "H264"},
             {StreamType::VIDE,  0,  VideoSubType::HEVC, StreamFormatType::none, 90000,  "H265"},
             {StreamType::AUDI,  0,  AudioSubType::AAC,  AacFormatType::raw,     1,      "mpeg4-generic"}, 
             {StreamType::AUDI,  0,  AudioSubType::MP1A, StreamFormatType::none, 90000,  "MPA"},
