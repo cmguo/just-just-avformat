@@ -3,7 +3,7 @@
 #ifndef _PPBOX_AVFORMAT_AVI_LIB_AVI_HEADER_LIST_H_
 #define _PPBOX_AVFORMAT_AVI_LIB_AVI_HEADER_LIST_H_
 
-#include "ppbox/avformat/avi/lib/AviHeader.h"
+#include "ppbox/avformat/avi/box/AviHeaderBox.h"
 #include "ppbox/avformat/avi/lib/AviStream.h"
 #include "ppbox/avformat/avi/lib/AviBoxWrapper.h"
 
@@ -20,6 +20,18 @@ namespace ppbox
                 AviBox & box, 
                 AviIndex & index);
 
+            AviHeaderList(
+                AviBox & box, 
+                AviIndex & index, 
+                create_new_t);
+
+        public:
+            AviStream * create_stream(
+                boost::uint32_t type);
+
+            bool fixup(
+                boost::system::error_code & ec);
+
         public:
             bool merge_begin(
                 boost::system::error_code & ec);
@@ -32,7 +44,7 @@ namespace ppbox
                 boost::system::error_code & ec);
 
         public:
-            AviHeader * header()
+            AviHeaderBox * header()
             {
                 return avih_;
             }
@@ -43,8 +55,9 @@ namespace ppbox
             }
 
         private:
-            AviHeader * avih_;
+            AviHeaderBox * avih_;
             std::vector<AviStream *> streams_;
+            AviIndex * index_;
         };
 
     } // namespace avformat

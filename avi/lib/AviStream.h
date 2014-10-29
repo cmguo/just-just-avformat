@@ -21,16 +21,14 @@ namespace ppbox
         {
         public:
             AviStream(
-                AviBox & box);
-
-            AviStream(
                 AviBox & box, 
                 AviIndex & avi_index, 
                 boost::uint32_t index);
 
             AviStream(
                 AviBox & box, 
-                boost::uint32_t id, 
+                AviIndex & avi_index, 
+                boost::uint32_t index, 
                 boost::uint32_t type); // create new
 
         public:
@@ -41,7 +39,6 @@ namespace ppbox
 
         public:
             bool fixup(
-                boost::uint32_t timescale, 
                 boost::system::error_code & ec);
 
         public:
@@ -72,6 +69,9 @@ namespace ppbox
                 ppbox::avbase::Sample & sample) const;
 
         public:
+            boost::uint32_t id(
+                boost::uint32_t index) const;
+
             boost::uint32_t type() const
             {
                 return strh_->dwType;
@@ -94,6 +94,9 @@ namespace ppbox
 
             boost::uint64_t duration() const;
 
+            void handler(
+                boost::uint32_t n);
+
             void sample_duration(
                 boost::uint32_t n);
 
@@ -103,12 +106,13 @@ namespace ppbox
             void duration(
                 boost::uint64_t n);
 
-            AviStreamFormatBox::VideoFormat const & video() const
+        public:
+            AviStreamFormatBox::VideoFormat & video()
             {
                 return strf_->video;
             }
 
-            AviStreamFormatBox::AudioFormat const & audio() const
+            AviStreamFormatBox::AudioFormat & audio()
             {
                 return strf_->audio;
             }

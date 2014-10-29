@@ -140,7 +140,7 @@ namespace ppbox
             CodecInfo const * codec = codec_from_codec(info.type, info.sub_type, info.context, ec);
             if (codec) {
                 info.type = codec->category;
-                info.sub_type = codec->codec_type;
+                info.sub_type = codec->stream_type;
                 info.format_type = codec->codec_format;
                 info.context = codec->context;
                 if (info.time_scale == 0 && codec->time_scale != 0)

@@ -27,11 +27,11 @@ namespace ppbox
             {StreamType::VIDE,  AviVideoCodec::h264,    VideoSubType::AVC,  AvcFormatType::byte_stream,  1}, 
             {StreamType::VIDE,  AviVideoCodec::WMV3,    VideoSubType::WMV3, StreamFormatType::none,      1}, 
             {StreamType::AUDI,  AviAudioCodec::MP3,     AudioSubType::MP3,  StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::MP3,     AudioSubType::MP1,  StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::MP3,     AudioSubType::MP2,  StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::MP3,     AudioSubType::MP1A, StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::MP3,     AudioSubType::MP2A, StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::AAC,     AudioSubType::AAC,  AacFormatType::raw,          1}, 
+            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioSubType::MP1,  StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioSubType::MP2,  StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioSubType::MP1A, StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioSubType::MP2A, StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::AAC,     AudioSubType::AAC,  AacFormatType::adts,         1}, 
             {StreamType::AUDI,  AviAudioCodec::WMA2,    AudioSubType::WMA2, StreamFormatType::none,      1}, 
         };
 
@@ -40,6 +40,32 @@ namespace ppbox
         {
         }
 
+        struct MPEG1WAVEFORMAT
+        {
+            boost::uint16_t fwHeadLayer;
+            boost::uint32_t dwHeadBitrate;
+            boost::uint16_t fwHeadMode;
+            boost::uint16_t fwHeadModeExt;
+            boost::uint16_t wHeadEmphasis;
+            boost::uint16_t fwHeadFlags;
+            boost::uint32_t dwPTSLow;
+            boost::uint32_t dwPTSHigh;
+            
+            template <typename Archive>
+            void serialize(
+                Archive & ar)
+            {
+                ar & fwHeadLayer
+                    & dwHeadBitrate
+                    & fwHeadMode
+                    & fwHeadModeExt
+                    & wHeadEmphasis
+                    & fwHeadFlags
+                    & dwPTSLow
+                    & dwPTSHigh;
+            }
+        };
+
         struct MPEGLAYER3WAVEFORMAT
         {
             boost::uint16_t wID;
@@ -47,8 +73,18 @@ namespace ppbox
             boost::uint16_t nBlockSize;
             boost::uint16_t nFramesPerBlock;
             boost::uint16_t nCodecDelay;
-        };
 
+            template <typename Archive>
+            void serialize(
+                Archive & ar)
+            {
+                ar & wID
+                    & fdwFlags
+                    & nBlockSize
+                    & nFramesPerBlock
+                    & nCodecDelay;
+            }
+        };
 
         bool AviFormat::finish_from_stream(
             ppbox::avbase::StreamInfo & info, 
@@ -63,11 +99,7 @@ namespace ppbox
                             boost::asio::buffer(info.format_data));
                         abuf.commit(info.format_data.size());
                         AviBoxIArchive ia(abuf);
-                        ia >> f.wID
-                            >> f.fdwFlags
-                            >> f.nBlockSize
-                            >> f.nFramesPerBlock
-                            >> f.nCodecDelay;
+                        ia >> f;
                         info.audio_format.sample_per_frame = f.nBlockSize / f.nFramesPerBlock;
                         info.format_data.clear();
                     }
@@ -75,6 +107,54 @@ namespace ppbox
                 }
             }
             return Format::finish_from_stream(info, ec);
+        }
+
+        bool AviFormat::finish_from_codec(
+            ppbox::avbase::StreamInfo & info, 
+            boost::system::error_code & ec)
+        {
+            if (!Format::finish_from_codec(info, ec))
+                return false;
+            if (info.type == StreamType::AUDI) {
+                switch (info.sub_type) {
+                    case AviAudioCodec::MP3:
+                    {
+                        MPEGLAYER3WAVEFORMAT f = {
+                            1, // MPEGLAYER3_ID_MPEG.
+                            0, 
+                            info.audio_format.sample_per_frame, 
+                            1,
+                            0};
+                        info.format_data.resize(12);
+                        util::archive::ArchiveBuffer<boost::uint8_t> abuf(
+                            boost::asio::buffer(info.format_data));
+                        AviBoxOArchive oa(abuf);
+                        oa << f;
+                    }
+                    break;
+                    case AviAudioCodec::MPEG:
+                    {
+                        MPEG1WAVEFORMAT f = {
+                            2, // ACM_MPEG_LAYER2.
+                            0, 
+                            1, // ACM_MPEG_STEREO
+                            0, // fwHeadModeExt
+                            0, // wHeadEmphasis
+                            0, // fwHeadFlags
+                            0, 
+                            0}; 
+                        info.format_data.resize(22);
+                        util::archive::ArchiveBuffer<boost::uint8_t> abuf(
+                            boost::asio::buffer(info.format_data));
+                        AviBoxOArchive oa(abuf);
+                        oa << f;
+                    }
+                    break;
+                    case AviAudioCodec::AAC:
+                    break;
+                }
+            }
+            return true;
         }
 
     } // namespace avformat

@@ -18,16 +18,26 @@ namespace ppbox
         {
         }
 
-        bool AviIndex::put(
-            boost::uint64_t index)
+        void AviIndex::set_movie_offset(
+            boost::uint64_t movie_offset)
         {
-            //AviIndexBox::Entry entry = {};
-            return false;
+            movie_offset_ = movie_offset + 8;
         }
 
-        bool AviIndex::put_eos()
+        bool AviIndex::put(
+            boost::uint32_t stream, 
+            ppbox::avbase::Sample const & sample)
         {
-            return false;
+            AviIndexBox::Entry entry;
+            entry.dwChunkId = stream;
+            entry.dwFlags = 0;
+            if (sample.flags & sample.f_sync) {
+                entry.dwFlags |= AviIndexFlags::KeyFrame;
+            }
+            entry.dwOffset = sample.time - movie_offset_;
+            entry.dwSize = sample.size - 8;
+            data_->table.push_back(entry);
+            return true;
         }
 
         bool AviIndex::merge(
@@ -41,7 +51,7 @@ namespace ppbox
         {
         }
 
-        bool AviIndex::next(
+    bool AviIndex::next(
             boost::uint32_t & index) const
         {
             boost::uint32_t stream = data_->table[index].dwChunkId;
@@ -81,7 +91,7 @@ namespace ppbox
             AviIndexBox::Entry const & entry(data_->table[index]);
             sample.flags = (entry.dwFlags & AviIndexFlags::KeyFrame) ? sample.f_sync : 0;
             sample.time = movie_offset_ + entry.dwOffset; // use time for offset
-            sample.size = entry.dwSize;
+            sample.size = entry.dwSize + 8;
         }
 
         AviIndexStream::AviIndexStream(
@@ -108,6 +118,23 @@ namespace ppbox
             }
             index1_ = 0;
             index2_ = index_map_[0].index2;
+        }
+
+        AviIndexStream::AviIndexStream(
+            AviIndex & index, 
+            boost::uint32_t stream, 
+            void *)
+            : avi_index_(index)
+            , all_sync_(true)
+        {
+            index1_ = 0;
+            index2_ = stream;
+        }
+
+        bool AviIndexStream::put(
+            ppbox::avbase::Sample const & sample)
+        {
+            return avi_index_.put(index2_, sample);
         }
 
         bool AviIndexStream::next()

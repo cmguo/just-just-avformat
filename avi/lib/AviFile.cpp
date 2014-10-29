@@ -15,7 +15,6 @@ namespace ppbox
         AviFile::AviFile()
             : AviBoxWrapper2<AviFileBox>(NULL)
             , hdrl_(NULL)
-            , movi_(NULL)
             , idx1_(NULL)
         {
         }
@@ -47,7 +46,6 @@ namespace ppbox
                         hdrl = cbox;
                         break;
                     case AviBoxType::movi:
-                        cbox->is<AviMovieBox>();
                         movi = cbox;
                         break;
                     case AviBoxType::idx1:
@@ -60,9 +58,9 @@ namespace ppbox
                     byte_size += (*iter)->byte_size();
             }
             if (hdrl && movi && idx1) {
+                movi->is<AviMovieBox>();
                 idx1_ = new AviIndex(*idx1, byte_size);
                 hdrl_ = new AviHeaderList(*hdrl, *idx1_);
-                movi_ = movi;
                 return true;
             }
             // return false, but no error
@@ -74,10 +72,22 @@ namespace ppbox
             boost::system::error_code & ec)
         {
             assign(new AviBox(AviFileBox()));
-            //avih_ = new AviHeader(*create_item("/avih"));
-            movi_ = create_item("/movi");
+            box_->riff_id(AviBoxType::AVI);
+            AviBox * hdrl = create_item("/hdrl");
+            AviBox * movi = create_item("/movi");
+            //AviBox * idx1 = create_item("/idx1");
+            AviBox * idx1 = new AviBox(AviIndexBox());
+            (void)movi;
+            idx1_ = new AviIndex(*idx1, 0);
+            hdrl_ = new AviHeaderList(*hdrl, *idx1_, create_new_t());
             ec.clear();
             return true;
+        }
+
+        bool AviFile::fixup(
+            boost::system::error_code & ec)
+        {
+            return hdrl_->fixup(ec);
         }
 
         void AviFile::close()
@@ -117,6 +127,8 @@ namespace ppbox
             AviBoxContext ctx;
             oa.context(&ctx);
             oa << *box_;
+            data_->push_back(&idx1_->box());
+            idx1_->set_movie_offset(box_->byte_size() - 12);
         }
 
         bool AviFile::merge_begin(

@@ -74,6 +74,20 @@ namespace ppbox
             void id(
                 boost::uint32_t id)
             {
+                type = type2 = id;
+            }
+
+            void riff_id(
+                boost::uint32_t id)
+            {
+                type = RIFF;
+                type2 = id;
+            }
+
+            void list_id(
+                boost::uint32_t id)
+            {
+                type = LIST;
                 type2 = id;
             }
 
@@ -99,6 +113,12 @@ namespace ppbox
             boost::uint64_t byte_size() const
             {
                 return 8 + size;
+            }
+
+            void byte_size(
+                boost::uint64_t sz)
+            {
+                size = sz - 8;
             }
         };
 

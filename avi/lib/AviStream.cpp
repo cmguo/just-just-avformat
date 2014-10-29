@@ -12,15 +12,6 @@ namespace ppbox
     {
 
         AviStream::AviStream(
-            AviBox & box)
-            : AviBoxWrapper2<AviStreamBox>(box)
-            , strh_(find_item_as<AviStreamHeaderBox>("/strh"))
-            , strf_(find_item_as<AviStreamFormatBox>("/strf"))
-            , index_(NULL)
-        {
-        }
-
-        AviStream::AviStream(
             AviBox & box, 
             AviIndex & avi_index, 
             boost::uint32_t index)
@@ -29,34 +20,46 @@ namespace ppbox
             , strf_(find_item_as<AviStreamFormatBox>("/strf"))
             , index_(NULL)
         {
-            AviIndexBox::Entry entry;
-            entry.fccChunkId[0] = boost::uint8_t((index >> 8) & 0xff) + '0';
-            entry.fccChunkId[1] = boost::uint8_t(index & 0xff) + '0';
-            switch (strh_->dwType) {
-                case AviStreamType::vids:
-                    entry.fccChunkId[2] = 'd';
-                    entry.fccChunkId[3] = 'c';
-                    break;
-                case AviStreamType::auds:
-                    entry.fccChunkId[2] = 'w';
-                    entry.fccChunkId[3] = 'b';
-                    break;
-                default:
-                    break;
-            }
-            index_ = new AviIndexStream(avi_index, entry.dwChunkId);
+            index_ = new AviIndexStream(avi_index, id(index));
         }
 
         AviStream::AviStream(
             AviBox & box, 
-            boost::uint32_t id, 
+            AviIndex & avi_index, 
+            boost::uint32_t index, 
             boost::uint32_t type)
             : AviBoxWrapper2<AviStreamBox>(box)
             , strh_(create_item_as<AviStreamHeaderBox>("/strh"))
             , strf_(create_item_as<AviStreamFormatBox>("/strf"))
+            , index_(NULL)
         {
-            strh_->dwHandler = type;
+            strh_->dwType = type;
+            index_ = new AviIndexStream(avi_index, id(index), NULL);
         }
+
+        bool AviStream::put(
+            ppbox::avbase::Sample const & sample)
+        {
+            return index_->put(sample);
+        }
+
+        bool AviStream::put_eos()
+        {
+            return true;
+        }
+
+        bool AviStream::fixup(
+            boost::system::error_code & ec)
+        {
+            if (strh_->dwType == AviStreamType::vids) {
+                strh_->dwHandler = strf_->video.biCompression;
+            } else if (strh_->dwType == AviStreamType::auds) {
+                //strh_->dwHandler = ???;
+                strh_->dwSampleSize = strf_->audio.nBlockAlign;
+            }
+            return true;
+        }
+
 
         bool AviStream::merge(
             AviStream const & track, 
@@ -120,11 +123,39 @@ namespace ppbox
             sample.dts = strh_->dwScale * sample.dts;
             sample.duration = strh_->dwScale;
             sample.time += 8; // offset
+            sample.size -= 8;
+        }
+
+        boost::uint32_t AviStream::id(
+             boost::uint32_t index) const
+        {
+            AviIndexBox::Entry entry;
+            entry.fccChunkId[0] = boost::uint8_t((index >> 8) & 0xff) + '0';
+            entry.fccChunkId[1] = boost::uint8_t(index & 0xff) + '0';
+            switch (strh_->dwType) {
+                case AviStreamType::vids:
+                    entry.fccChunkId[2] = 'd';
+                    entry.fccChunkId[3] = 'c';
+                    break;
+                case AviStreamType::auds:
+                    entry.fccChunkId[2] = 'w';
+                    entry.fccChunkId[3] = 'b';
+                    break;
+                default:
+                    break;
+            }
+            return entry.dwChunkId;
         }
 
         boost::uint64_t AviStream::duration() const
         {
             return (boost::uint64_t)strh_->dwScale * strh_->dwLength;
+        }
+
+        void AviStream::handler(
+            boost::uint32_t n)
+        {
+            strh_->dwHandler = n;
         }
 
         void AviStream::sample_duration(

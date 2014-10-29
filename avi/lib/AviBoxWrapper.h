@@ -11,8 +11,15 @@ namespace ppbox
     namespace avformat
     {
 
+        class AviBoxWrapperBase
+        {
+        public:
+            struct create_new_t {};
+        };
+
         template <typename T>
         class AviBoxWrapper
+            : public AviBoxWrapperBase
         {
         public:
             AviBoxWrapper(
@@ -90,6 +97,13 @@ namespace ppbox
                 AviBoxVector * vec = NULL)
                 : vec_(vec)
             {
+            }
+
+        public:
+            void assign(
+                AviBoxVector * vec)
+            {
+                vec_ = vec;
             }
 
         public:
@@ -204,6 +218,13 @@ namespace ppbox
                 : AviBoxWrapper<T>(box)
                 , AviBoxVectorWrapper(this->data_)
             {
+            }
+
+            void assign(
+                AviBox * box)
+            {
+                AviBoxWrapper<T>::assign(box);
+                AviBoxVectorWrapper::assign(this->data_);
             }
         };
 

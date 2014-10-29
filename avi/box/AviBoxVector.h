@@ -112,6 +112,8 @@ namespace ppbox
                 boost::uint32_t type)
             {
                 push_back(new AviBox(type));
+                if (get_vec_map()[type] != NULL)
+                    back()->list_id(type);
                 return back();
             }
 

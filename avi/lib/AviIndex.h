@@ -22,10 +22,12 @@ namespace ppbox
                 boost::uint64_t movie_offset);
 
         public:
-            bool put(
-                boost::uint64_t offset);
+            void set_movie_offset(
+                boost::uint64_t movie_offset);
 
-            bool put_eos();
+            bool put(
+                boost::uint32_t stream,
+                ppbox::avbase::Sample const & sample);
 
         public:
             bool merge(
@@ -64,6 +66,15 @@ namespace ppbox
             AviIndexStream(
                 AviIndex & index, 
                 boost::uint32_t stream);
+
+            AviIndexStream(
+                AviIndex & index, 
+                boost::uint32_t stream, 
+                void *); // create_new
+
+        public:
+            bool put(
+                ppbox::avbase::Sample const & sample);
 
         public:
             bool next();

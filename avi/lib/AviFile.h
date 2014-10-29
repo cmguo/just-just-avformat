@@ -29,6 +29,9 @@ namespace ppbox
             bool create(
                 boost::system::error_code & ec);
 
+            bool fixup(
+                boost::system::error_code & ec);
+
             void close();
 
         public:
@@ -54,6 +57,11 @@ namespace ppbox
             AviHeaderList * header_list()
             {
                 return hdrl_;
+            }
+
+            AviIndex * index()
+            {
+                return idx1_;
             }
 
         private:

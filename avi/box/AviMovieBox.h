@@ -14,6 +14,7 @@ namespace ppbox
 
         struct AviMovieBox
             : AviBoxData<AviMovieBox, AviBoxType::movi>
+            , AviBoxContainer<AviMovieBox, AviBoxType::movi>
         {
             static ppbox::avbase::ObjectDefine::ClassEnum const static_cls = ppbox::avbase::ObjectDefine::cls_data;
 

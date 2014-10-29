@@ -62,9 +62,10 @@ namespace ppbox
         struct AviAudioCodec
         {
             enum Enum {
+                MPEG    = 0x0050, 
                 MP3     = 0x0055, 
-                WMA2    = 0x0161, 
                 AAC     = 0x00ff, 
+                WMA2    = 0x0161, 
             };
         };
 

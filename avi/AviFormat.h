@@ -21,6 +21,10 @@ namespace ppbox
                 ppbox::avbase::StreamInfo & info, 
                 boost::system::error_code & ec);
 
+            virtual bool finish_from_codec(
+                ppbox::avbase::StreamInfo & info, 
+                boost::system::error_code & ec);
+
         private:
             static CodecInfo const codecs_[];
         };
