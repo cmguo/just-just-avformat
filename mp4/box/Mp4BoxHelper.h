@@ -28,6 +28,7 @@ namespace ppbox
             {
                 ctx_->path.append(1, '/');
                 ctx_->path += ppbox::avbase::FourCC::to_string(h.header().type);
+                LOG_TRACE("box type: " << ctx_->path << " size: " << h.header().byte_size());
                 ctx_->stack.push_back(&h.object());
                 ctx_->data_ends.push_back(h.data_end());
             }
