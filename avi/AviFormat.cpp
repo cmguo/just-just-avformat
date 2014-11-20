@@ -33,6 +33,8 @@ namespace ppbox
             {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioSubType::MP2A, StreamFormatType::none,      1}, 
             {StreamType::AUDI,  AviAudioCodec::AAC,     AudioSubType::AAC,  AacFormatType::adts,         1}, 
             {StreamType::AUDI,  AviAudioCodec::WMA2,    AudioSubType::WMA2, StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::AC3,     AudioSubType::EAC3, StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::DTS,     AudioSubType::DTS,  StreamFormatType::none,      1}, 
         };
 
         AviFormat::AviFormat()
@@ -154,6 +156,8 @@ namespace ppbox
                     break;
                 }
             }
+            if (info.format_data.size() & 1)
+                info.format_data.push_back(0);
             return true;
         }
 

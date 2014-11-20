@@ -66,6 +66,8 @@ namespace ppbox
                 MP3     = 0x0055, 
                 AAC     = 0x00ff, 
                 WMA2    = 0x0161, 
+                AC3     = 0x2000, 
+                DTS     = 0x2001, 
             };
         };
 
