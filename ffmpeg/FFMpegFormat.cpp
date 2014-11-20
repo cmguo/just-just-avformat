@@ -3,8 +3,6 @@
 #include "ppbox/avformat/Common.h"
 #include "ppbox/avformat/ffmpeg/FFMpegFormat.h"
 
-#include <ppbox/avcodec/avc/AvcFormatType.h>
-#include <ppbox/avcodec/aac/AacFormatType.h>
 #include <ppbox/avcodec/ffmpeg/FFMpegCodecMap.h>
 using namespace ppbox::avcodec;
 

@@ -5,11 +5,10 @@
 #include "ppbox/avformat/mp4/box/Mp4BoxEnum.h"
 #include "ppbox/avformat/Error.h"
 
-#include <ppbox/avcodec/avc/AvcFormatType.h>
-#include <ppbox/avcodec/aac/AacFormatType.h>
+#include <ppbox/avcodec/CodecType.h>
+using namespace ppbox::avcodec;
 
 #include <ppbox/avbase/TypeMap.h>
-using namespace ppbox::avcodec;
 
 namespace ppbox
 {
@@ -17,21 +16,21 @@ namespace ppbox
     {
 
         CodecInfo const Mp4Format::codecs_[] = {
-            {StreamType::VIDE,  Mp4CodecType::hvc1, VideoSubType::HEVC, AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('h', 'v', 'c', 'C')}, 
-            {StreamType::VIDE,  Mp4CodecType::hev1, VideoSubType::HEVC, AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('h', 'v', 'c', 'C')}, 
-            {StreamType::VIDE,  Mp4CodecType::avc1, VideoSubType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
-            {StreamType::VIDE,  Mp4CodecType::avc2, VideoSubType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
-            {StreamType::VIDE,  Mp4CodecType::avc3, VideoSubType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
-            {StreamType::VIDE,  Mp4CodecType::avc4, VideoSubType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
-            {StreamType::VIDE,  Mp4CodecType::mp4v, VideoSubType::MP4V, StreamFormatType::none, 0,  (void*)Mp4ObjectType::MPEG4_VISUAL}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG4_AUDIO}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_MAIN}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_LC}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_SSRP}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP2A, StreamFormatType::none, 1,  (void*)Mp4ObjectType::MPEG2_PART3_AUDIO}, 
-            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioSubType::MP1A, StreamFormatType::none, 1,  (void*)Mp4ObjectType::MPEG1_AUDIO}, 
-            {StreamType::AUDI,  Mp4CodecType::ac_3, AudioSubType::AC3,  StreamFormatType::none, 1,  0}, 
-            {StreamType::AUDI,  Mp4CodecType::ec_3, AudioSubType::EAC3, StreamFormatType::none, 1,  (void*)MAKE_FOURC_TYPE('d',  'e', 'c', '3')}, 
+            {StreamType::VIDE,  Mp4CodecType::hvc1, VideoType::HEVC, AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('h', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::hev1, VideoType::HEVC, AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('h', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::avc1, VideoType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::avc2, VideoType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::avc3, VideoType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::avc4, VideoType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
+            {StreamType::VIDE,  Mp4CodecType::mp4v, VideoType::MP4V, StreamFormatType::none, 0,  (void*)Mp4ObjectType::MPEG4_VISUAL}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG4_AUDIO}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_MAIN}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_LC}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_SSRP}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::MP2A, StreamFormatType::none, 1,  (void*)Mp4ObjectType::MPEG2_PART3_AUDIO}, 
+            {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::MP1A, StreamFormatType::none, 1,  (void*)Mp4ObjectType::MPEG1_AUDIO}, 
+            {StreamType::AUDI,  Mp4CodecType::ac_3, AudioType::AC3,  StreamFormatType::none, 1,  0}, 
+            {StreamType::AUDI,  Mp4CodecType::ec_3, AudioType::EAC3, StreamFormatType::none, 1,  (void*)MAKE_FOURC_TYPE('d',  'e', 'c', '3')}, 
         };
 
         Mp4Format::Mp4Format()

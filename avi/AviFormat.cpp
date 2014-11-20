@@ -6,11 +6,10 @@
 #include "ppbox/avformat/avi/box/AviBoxArchive.h"
 #include "ppbox/avformat/Error.h"
 
-#include <ppbox/avcodec/avc/AvcFormatType.h>
-#include <ppbox/avcodec/aac/AacFormatType.h>
+#include <ppbox/avcodec/CodecType.h>
+using namespace ppbox::avcodec;
 
 #include <ppbox/avbase/TypeMap.h>
-using namespace ppbox::avcodec;
 
 #include <util/archive/ArchiveBuffer.h>
 
@@ -23,18 +22,18 @@ namespace ppbox
 
         CodecInfo const AviFormat::codecs_[] = {
             {StreamType::VIDE,  AviVideoCodec::DIVX,    AviVideoCodec::DIVX,StreamFormatType::none,      1}, 
-            {StreamType::VIDE,  AviVideoCodec::H264,    VideoSubType::AVC,  AvcFormatType::byte_stream,  1}, 
-            {StreamType::VIDE,  AviVideoCodec::h264,    VideoSubType::AVC,  AvcFormatType::byte_stream,  1}, 
-            {StreamType::VIDE,  AviVideoCodec::WMV3,    VideoSubType::WMV3, StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::MP3,     AudioSubType::MP3,  StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioSubType::MP1,  StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioSubType::MP2,  StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioSubType::MP1A, StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioSubType::MP2A, StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::AAC,     AudioSubType::AAC,  AacFormatType::adts,         1}, 
-            {StreamType::AUDI,  AviAudioCodec::WMA2,    AudioSubType::WMA2, StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::AC3,     AudioSubType::EAC3, StreamFormatType::none,      1}, 
-            {StreamType::AUDI,  AviAudioCodec::DTS,     AudioSubType::DTS,  StreamFormatType::none,      1}, 
+            {StreamType::VIDE,  AviVideoCodec::H264,    VideoType::AVC,  AvcFormatType::byte_stream,  1}, 
+            {StreamType::VIDE,  AviVideoCodec::h264,    VideoType::AVC,  AvcFormatType::byte_stream,  1}, 
+            {StreamType::VIDE,  AviVideoCodec::WMV3,    VideoType::WMV3, StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::MP3,     AudioType::MP3,  StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioType::MP1,  StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioType::MP2,  StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioType::MP1A, StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::MPEG,    AudioType::MP2A, StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::AAC,     AudioType::AAC,  AacFormatType::adts,         1}, 
+            {StreamType::AUDI,  AviAudioCodec::WMA2,    AudioType::WMA2, StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::AC3,     AudioType::EAC3, StreamFormatType::none,      1}, 
+            {StreamType::AUDI,  AviAudioCodec::DTS,     AudioType::DTS,  StreamFormatType::none,      1}, 
         };
 
         AviFormat::AviFormat()

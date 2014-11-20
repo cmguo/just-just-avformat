@@ -4,9 +4,7 @@
 #include "ppbox/avformat/asf/AsfFormat.h"
 #include "ppbox/avformat/asf/AsfEnum.h"
 
-#include <ppbox/avcodec/avc/AvcFormatType.h>
-#include <ppbox/avcodec/aac/AacFormatType.h>
-
+#include <ppbox/avcodec/CodecType.h>
 using namespace ppbox::avcodec;
 
 namespace ppbox
@@ -15,16 +13,16 @@ namespace ppbox
     {
 
         CodecInfo const AsfFormat::codecs_[] = {
-            {StreamType::VIDE,  AsfVideoCodec::H264,    VideoSubType::AVC,  AvcFormatType::byte_stream, 1000}, 
-            {StreamType::VIDE,  AsfVideoCodec::h264,    VideoSubType::AVC,  AvcFormatType::byte_stream, 1000}, 
-            {StreamType::VIDE,  AsfVideoCodec::WMV3,    VideoSubType::WMV3, StreamFormatType::none,     1000}, 
-            {StreamType::AUDI,  AsfAudioCodec::MP3,     AudioSubType::MP3,  StreamFormatType::none,     1000}, 
-            {StreamType::AUDI,  AsfAudioCodec::MP3,     AudioSubType::MP1,  StreamFormatType::none,     1000}, 
-            {StreamType::AUDI,  AsfAudioCodec::MP3,     AudioSubType::MP2,  StreamFormatType::none,     1000}, 
-            {StreamType::AUDI,  AsfAudioCodec::MP3,     AudioSubType::MP1A, StreamFormatType::none,     1000}, 
-            {StreamType::AUDI,  AsfAudioCodec::MP3,     AudioSubType::MP2A, StreamFormatType::none,     1000}, 
-            {StreamType::AUDI,  AsfAudioCodec::AAC,     AudioSubType::AAC,  AacFormatType::raw,         1000}, 
-            {StreamType::AUDI,  AsfAudioCodec::WMA2,    AudioSubType::WMA2, StreamFormatType::none,     1000}, 
+            {StreamType::VIDE,  AsfVideoCodec::H264,    VideoType::AVC,  AvcFormatType::byte_stream, 1000}, 
+            {StreamType::VIDE,  AsfVideoCodec::h264,    VideoType::AVC,  AvcFormatType::byte_stream, 1000}, 
+            {StreamType::VIDE,  AsfVideoCodec::WMV3,    VideoType::WMV3, StreamFormatType::none,     1000}, 
+            {StreamType::AUDI,  AsfAudioCodec::MP3,     AudioType::MP3,  StreamFormatType::none,     1000}, 
+            {StreamType::AUDI,  AsfAudioCodec::MP3,     AudioType::MP1,  StreamFormatType::none,     1000}, 
+            {StreamType::AUDI,  AsfAudioCodec::MP3,     AudioType::MP2,  StreamFormatType::none,     1000}, 
+            {StreamType::AUDI,  AsfAudioCodec::MP3,     AudioType::MP1A, StreamFormatType::none,     1000}, 
+            {StreamType::AUDI,  AsfAudioCodec::MP3,     AudioType::MP2A, StreamFormatType::none,     1000}, 
+            {StreamType::AUDI,  AsfAudioCodec::AAC,     AudioType::AAC,  AacFormatType::raw,         1000}, 
+            {StreamType::AUDI,  AsfAudioCodec::WMA2,    AudioType::WMA2, StreamFormatType::none,     1000}, 
         };
 
         AsfFormat::AsfFormat()

@@ -5,8 +5,7 @@
 #include "ppbox/avformat/mp2/Mp2Enum.h"
 #include "ppbox/avformat/Error.h"
 
-#include <ppbox/avcodec/avc/AvcFormatType.h>
-#include <ppbox/avcodec/aac/AacFormatType.h>
+#include <ppbox/avcodec/CodecType.h>
 using namespace ppbox::avcodec;
 
 #include <ppbox/avbase/TypeMap.h>
@@ -29,24 +28,24 @@ namespace ppbox
         };
 
         CodecInfo const Mp2Format::codecs_[] = {
-            {StreamType::VIDE,  Mp2StreamType::iso_xxxxx_video,    VideoSubType::HEVC, AvcFormatType::byte_stream, Mp2::TIME_SCALE}, 
-            {StreamType::VIDE,  Mp2StreamType::iso_xxxxx_video_2,  VideoSubType::HEVC, AvcFormatType::byte_stream, Mp2::TIME_SCALE}, 
-            {StreamType::VIDE,  Mp2StreamType::iso_14496_10_video, VideoSubType::AVC,  AvcFormatType::byte_stream, Mp2::TIME_SCALE}, 
-            {StreamType::VIDE,  Mp2StreamType::iso_14496_2_video,  VideoSubType::MP4V, StreamFormatType::none,     Mp2::TIME_SCALE}, 
-            {StreamType::VIDE,  Mp2StreamType::iso_13818_2_video,  VideoSubType::MP2V, StreamFormatType::none,     Mp2::TIME_SCALE}, 
-            {StreamType::AUDI,  Mp2StreamType::iso_13818_7_audio,  AudioSubType::AAC,  AacFormatType::adts,        Mp2::TIME_SCALE}, 
-            {StreamType::AUDI,  Mp2StreamType::iso_11172_audio,    AudioSubType::MP1A, StreamFormatType::none,     Mp2::TIME_SCALE}, 
-            {StreamType::AUDI,  Mp2StreamType::iso_11172_audio,    AudioSubType::MP1,  StreamFormatType::none,     Mp2::TIME_SCALE}, 
-            {StreamType::AUDI,  Mp2StreamType::iso_11172_audio,    AudioSubType::MP2,  StreamFormatType::none,     Mp2::TIME_SCALE}, 
-            {StreamType::AUDI,  Mp2StreamType::iso_11172_audio,    AudioSubType::MP3,  StreamFormatType::none,     Mp2::TIME_SCALE}, 
-            {StreamType::AUDI,  Mp2StreamType::iso_13818_3_audio,  AudioSubType::MP2A, StreamFormatType::none,     Mp2::TIME_SCALE}, 
-            {StreamType::AUDI,  0,  AudioSubType::AC3,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts}, 
-            {StreamType::AUDI,  0,  AudioSubType::DTS,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 1}, 
-            {StreamType::AUDI,  0,  AudioSubType::EAC3, StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 2}, 
-            {StreamType::AUDI,  0,  AudioSubType::DTS,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 3}, 
-            {StreamType::AUDI,  0,  AudioSubType::DTS,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 4}, 
-            {StreamType::AUDI,  0,  AudioSubType::EAC3, StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 5}, 
-            {StreamType::AUDI,  0,  AudioSubType::EAC3, StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 6}, 
+            {StreamType::VIDE,  Mp2StreamType::iso_xxxxx_video,    VideoType::HEVC, AvcFormatType::byte_stream, Mp2::TIME_SCALE}, 
+            {StreamType::VIDE,  Mp2StreamType::iso_xxxxx_video_2,  VideoType::HEVC, AvcFormatType::byte_stream, Mp2::TIME_SCALE}, 
+            {StreamType::VIDE,  Mp2StreamType::iso_14496_10_video, VideoType::AVC,  AvcFormatType::byte_stream, Mp2::TIME_SCALE}, 
+            {StreamType::VIDE,  Mp2StreamType::iso_14496_2_video,  VideoType::MP4V, StreamFormatType::none,     Mp2::TIME_SCALE}, 
+            {StreamType::VIDE,  Mp2StreamType::iso_13818_2_video,  VideoType::MP2V, StreamFormatType::none,     Mp2::TIME_SCALE}, 
+            {StreamType::AUDI,  Mp2StreamType::iso_13818_7_audio,  AudioType::AAC,  AacFormatType::adts,        Mp2::TIME_SCALE}, 
+            {StreamType::AUDI,  Mp2StreamType::iso_11172_audio,    AudioType::MP1A, StreamFormatType::none,     Mp2::TIME_SCALE}, 
+            {StreamType::AUDI,  Mp2StreamType::iso_11172_audio,    AudioType::MP1,  StreamFormatType::none,     Mp2::TIME_SCALE}, 
+            {StreamType::AUDI,  Mp2StreamType::iso_11172_audio,    AudioType::MP2,  StreamFormatType::none,     Mp2::TIME_SCALE}, 
+            {StreamType::AUDI,  Mp2StreamType::iso_11172_audio,    AudioType::MP3,  StreamFormatType::none,     Mp2::TIME_SCALE}, 
+            {StreamType::AUDI,  Mp2StreamType::iso_13818_3_audio,  AudioType::MP2A, StreamFormatType::none,     Mp2::TIME_SCALE}, 
+            {StreamType::AUDI,  0,  AudioType::AC3,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts}, 
+            {StreamType::AUDI,  0,  AudioType::DTS,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 1}, 
+            {StreamType::AUDI,  0,  AudioType::EAC3, StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 2}, 
+            {StreamType::AUDI,  0,  AudioType::DTS,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 3}, 
+            {StreamType::AUDI,  0,  AudioType::DTS,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 4}, 
+            {StreamType::AUDI,  0,  AudioType::EAC3, StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 5}, 
+            {StreamType::AUDI,  0,  AudioType::EAC3, StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 6}, 
         };
 
         Mp2Format::Mp2Format()

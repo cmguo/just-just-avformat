@@ -4,9 +4,7 @@
 #include "ppbox/avformat/rtp/RtpFormat.h"
 #include "ppbox/avformat/Error.h"
 
-#include <ppbox/avcodec/avc/AvcFormatType.h>
-#include <ppbox/avcodec/aac/AacFormatType.h>
-
+#include <ppbox/avcodec/CodecType.h>
 using namespace ppbox::avcodec;
 
 namespace ppbox
@@ -17,16 +15,16 @@ namespace ppbox
         // http://www.iana.org/assignments/rtp-parameters/rtp-parameters.xhtml
 
         ppbox::avformat::CodecInfo const RtpFormat::codecs_[] = {
-            {StreamType::VIDE,  0,  VideoSubType::AVC,  StreamFormatType::none, 90000,  "H264"},
-            {StreamType::VIDE,  0,  VideoSubType::HEVC, StreamFormatType::none, 90000,  "H265"},
-            {StreamType::AUDI,  0,  AudioSubType::AAC,  AacFormatType::raw,     1,      "mpeg4-generic"}, 
-            {StreamType::AUDI,  0,  AudioSubType::MP1A, StreamFormatType::none, 90000,  "MPA"},
-            {StreamType::AUDI,  0,  AudioSubType::MP2A, StreamFormatType::none, 90000,  "MPA"},
-            {StreamType::AUDI,  0,  AudioSubType::MP1,  StreamFormatType::none, 90000,  "MPA"},
-            {StreamType::AUDI,  0,  AudioSubType::MP2,  StreamFormatType::none, 90000,  "MPA"},
-            {StreamType::AUDI,  0,  AudioSubType::MP3,  StreamFormatType::none, 90000,  "MPA"},
-            {StreamType::AUDI,  0,  AudioSubType::AC3,  StreamFormatType::none, 1,      "ac3"},
-            {StreamType::AUDI,  0,  AudioSubType::EAC3, StreamFormatType::none, 1,      "eac3"},           
+            {StreamType::VIDE,  0,  VideoType::AVC,  StreamFormatType::none, 90000,  "H264"},
+            {StreamType::VIDE,  0,  VideoType::HEVC, StreamFormatType::none, 90000,  "H265"},
+            {StreamType::AUDI,  0,  AudioType::AAC,  AacFormatType::raw,     1,      "mpeg4-generic"}, 
+            {StreamType::AUDI,  0,  AudioType::MP1A, StreamFormatType::none, 90000,  "MPA"},
+            {StreamType::AUDI,  0,  AudioType::MP2A, StreamFormatType::none, 90000,  "MPA"},
+            {StreamType::AUDI,  0,  AudioType::MP1,  StreamFormatType::none, 90000,  "MPA"},
+            {StreamType::AUDI,  0,  AudioType::MP2,  StreamFormatType::none, 90000,  "MPA"},
+            {StreamType::AUDI,  0,  AudioType::MP3,  StreamFormatType::none, 90000,  "MPA"},
+            {StreamType::AUDI,  0,  AudioType::AC3,  StreamFormatType::none, 1,      "ac3"},
+            {StreamType::AUDI,  0,  AudioType::EAC3, StreamFormatType::none, 1,      "eac3"},           
         };
 
         RtpFormat::RtpFormat()

@@ -4,12 +4,7 @@
 #include "ppbox/avformat/mkv/MkvFormat.h"
 #include "ppbox/avformat/Error.h"
 
-#include <ppbox/avcodec/hevc/HevcFormatType.h>
-#include <ppbox/avcodec/avc/AvcFormatType.h>
-#include <ppbox/avcodec/aac/AacFormatType.h>
-
-#include <ppbox/avcodec/Codec.h>
-
+#include <ppbox/avcodec/CodecType.h>
 using namespace ppbox::avcodec;
 
 namespace ppbox
@@ -18,16 +13,17 @@ namespace ppbox
     {
 
         CodecInfo const MkvFormat::codecs_[] = {
-            {StreamType::VIDE,  0,  VideoSubType::HEVC, HevcFormatType::packet,   1000, "V_MPEGH/ISO/HEVC"}, 
-            {StreamType::VIDE,  0,  VideoSubType::AVC,  AvcFormatType::packet,    1000, "V_MPEG4/ISO/AVC"}, 
-            {StreamType::AUDI,  0,  AudioSubType::AAC,  AacFormatType::raw,       1000, "A_AAC"}, 
-            {StreamType::AUDI,  0,  AudioSubType::MP1,  StreamFormatType::none,   1000, "A_MPEG/L1"}, 
-            {StreamType::AUDI,  0,  AudioSubType::MP2,  StreamFormatType::none,   1000, "A_MPEG/L2"}, 
-            {StreamType::AUDI,  0,  AudioSubType::MP3,  StreamFormatType::none,   1000, "A_MPEG/L3"}, 
-            {StreamType::AUDI,  0,  AudioSubType::MP1A, StreamFormatType::none,   1000, "A_MPEG/L3"}, 
-            {StreamType::AUDI,  0,  AudioSubType::MP2A, StreamFormatType::none,   1000, "A_MPEG/L3"}, 
-            {StreamType::AUDI,  0,  AudioSubType::AC3,  StreamFormatType::none,   1000, "A_AC3"}, 
-            {StreamType::AUDI,  0,  AudioSubType::EAC3, StreamFormatType::none,   1000, "A_EAC3"}, 
+            {StreamType::VIDE,  0,  VideoType::HEVC, HevcFormatType::packet,   1000, "V_MPEGH/ISO/HEVC"}, 
+            {StreamType::VIDE,  0,  VideoType::AVC,  AvcFormatType::packet,    1000, "V_MPEG4/ISO/AVC"}, 
+            {StreamType::AUDI,  0,  AudioType::AAC,  AacFormatType::raw,       1000, "A_AAC"}, 
+            {StreamType::AUDI,  0,  AudioType::MP1,  StreamFormatType::none,   1000, "A_MPEG/L1"}, 
+            {StreamType::AUDI,  0,  AudioType::MP2,  StreamFormatType::none,   1000, "A_MPEG/L2"}, 
+            {StreamType::AUDI,  0,  AudioType::MP3,  StreamFormatType::none,   1000, "A_MPEG/L3"}, 
+            {StreamType::AUDI,  0,  AudioType::MP1A, StreamFormatType::none,   1000, "A_MPEG/L3"}, 
+            {StreamType::AUDI,  0,  AudioType::MP2A, StreamFormatType::none,   1000, "A_MPEG/L3"}, 
+            {StreamType::AUDI,  0,  AudioType::AC3,  StreamFormatType::none,   1000, "A_AC3"}, 
+            {StreamType::AUDI,  0,  AudioType::EAC3, StreamFormatType::none,   1000, "A_EAC3"}, 
+            {StreamType::SUBS,  0,  SubtlType::UTF8, StreamFormatType::none,   1000, "S_TEXT/UTF8"}, 
         };
 
         MkvFormat::MkvFormat()
