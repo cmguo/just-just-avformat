@@ -69,6 +69,16 @@ namespace ppbox
                 if (property.PropertyName.StringData == "audiosamplesize") {
                     audiosamplesize = (boost::uint32_t)property.PropertyData.Double;
                 }
+                if (property.PropertyName.StringData == "keyframes") {
+                    FlvDataObject const & object = property.PropertyData.as<FlvDataObject>();
+                    FlvDataStrictArray const & filepositions = object.ObjectProperties[0].PropertyData.as<FlvDataStrictArray>();
+                    FlvDataStrictArray const & times = object.ObjectProperties[1].PropertyData.as<FlvDataStrictArray>();
+                    keyframes.resize(filepositions.StrictArrayLength);
+                    for (size_t i = 0; i < keyframes.size(); ++i) {
+                        keyframes[i].offset = (boost::uint64_t)filepositions.StrictArrayValue[i].Double;
+                        keyframes[i].time = (boost::uint64_t)(times.StrictArrayValue[i].Double * 1000.0);
+                    }
+                }
             }
         }
 

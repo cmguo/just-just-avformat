@@ -70,10 +70,10 @@ namespace ppbox
         struct FlvVideoCodec
         {
             enum Enum {
-                H263    = 2,
+                H263    = 2, // Sorenson Spark
                 SCREEN  = 3,
                 VP6     = 4,
-                VP6A    = 5,
+                VP6A    = 5, // Flash video with alpha channel
                 SCREEN2 = 6,
                 H264    = 7,
                 H265    = 10,

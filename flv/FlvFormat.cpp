@@ -15,8 +15,10 @@ namespace ppbox
     {
 
         CodecInfo const FlvFormat::codecs_[] = {
-            {StreamType::VIDE,  FlvVideoCodec::H265, VideoSubType::HEVC, AvcFormatType::packet,     1000}, 
+            {StreamType::VIDE,  FlvVideoCodec::H263, VideoSubType::H263, AvcFormatType::packet,     1000}, 
+            {StreamType::VIDE,  FlvVideoCodec::VP6,  VideoSubType::VP6,  AvcFormatType::packet,     1000}, 
             {StreamType::VIDE,  FlvVideoCodec::H264, VideoSubType::AVC,  AvcFormatType::packet,     1000}, 
+            {StreamType::VIDE,  FlvVideoCodec::H265, VideoSubType::HEVC, AvcFormatType::packet,     1000}, 
             {StreamType::AUDI,  FlvSoundCodec::AAC,  AudioSubType::AAC,  AacFormatType::raw,        1000}, 
             {StreamType::AUDI,  FlvSoundCodec::MP3,  AudioSubType::MP3,  StreamFormatType::none,    1000}, 
             {StreamType::AUDI,  FlvSoundCodec::MP3,  AudioSubType::MP1,  StreamFormatType::none,    1000}, 
