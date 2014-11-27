@@ -1,11 +1,11 @@
 // EBML_Archive.h
 
-#ifndef _PPBOX_AVFORMAT_MKV_EBML_EBML_ARCHIVE_H_
-#define _PPBOX_AVFORMAT_MKV_EBML_EBML_ARCHIVE_H_
+#ifndef _JUST_AVFORMAT_MKV_EBML_EBML_ARCHIVE_H_
+#define _JUST_AVFORMAT_MKV_EBML_EBML_ARCHIVE_H_
 
-#include "ppbox/avformat/mkv/ebml/EBML_Type.h"
+#include "just/avformat/mkv/ebml/EBML_Type.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -22,7 +22,7 @@ namespace util
     {
 
         template <>
-        struct is_primitive<ppbox::avformat::EBML_DataSizeArchive, ppbox::avformat::EBML_ElementHeader>
+        struct is_primitive<just::avformat::EBML_DataSizeArchive, just::avformat::EBML_ElementHeader>
             : boost::true_type
         {
         };
@@ -31,13 +31,13 @@ namespace util
             typename _Ty, 
             typename _Traits
         >
-        struct is_primitive<ppbox::avformat::EBML_DataSizeArchive, ppbox::avformat::EBML_UnitType<_Ty, _Traits> >
+        struct is_primitive<just::avformat::EBML_DataSizeArchive, just::avformat::EBML_UnitType<_Ty, _Traits> >
             : boost::true_type
         {
         };
 
         template <>
-        struct is_primitive<ppbox::avformat::EBML_ElementIArchive, ppbox::avformat::EBML_ElementHeader>
+        struct is_primitive<just::avformat::EBML_ElementIArchive, just::avformat::EBML_ElementHeader>
             : boost::true_type
         {
         };
@@ -46,7 +46,7 @@ namespace util
             typename _Ty, 
             typename _Traits
         >
-        struct is_primitive<ppbox::avformat::EBML_ElementIArchive, ppbox::avformat::EBML_UnitType<_Ty, _Traits> >
+        struct is_primitive<just::avformat::EBML_ElementIArchive, just::avformat::EBML_UnitType<_Ty, _Traits> >
             : boost::true_type
         {
         };
@@ -54,7 +54,7 @@ namespace util
     }
 }
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -284,6 +284,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MKV_EBML_EBML_ARCHIVE_H_
+#endif // _JUST_AVFORMAT_MKV_EBML_EBML_ARCHIVE_H_

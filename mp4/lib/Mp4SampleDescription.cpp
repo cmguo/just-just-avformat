@@ -1,11 +1,11 @@
 // Mp4SampleDescription.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp4/lib/Mp4SampleDescription.h"
-#include "ppbox/avformat/mp4/box/Mp4Box.hpp"
-#include "ppbox/avformat/mp4/box/Mp4BoxVector.hpp"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp4/lib/Mp4SampleDescription.h"
+#include "just/avformat/mp4/box/Mp4Box.hpp"
+#include "just/avformat/mp4/box/Mp4BoxVector.hpp"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -164,4 +164,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

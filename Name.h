@@ -1,10 +1,10 @@
 // Name.h
 
-#ifndef _PPBOX_AVFORMAT_NAME_H_
-#define _PPBOX_AVFORMAT_NAME_H_
+#ifndef _JUST_AVFORMAT_NAME_H_
+#define _JUST_AVFORMAT_NAME_H_
 
-#include "ppbox/avformat/Define.h"
+#include "just/avformat/Define.h"
 
 #include <framework/system/AutoName.h>
 
-#endif // _PPBOX_AVFORMAT_NAME_H_
+#endif // _JUST_AVFORMAT_NAME_H_

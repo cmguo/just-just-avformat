@@ -1,11 +1,11 @@
 // AsfGuid.h
 
-#ifndef _PPBOX_AVFORMAT_ASF_ASF_GUID_H_
-#define _PPBOX_AVFORMAT_ASF_ASF_GUID_H_
+#ifndef _JUST_AVFORMAT_ASF_ASF_GUID_H_
+#define _JUST_AVFORMAT_ASF_ASF_GUID_H_
 
 #include <framework/string/Uuid.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -44,6 +44,6 @@ namespace ppbox
         framework::string::UUID const ASF_CONTENT_ENCRYPTION_OBJECT            =  { 0x2211B3FB, 0xBD23, 0x11D2, { 0xB4, 0xB7, 0x00, 0xA0, 0xC9, 0x55, 0xFC, 0x6E } } ;
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_ASF_ASF_GUID_H_
+#endif // _JUST_AVFORMAT_ASF_ASF_GUID_H_

@@ -1,10 +1,10 @@
 // PatPacket.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp2/PatPacket.h"
-#include "ppbox/avformat/mp2/Mp2Enum.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp2/PatPacket.h"
+#include "just/avformat/mp2/Mp2Enum.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -36,4 +36,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

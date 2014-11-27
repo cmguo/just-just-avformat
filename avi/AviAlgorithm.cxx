@@ -1,14 +1,14 @@
 // AviAlgorithm.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/avi/AviAlgorithm.h"
-#include "ppbox/avformat/Error.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/avi/AviAlgorithm.h"
+#include "just/avformat/Error.h"
 
-#include <ppbox/avbase/FourCC.h>
+#include <just/avbase/FourCC.h>
 
 #include <framework/system/BytesOrder.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -81,4 +81,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

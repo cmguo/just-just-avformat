@@ -1,20 +1,20 @@
 // RtpFormat.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/rtp/RtpFormat.h"
-#include "ppbox/avformat/Error.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/rtp/RtpFormat.h"
+#include "just/avformat/Error.h"
 
-#include <ppbox/avcodec/CodecType.h>
-using namespace ppbox::avcodec;
+#include <just/avcodec/CodecType.h>
+using namespace just::avcodec;
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
 
         // http://www.iana.org/assignments/rtp-parameters/rtp-parameters.xhtml
 
-        ppbox::avformat::CodecInfo const RtpFormat::codecs_[] = {
+        just::avformat::CodecInfo const RtpFormat::codecs_[] = {
             {StreamType::VIDE,  0,  VideoType::AVC,  StreamFormatType::none, 90000,  "H264"},
             {StreamType::VIDE,  0,  VideoType::HEVC, StreamFormatType::none, 90000,  "H265"},
             {StreamType::AUDI,  0,  AudioType::AAC,  AacFormatType::raw,     1,      "mpeg4-generic"}, 
@@ -71,4 +71,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

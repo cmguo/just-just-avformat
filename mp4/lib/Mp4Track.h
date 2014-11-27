@@ -1,14 +1,14 @@
 // Mp4Track.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_LIB_MP4_TRACK_H_
-#define _PPBOX_AVFORMAT_MP4_LIB_MP4_TRACK_H_
+#ifndef _JUST_AVFORMAT_MP4_LIB_MP4_TRACK_H_
+#define _JUST_AVFORMAT_MP4_LIB_MP4_TRACK_H_
 
-#include "ppbox/avformat/mp4/lib/Mp4BoxWrapper.h"
-#include "ppbox/avformat/mp4/lib/Mp4SampleTable.h"
-#include "ppbox/avformat/mp4/box/Mp4TrackBox.h"
-#include "ppbox/avformat/mp4/box/Mp4MediaBox.h"
+#include "just/avformat/mp4/lib/Mp4BoxWrapper.h"
+#include "just/avformat/mp4/lib/Mp4SampleTable.h"
+#include "just/avformat/mp4/box/Mp4TrackBox.h"
+#include "just/avformat/mp4/box/Mp4MediaBox.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -78,6 +78,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_LIB_MP4_TRACK_H_
+#endif // _JUST_AVFORMAT_MP4_LIB_MP4_TRACK_H_

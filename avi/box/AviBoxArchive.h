@@ -1,12 +1,12 @@
 // AviBoxArchive.h
 
-#ifndef _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_ARCHIVE_H_
-#define _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_ARCHIVE_H_
+#ifndef _JUST_AVFORMAT_AVI_BOX_AVI_BOX_ARCHIVE_H_
+#define _JUST_AVFORMAT_AVI_BOX_AVI_BOX_ARCHIVE_H_
 
 #include <util/archive/LittleEndianBinaryIArchive.h>
 #include <util/archive/LittleEndianBinaryOArchive.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -16,6 +16,6 @@ namespace ppbox
         typedef util::archive::LittleEndianBinaryIArchive<boost::uint8_t> AviBoxIArchive;
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_ARCHIVE_H_
+#endif // _JUST_AVFORMAT_AVI_BOX_AVI_BOX_ARCHIVE_H_

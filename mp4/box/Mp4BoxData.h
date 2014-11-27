@@ -1,30 +1,30 @@
 // Mp4BoxData.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_DATA_H_
-#define _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_DATA_H_
+#ifndef _JUST_AVFORMAT_MP4_BOX_MP4_BOX_DATA_H_
+#define _JUST_AVFORMAT_MP4_BOX_MP4_BOX_DATA_H_
 
-#include "ppbox/avformat/mp4/box/Mp4BoxTraits.h"
-#include "ppbox/avformat/mp4/box/Mp4BoxHeader.h"
+#include "just/avformat/mp4/box/Mp4BoxTraits.h"
+#include "just/avformat/mp4/box/Mp4BoxHeader.h"
 
-#include <ppbox/avbase/object/ObjectData.h>
+#include <just/avbase/object/ObjectData.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
 
-        typedef ppbox::avbase::ObjectDefine Mp4BoxDefine;
+        typedef just::avbase::ObjectDefine Mp4BoxDefine;
 
         template <
             typename T, 
             Mp4BoxHeader::id_type id
         >
         struct Mp4BoxData
-            : ppbox::avbase::ObjectData<Mp4BoxTraits, T, id>
+            : just::avbase::ObjectData<Mp4BoxTraits, T, id>
         {
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_DATA_H_
+#endif // _JUST_AVFORMAT_MP4_BOX_MP4_BOX_DATA_H_

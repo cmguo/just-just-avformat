@@ -1,15 +1,15 @@
 // Mp4Merge.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp4/Mp4Merge.h"
-#include "ppbox/avformat/mp4/lib/Mp4Error.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp4/Mp4Merge.h"
+#include "just/avformat/mp4/lib/Mp4Error.h"
 
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
 
-FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.avformat.Mp4Merge", framework::logger::Debug);
+FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("just.avformat.Mp4Merge", framework::logger::Debug);
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -17,7 +17,7 @@ namespace ppbox
         bool mp4_merge_head(
             std::basic_istream<boost::uint8_t> & is,
             std::basic_ostream<boost::uint8_t> & os, 
-            std::vector<ppbox::data::SegmentInfo> & segment_infos,
+            std::vector<just::data::SegmentInfo> & segment_infos,
             boost::system::error_code & ec)
         {
             if (segment_infos.empty()) {
@@ -51,7 +51,7 @@ namespace ppbox
         bool mp4_merge(
             Mp4File *& file, 
             std::basic_istream<boost::uint8_t> & is, 
-            ppbox::data::SegmentInfo const & segment, 
+            just::data::SegmentInfo const & segment, 
             boost::system::error_code & ec)
         {
             Mp4BoxIArchive ia(*is.rdbuf());
@@ -98,4 +98,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

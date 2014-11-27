@@ -1,14 +1,14 @@
 // Mp4SampleDescription.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_LIB_MP4_SAMPLE_DESCRIPTION_H_
-#define _PPBOX_AVFORMAT_MP4_LIB_MP4_SAMPLE_DESCRIPTION_H_
+#ifndef _JUST_AVFORMAT_MP4_LIB_MP4_SAMPLE_DESCRIPTION_H_
+#define _JUST_AVFORMAT_MP4_LIB_MP4_SAMPLE_DESCRIPTION_H_
 
-#include "ppbox/avformat/mp4/lib/Mp4BoxWrapper.h"
-#include "ppbox/avformat/mp4/box/Mp4SampleBox.h"
-#include "ppbox/avformat/mp4/box/Mp4SampleDescriptionBox.h"
-#include "ppbox/avformat/mp4/box/Mp4Descriptor.h"
+#include "just/avformat/mp4/lib/Mp4BoxWrapper.h"
+#include "just/avformat/mp4/box/Mp4SampleBox.h"
+#include "just/avformat/mp4/box/Mp4SampleDescriptionBox.h"
+#include "just/avformat/mp4/box/Mp4Descriptor.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -167,6 +167,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_LIB_MP4_SAMPLE_DESCRIPTION_H_
+#endif // _JUST_AVFORMAT_MP4_LIB_MP4_SAMPLE_DESCRIPTION_H_

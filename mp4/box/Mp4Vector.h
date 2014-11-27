@@ -1,14 +1,14 @@
 // Mp4Vector.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_BOX_MP4_VECTOR_H_
-#define _PPBOX_AVFORMAT_MP4_BOX_MP4_VECTOR_H_
+#ifndef _JUST_AVFORMAT_MP4_BOX_MP4_VECTOR_H_
+#define _JUST_AVFORMAT_MP4_BOX_MP4_VECTOR_H_
 
-#include "ppbox/avformat/mp4/box/Mp4BoxContext.h"
+#include "just/avformat/mp4/box/Mp4BoxContext.h"
 
 #include <util/serialization/Serialization.h>
 #include <util/serialization/SplitMember.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -67,6 +67,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_BOX_MP4_VECTOR_H_
+#endif // _JUST_AVFORMAT_MP4_BOX_MP4_VECTOR_H_

@@ -1,11 +1,11 @@
 // AviFormat.h
 
-#ifndef _PPBOX_AVFORMAT_AVI_AVI_FORMAT_H_
-#define _PPBOX_AVFORMAT_AVI_AVI_FORMAT_H_
+#ifndef _JUST_AVFORMAT_AVI_AVI_FORMAT_H_
+#define _JUST_AVFORMAT_AVI_AVI_FORMAT_H_
 
-#include "ppbox/avformat/Format.h"
+#include "just/avformat/Format.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -18,21 +18,21 @@ namespace ppbox
 
         public:
             virtual bool finish_from_stream(
-                ppbox::avbase::StreamInfo & info, 
+                just::avbase::StreamInfo & info, 
                 boost::system::error_code & ec);
 
             virtual bool finish_from_codec(
-                ppbox::avbase::StreamInfo & info, 
+                just::avbase::StreamInfo & info, 
                 boost::system::error_code & ec);
 
         private:
             static CodecInfo const codecs_[];
         };
 
-        PPBOX_REGISTER_FORMAT("avi", AviFormat);
+        JUST_REGISTER_FORMAT("avi", AviFormat);
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
 
-#endif // _PPBOX_AVFORMAT_AVI_AVI_FORMAT_H_
+#endif // _JUST_AVFORMAT_AVI_AVI_FORMAT_H_

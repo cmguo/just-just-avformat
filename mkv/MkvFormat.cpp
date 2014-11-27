@@ -1,13 +1,13 @@
 // MkvFormat.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mkv/MkvFormat.h"
-#include "ppbox/avformat/Error.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/mkv/MkvFormat.h"
+#include "just/avformat/Error.h"
 
-#include <ppbox/avcodec/CodecType.h>
-using namespace ppbox::avcodec;
+#include <just/avcodec/CodecType.h>
+using namespace just::avcodec;
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -67,4 +67,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

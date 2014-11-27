@@ -1,13 +1,13 @@
 // Mp4Movie.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_LIB_MP4_MOVIE_H_
-#define _PPBOX_AVFORMAT_MP4_LIB_MP4_MOVIE_H_
+#ifndef _JUST_AVFORMAT_MP4_LIB_MP4_MOVIE_H_
+#define _JUST_AVFORMAT_MP4_LIB_MP4_MOVIE_H_
 
-#include "ppbox/avformat/mp4/lib/Mp4BoxWrapper.h"
-#include "ppbox/avformat/mp4/box/Mp4MovieBox.h"
-#include "ppbox/avformat/mp4/lib/Mp4Track.h"
+#include "just/avformat/mp4/lib/Mp4BoxWrapper.h"
+#include "just/avformat/mp4/box/Mp4MovieBox.h"
+#include "just/avformat/mp4/lib/Mp4Track.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -68,6 +68,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_LIB_MP4_MOVIE_H_
+#endif // _JUST_AVFORMAT_MP4_LIB_MP4_MOVIE_H_

@@ -1,14 +1,14 @@
 // Mp2Archive.h
 
-#ifndef _PPBOX_AVFORMAT_MP2_MP2_ARCHIVE_H_
-#define _PPBOX_AVFORMAT_MP2_MP2_ARCHIVE_H_
+#ifndef _JUST_AVFORMAT_MP2_MP2_ARCHIVE_H_
+#define _JUST_AVFORMAT_MP2_MP2_ARCHIVE_H_
 
-#include "ppbox/avformat/FormatBuffer.h"
+#include "just/avformat/FormatBuffer.h"
 
 #include <util/archive/BigEndianBinaryIArchive.h>
 #include <util/archive/BigEndianBinaryOArchive.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -17,6 +17,6 @@ namespace ppbox
         typedef util::archive::BigEndianBinaryOArchive<boost::uint8_t> Mp2OArchive;
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP2_MP2_ARCHIVE_H_
+#endif // _JUST_AVFORMAT_MP2_MP2_ARCHIVE_H_

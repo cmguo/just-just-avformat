@@ -1,5 +1,5 @@
 // Version.cpp
 
-#include "ppbox/avformat/Common.h"
+#include "just/avformat/Common.h"
 #define VERSION_SOURCE
-#include "ppbox/avformat/Version.h"
+#include "just/avformat/Version.h"

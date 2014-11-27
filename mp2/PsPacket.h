@@ -1,12 +1,12 @@
 // PsPacket.h
 
-#ifndef _PPBOX_AVFORMAT_MP2_PS_PACKET_H_
-#define _PPBOX_AVFORMAT_MP2_PS_PACKET_H_
+#ifndef _JUST_AVFORMAT_MP2_PS_PACKET_H_
+#define _JUST_AVFORMAT_MP2_PS_PACKET_H_
 
-#include "ppbox/avformat/mp2/Mp2Vector.h"
-#include "ppbox/avformat/mp2/Mp2Enum.h"
+#include "just/avformat/mp2/Mp2Vector.h"
+#include "just/avformat/mp2/Mp2Enum.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -326,6 +326,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP2_PS_PACKET_H_
+#endif // _JUST_AVFORMAT_MP2_PS_PACKET_H_

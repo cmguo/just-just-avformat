@@ -1,16 +1,16 @@
 // Mp4SampleTable.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_LIB_MP4_SAMPLE_TABLE_H_
-#define _PPBOX_AVFORMAT_MP4_LIB_MP4_SAMPLE_TABLE_H_
+#ifndef _JUST_AVFORMAT_MP4_LIB_MP4_SAMPLE_TABLE_H_
+#define _JUST_AVFORMAT_MP4_LIB_MP4_SAMPLE_TABLE_H_
 
-#include "ppbox/avformat/mp4/lib/Mp4BoxWrapper.h"
-#include "ppbox/avformat/mp4/lib/Mp4SampleMeta.h"
-#include "ppbox/avformat/mp4/lib/Mp4SampleData.h"
-#include "ppbox/avformat/mp4/lib/Mp4SampleDescription.h"
+#include "just/avformat/mp4/lib/Mp4BoxWrapper.h"
+#include "just/avformat/mp4/lib/Mp4SampleMeta.h"
+#include "just/avformat/mp4/lib/Mp4SampleData.h"
+#include "just/avformat/mp4/lib/Mp4SampleDescription.h"
 
-#include <ppbox/avbase/Sample.h>
+#include <just/avbase/Sample.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -28,7 +28,7 @@ namespace ppbox
 
         public:
             bool put(
-                ppbox::avbase::Sample const & sample);
+                just::avbase::Sample const & sample);
 
             bool put_eos();
 
@@ -67,7 +67,7 @@ namespace ppbox
 
         public:
             void get(
-                ppbox::avbase::Sample & sample) const;
+                just::avbase::Sample & sample) const;
 
             boost::uint64_t dts() const
             {
@@ -107,6 +107,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_LIB_MP4_SAMPLE_TABLE_H_
+#endif // _JUST_AVFORMAT_MP4_LIB_MP4_SAMPLE_TABLE_H_

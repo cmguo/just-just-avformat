@@ -1,15 +1,15 @@
 // AviMerge.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/avi/AviMerge.h"
-#include "ppbox/avformat/avi/lib/AviError.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/avi/AviMerge.h"
+#include "just/avformat/avi/lib/AviError.h"
 
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
 
-FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.avformat.AviMerge", framework::logger::Debug);
+FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("just.avformat.AviMerge", framework::logger::Debug);
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -17,7 +17,7 @@ namespace ppbox
         bool avi_merge_head(
             std::basic_istream<boost::uint8_t> & is,
             std::basic_ostream<boost::uint8_t> & os, 
-            std::vector<ppbox::data::SegmentInfo> & segment_infos,
+            std::vector<just::data::SegmentInfo> & segment_infos,
             boost::system::error_code & ec)
         {
             if (segment_infos.empty()) {
@@ -51,7 +51,7 @@ namespace ppbox
         bool avi_merge(
             AviFile *& file, 
             std::basic_istream<boost::uint8_t> & is, 
-            ppbox::data::SegmentInfo const & segment, 
+            just::data::SegmentInfo const & segment, 
             boost::system::error_code & ec)
         {
             AviBoxIArchive ia(*is.rdbuf());
@@ -98,4 +98,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

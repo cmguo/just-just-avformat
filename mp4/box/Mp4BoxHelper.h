@@ -1,33 +1,33 @@
 // Mp4BoxHelper.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_HELPER_H_
-#define _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_HELPER_H_
+#ifndef _JUST_AVFORMAT_MP4_BOX_MP4_BOX_HELPER_H_
+#define _JUST_AVFORMAT_MP4_BOX_MP4_BOX_HELPER_H_
 
-#include "ppbox/avformat/mp4/box/Mp4BoxTraits.h"
+#include "just/avformat/mp4/box/Mp4BoxTraits.h"
 
-#include <ppbox/avbase/object/ObjectHelper.h>
-#include <ppbox/avbase/FourCC.h>
+#include <just/avbase/object/ObjectHelper.h>
+#include <just/avbase/FourCC.h>
 
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
 #include <framework/logger/DataRecord.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
 
         class Mp4BoxDataHelper
-            : ppbox::avbase::ObjectDataHelper<Mp4BoxTraits>
+            : just::avbase::ObjectDataHelper<Mp4BoxTraits>
         {
         public:
             Mp4BoxDataHelper(
                 Mp4BoxTraits::helper_t & h)
-                : ppbox::avbase::ObjectDataHelper<Mp4BoxTraits>(h)
+                : just::avbase::ObjectDataHelper<Mp4BoxTraits>(h)
                 , ctx_((Mp4BoxContext *)h.context())
             {
                 ctx_->path.append(1, '/');
-                ctx_->path += ppbox::avbase::FourCC::to_string(h.header().type);
+                ctx_->path += just::avbase::FourCC::to_string(h.header().type);
                 LOG_TRACE("box type: " << ctx_->path << " size: " << h.header().byte_size());
                 ctx_->stack.push_back(&h.object());
                 ctx_->data_ends.push_back(h.data_end());
@@ -46,13 +46,13 @@ namespace ppbox
             }
 
         private:
-            FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.avformat.Mp4BoxDataHelper", framework::logger::Debug);
+            FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("just.avformat.Mp4BoxDataHelper", framework::logger::Debug);
 
         private:
             Mp4BoxContext * ctx_;
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_HELPER_H_
+#endif // _JUST_AVFORMAT_MP4_BOX_MP4_BOX_HELPER_H_

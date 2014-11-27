@@ -1,13 +1,13 @@
 // AviHeaderBox.h
 
-#ifndef _PPBOX_AVFORMAT_AVI_BOX_AVI_HEADER_BOX_H_
-#define _PPBOX_AVFORMAT_AVI_BOX_AVI_HEADER_BOX_H_
+#ifndef _JUST_AVFORMAT_AVI_BOX_AVI_HEADER_BOX_H_
+#define _JUST_AVFORMAT_AVI_BOX_AVI_HEADER_BOX_H_
 
-#include "ppbox/avformat/avi/box/AviBoxData.h"
-#include "ppbox/avformat/avi/box/AviBoxEnum.h"
-#include "ppbox/avformat/avi/box/AviBoxVector.h"
+#include "just/avformat/avi/box/AviBoxData.h"
+#include "just/avformat/avi/box/AviBoxEnum.h"
+#include "just/avformat/avi/box/AviBoxVector.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -67,6 +67,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_AVI_BOX_AVI_HEADER_BOX_H_
+#endif // _JUST_AVFORMAT_AVI_BOX_AVI_HEADER_BOX_H_

@@ -1,9 +1,9 @@
 // Mp4BoxDefine.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_DEFINE_H_
-#define _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_DEFINE_H_
+#ifndef _JUST_AVFORMAT_MP4_BOX_MP4_BOX_DEFINE_H_
+#define _JUST_AVFORMAT_MP4_BOX_MP4_BOX_DEFINE_H_
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -43,6 +43,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_DEFINE_H_
+#endif // _JUST_AVFORMAT_MP4_BOX_MP4_BOX_DEFINE_H_

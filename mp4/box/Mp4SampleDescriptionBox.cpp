@@ -1,10 +1,10 @@
 // Mp4BoxBase.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp4/box/Mp4SampleDescriptionBox.h"
-#include "ppbox/avformat/mp4/box/Mp4BoxEnum.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp4/box/Mp4SampleDescriptionBox.h"
+#include "just/avformat/mp4/box/Mp4BoxEnum.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -27,4 +27,4 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

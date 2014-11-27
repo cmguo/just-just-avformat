@@ -1,15 +1,15 @@
 // FlvTagType.h
 
-#ifndef _PPBOX_AVFORMAT_FLV_FLV_TAG_TYPE_H_
-#define _PPBOX_AVFORMAT_FLV_FLV_TAG_TYPE_H_
+#ifndef _JUST_AVFORMAT_FLV_FLV_TAG_TYPE_H_
+#define _JUST_AVFORMAT_FLV_FLV_TAG_TYPE_H_
 
-#include "ppbox/avformat/flv/FlvFormat.h"
-#include "ppbox/avformat/flv/FlvEnum.h"
-#include "ppbox/avformat/flv/FlvDataType.h"
+#include "just/avformat/flv/FlvFormat.h"
+#include "just/avformat/flv/FlvEnum.h"
+#include "just/avformat/flv/FlvDataType.h"
 
 #include <util/serialization/NumberBits24.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -280,6 +280,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_FLV_FLV_TAG_TYPE_H_
+#endif // _JUST_AVFORMAT_FLV_FLV_TAG_TYPE_H_

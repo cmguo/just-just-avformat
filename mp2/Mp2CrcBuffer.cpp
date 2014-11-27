@@ -1,9 +1,9 @@
 // Mp2CrcBuffer.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp2/Mp2CrcBuffer.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp2/Mp2CrcBuffer.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -104,4 +104,4 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

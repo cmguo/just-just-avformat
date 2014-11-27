@@ -1,9 +1,9 @@
 // SeekPoint.h
 
-#ifndef _PPBOX_AVFORMAT_SEEK_POINT_H_
-#define _PPBOX_AVFORMAT_SEEK_POINT_H_
+#ifndef _JUST_AVFORMAT_SEEK_POINT_H_
+#define _JUST_AVFORMAT_SEEK_POINT_H_
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -15,6 +15,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_SEEK_POINT_H_
+#endif // _JUST_AVFORMAT_SEEK_POINT_H_

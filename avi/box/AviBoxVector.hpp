@@ -1,11 +1,11 @@
 // AviBoxVector.hpp
 
-#ifndef _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_HPP_
-#define _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_HPP_
+#ifndef _JUST_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_HPP_
+#define _JUST_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_HPP_
 
-#include "ppbox/avformat/avi/box/AviBoxVector.h"
+#include "just/avformat/avi/box/AviBoxVector.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -118,6 +118,6 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_HPP_
+#endif // _JUST_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_HPP_

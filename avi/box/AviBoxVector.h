@@ -1,18 +1,18 @@
 // AviBoxVector.h
 
-#ifndef _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_H_
-#define _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_H_
+#ifndef _JUST_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_H_
+#define _JUST_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_H_
 
-#include "ppbox/avformat/avi/box/AviBoxContext.h"
+#include "just/avformat/avi/box/AviBoxContext.h"
 
 #include <util/serialization/Serialization.h>
 #include <util/serialization/SplitMember.h>
 
-#include <ppbox/avbase/FourCC.h>
+#include <just/avbase/FourCC.h>
 
 #include <framework/container/Array.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -121,7 +121,7 @@ namespace ppbox
                 std::string const & path)
             {
                 boost::uint32_t type = 
-                    ppbox::avbase::FourCC::from_string(path.substr(1, 4));
+                    just::avbase::FourCC::from_string(path.substr(1, 4));
                 AviBox * box = find_item(type);
                 if (box == NULL)
                     return NULL;
@@ -145,7 +145,7 @@ namespace ppbox
                 std::string const & path)
             {
                 boost::uint32_t type = 
-                    ppbox::avbase::FourCC::from_string(path.substr(1, 4));
+                    just::avbase::FourCC::from_string(path.substr(1, 4));
                 if (path.size() == 5) { // always create one
                     return create_item(type);
                 }
@@ -224,6 +224,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_H_
+#endif // _JUST_AVFORMAT_AVI_BOX_AVI_BOX_VECTOR_H_

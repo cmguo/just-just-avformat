@@ -1,18 +1,18 @@
 // FormatBuffer.h
 
-#ifndef _PPBOX_AVFORMAT_FORMAT_BUFFER_H_
-#define _PPBOX_AVFORMAT_FORMAT_BUFFER_H_
+#ifndef _JUST_AVFORMAT_FORMAT_BUFFER_H_
+#define _JUST_AVFORMAT_FORMAT_BUFFER_H_
 
-#include <ppbox/avbase/stream/FormatBuffer.h>
+#include <just/avbase/stream/FormatBuffer.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
 
-        using ppbox::avbase::FormatBuffer;
+        using just::avbase::FormatBuffer;
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_FORMAT_BUFFER_H_
+#endif // _JUST_AVFORMAT_FORMAT_BUFFER_H_

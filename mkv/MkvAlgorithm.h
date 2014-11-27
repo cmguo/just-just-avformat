@@ -1,11 +1,11 @@
 // MkvAlgorithm.h
 
-#ifndef _PPBOX_AVFORMAT_MKV_MKV_ALGORITHM_H_
-#define _PPBOX_AVFORMAT_MKV_MKV_ALGORITHM_H_
+#ifndef _JUST_AVFORMAT_MKV_MKV_ALGORITHM_H_
+#define _JUST_AVFORMAT_MKV_MKV_ALGORITHM_H_
 
 #include <istream>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -15,6 +15,6 @@ namespace ppbox
             boost::system::error_code & ec);
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // End _PPBOX_AVFORMAT_MKV_MKV_ALGORITHM_H_
+#endif // End _JUST_AVFORMAT_MKV_MKV_ALGORITHM_H_

@@ -1,13 +1,13 @@
 // Format.h
 
-#ifndef _PPBOX_AVFORMAT_FORMAT_H_
-#define _PPBOX_AVFORMAT_FORMAT_H_
+#ifndef _JUST_AVFORMAT_FORMAT_H_
+#define _JUST_AVFORMAT_FORMAT_H_
 
-#include <ppbox/avbase/StreamInfo.h>
+#include <just/avbase/StreamInfo.h>
 
 #include <util/tools/ClassFactory.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -61,19 +61,19 @@ namespace ppbox
             // sub_type is the stream type according to file specific
             // fill type, sub_type and time_scale
             virtual bool finish_from_stream(
-                ppbox::avbase::StreamInfo & info, 
+                just::avbase::StreamInfo & info, 
                 boost::system::error_code & ec);
 
             // call by muxer, with type, sub_type of info valid, 
             // fill format_type according to file specific
             // fill time_scale according to file specific
             virtual bool finish_from_codec(
-                ppbox::avbase::StreamInfo & info, 
+                just::avbase::StreamInfo & info, 
                 boost::system::error_code & ec);
 
         public:
             static bool finish_from_stream(
-                ppbox::avbase::StreamInfo & info, 
+                just::avbase::StreamInfo & info, 
                 std::string const & format_str, 
                 boost::uint32_t stream_type, 
                 boost::system::error_code & ec);
@@ -95,8 +95,8 @@ namespace ppbox
         typedef util::tools::ClassFactory<FormatTraits> FormatFactory;
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#define PPBOX_REGISTER_FORMAT(key, cls) UTIL_REGISTER_CLASS(ppbox::avformat::FormatFactory, key, cls)
+#define JUST_REGISTER_FORMAT(key, cls) UTIL_REGISTER_CLASS(just::avformat::FormatFactory, key, cls)
 
-#endif // _PPBOX_AVFORMAT_FORMAT_H_
+#endif // _JUST_AVFORMAT_FORMAT_H_

@@ -1,16 +1,16 @@
 // Mp2Format.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp2/Mp2Format.h"
-#include "ppbox/avformat/mp2/Mp2Enum.h"
-#include "ppbox/avformat/Error.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp2/Mp2Format.h"
+#include "just/avformat/mp2/Mp2Enum.h"
+#include "just/avformat/Error.h"
 
-#include <ppbox/avcodec/CodecType.h>
-using namespace ppbox::avcodec;
+#include <just/avcodec/CodecType.h>
+using namespace just::avcodec;
 
-#include <ppbox/avbase/TypeMap.h>
+#include <just/avbase/TypeMap.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -59,7 +59,7 @@ namespace ppbox
             void const * context, 
             boost::system::error_code & ec)
         {
-            CodecInfo const * codec = ppbox::avbase::type_map_find(codecs_, 
+            CodecInfo const * codec = just::avbase::type_map_find(codecs_, 
                 &CodecInfo::stream_type, stream_type);
             if (codec) {
                 ec.clear();
@@ -72,24 +72,24 @@ namespace ppbox
             Mp2Context const * tsc = (Mp2Context const *)context;
             Mp2Context const * tsc2 = NULL;
             if (tsc->regd_type) {
-                tsc2 = ppbox::avbase::type_map_find(
+                tsc2 = just::avbase::type_map_find(
                     ts_contexts, 
                     &Mp2Context::regd_type, tsc->regd_type);
             }
             if (tsc2 == NULL && tsc->hdmv_type) {
-                tsc2 = ppbox::avbase::type_map_find(
+                tsc2 = just::avbase::type_map_find(
                     ts_contexts, 
                     &Mp2Context::hdmv_type, tsc->hdmv_type);
             }
             if (tsc2 == NULL) {
-                tsc2 = ppbox::avbase::type_map_find(
+                tsc2 = just::avbase::type_map_find(
                     ts_contexts, 
                     &Mp2Context::misc_type, (boost::uint8_t)stream_type);
             }
             if (tsc2 == NULL) {
                 ec = error::codec_not_support;
             } else {
-                codec = ppbox::avbase::type_map_find(codecs_, 
+                codec = just::avbase::type_map_find(codecs_, 
                     &CodecInfo::context, (void const *)tsc2);
                 assert(codec);
                 ec.clear();
@@ -98,4 +98,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

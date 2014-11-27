@@ -1,14 +1,14 @@
 // Mp4Movie.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp4/lib/Mp4Movie.h"
-#include "ppbox/avformat/mp4/box/Mp4Box.hpp"
-#include "ppbox/avformat/mp4/box/Mp4BoxVector.hpp"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp4/lib/Mp4Movie.h"
+#include "just/avformat/mp4/box/Mp4Box.hpp"
+#include "just/avformat/mp4/box/Mp4BoxVector.hpp"
 
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <boost/date_time/date.hpp>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -112,4 +112,4 @@ namespace ppbox
 
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

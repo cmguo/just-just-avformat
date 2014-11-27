@@ -1,13 +1,13 @@
 // AviBoxTraits.h
 
-#ifndef _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_TRAITS_H_
-#define _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_TRAITS_H_
+#ifndef _JUST_AVFORMAT_AVI_BOX_AVI_BOX_TRAITS_H_
+#define _JUST_AVFORMAT_AVI_BOX_AVI_BOX_TRAITS_H_
 
-#include "ppbox/avformat/avi/box/AviBoxArchive.h"
+#include "just/avformat/avi/box/AviBoxArchive.h"
 
-#include <ppbox/avbase/object/ObjectHelper.h>
+#include <just/avbase/object/ObjectHelper.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -26,12 +26,12 @@ namespace ppbox
 
             static size_t const max_size = 128;
 
-            typedef ppbox::avbase::ObjectHelper<AviBoxTraits> helper_t;
+            typedef just::avbase::ObjectHelper<AviBoxTraits> helper_t;
 
             typedef AviBoxDataHelper data_helper_t;
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_TRAITS_H_
+#endif // _JUST_AVFORMAT_AVI_BOX_AVI_BOX_TRAITS_H_

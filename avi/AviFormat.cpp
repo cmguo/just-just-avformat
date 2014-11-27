@@ -1,21 +1,21 @@
 // AviFormat.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/avi/AviFormat.h"
-#include "ppbox/avformat/avi/box/AviBoxEnum.h"
-#include "ppbox/avformat/avi/box/AviBoxArchive.h"
-#include "ppbox/avformat/Error.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/avi/AviFormat.h"
+#include "just/avformat/avi/box/AviBoxEnum.h"
+#include "just/avformat/avi/box/AviBoxArchive.h"
+#include "just/avformat/Error.h"
 
-#include <ppbox/avcodec/CodecType.h>
-using namespace ppbox::avcodec;
+#include <just/avcodec/CodecType.h>
+using namespace just::avcodec;
 
-#include <ppbox/avbase/TypeMap.h>
+#include <just/avbase/TypeMap.h>
 
 #include <util/archive/ArchiveBuffer.h>
 
 #include <boost/asio/buffer.hpp>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -88,7 +88,7 @@ namespace ppbox
         };
 
         bool AviFormat::finish_from_stream(
-            ppbox::avbase::StreamInfo & info, 
+            just::avbase::StreamInfo & info, 
             boost::system::error_code & ec)
         {
             if (info.type == StreamType::AUDI) {
@@ -111,7 +111,7 @@ namespace ppbox
         }
 
         bool AviFormat::finish_from_codec(
-            ppbox::avbase::StreamInfo & info, 
+            just::avbase::StreamInfo & info, 
             boost::system::error_code & ec)
         {
             if (!Format::finish_from_codec(info, ec))
@@ -161,4 +161,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

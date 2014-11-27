@@ -1,9 +1,9 @@
 // TsEnum.h
 
-#ifndef _PPBOX_AVFORMAT_MP2_MP2_ENUM_H_
-#define _PPBOX_AVFORMAT_MP2_MP2_ENUM_H_
+#ifndef _JUST_AVFORMAT_MP2_MP2_ENUM_H_
+#define _JUST_AVFORMAT_MP2_MP2_ENUM_H_
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -86,6 +86,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP2_MP2_ENUM_H_
+#endif // _JUST_AVFORMAT_MP2_MP2_ENUM_H_

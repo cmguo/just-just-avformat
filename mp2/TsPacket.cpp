@@ -1,9 +1,9 @@
 // TsPacket.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp2/TsPacket.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp2/TsPacket.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -74,4 +74,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

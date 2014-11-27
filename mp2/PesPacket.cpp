@@ -1,9 +1,9 @@
 // PesPacket.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp2/PesPacket.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp2/PesPacket.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -93,4 +93,4 @@ namespace ppbox
 
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

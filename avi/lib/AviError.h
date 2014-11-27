@@ -1,9 +1,9 @@
 // AviError.h
 
-#ifndef _PPBOX_AVFORMAT_AVI_LIB_AVI_ERROR_H_
-#define _PPBOX_AVFORMAT_AVI_LIB_AVI_ERROR_H_
+#ifndef _JUST_AVFORMAT_AVI_LIB_AVI_ERROR_H_
+#define _JUST_AVFORMAT_AVI_LIB_AVI_ERROR_H_
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -59,7 +59,7 @@ namespace ppbox
         } // namespace avi_error
 
     } // namespace live
-} // namespace ppbox
+} // namespace just
 
 namespace boost
 {
@@ -67,11 +67,11 @@ namespace boost
     {
 
         template<>
-        struct is_error_code_enum<ppbox::avformat::avi_error::errors>
+        struct is_error_code_enum<just::avformat::avi_error::errors>
         {
             BOOST_STATIC_CONSTANT(bool, value = true);
         };
     }
 }
 
-#endif // _PPBOX_AVFORMAT_AVI_LIB_AVI_ERROR_H_
+#endif // _JUST_AVFORMAT_AVI_LIB_AVI_ERROR_H_

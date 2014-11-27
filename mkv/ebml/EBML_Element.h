@@ -1,12 +1,12 @@
 // EBML_Element.h
 
-#ifndef _PPBOX_AVFORMAT_MKV_EBML_EBML_ELEMENT_H_
-#define _PPBOX_AVFORMAT_MKV_EBML_EBML_ELEMENT_H_
+#ifndef _JUST_AVFORMAT_MKV_EBML_EBML_ELEMENT_H_
+#define _JUST_AVFORMAT_MKV_EBML_EBML_ELEMENT_H_
 
-#include "ppbox/avformat/mkv/ebml/EBML_Type.h"
-#include "ppbox/avformat/mkv/ebml/EBML_Archive.h"
+#include "just/avformat/mkv/ebml/EBML_Type.h"
+#include "just/avformat/mkv/ebml/EBML_Archive.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -56,6 +56,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MKV_EBML_EBML_ELEMENT_H_
+#endif // _JUST_AVFORMAT_MKV_EBML_EBML_ELEMENT_H_

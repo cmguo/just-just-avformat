@@ -1,17 +1,17 @@
 // FFMpegFormat.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/ffmpeg/FFMpegFormat.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/ffmpeg/FFMpegFormat.h"
 
-#include <ppbox/avcodec/ffmpeg/FFMpegCodecMap.h>
-using namespace ppbox::avcodec;
+#include <just/avcodec/ffmpeg/FFMpegCodecMap.h>
+using namespace just::avcodec;
 
 extern "C" {
 #define UINT64_C(c)   c ## ULL
 #include <libavformat/avformat.h>
 }
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -43,4 +43,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

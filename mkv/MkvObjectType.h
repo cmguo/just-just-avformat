@@ -1,13 +1,13 @@
 // MkvObjectType.h
 
-#ifndef _PPBOX_AVFORMAT_MKV_MKV_OBJECT_TYPE_H_
-#define _PPBOX_AVFORMAT_MKV_MKV_OBJECT_TYPE_H_
+#ifndef _JUST_AVFORMAT_MKV_MKV_OBJECT_TYPE_H_
+#define _JUST_AVFORMAT_MKV_MKV_OBJECT_TYPE_H_
 
-#include "ppbox/avformat/mkv/MkvFormat.h"
-#include "ppbox/avformat/mkv/ebml/EBML_File.h"
-#include "ppbox/avformat/mkv/MkvSegment.h"
+#include "just/avformat/mkv/MkvFormat.h"
+#include "just/avformat/mkv/ebml/EBML_File.h"
+#include "just/avformat/mkv/MkvSegment.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -28,7 +28,7 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
 
-#endif // _PPBOX_AVFORMAT_MKV_MKV_OBJECT_TYPE_H_
+#endif // _JUST_AVFORMAT_MKV_MKV_OBJECT_TYPE_H_

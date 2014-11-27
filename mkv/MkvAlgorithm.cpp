@@ -1,11 +1,11 @@
 // MkvAlgorithm.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mkv/MkvAlgorithm.h"
-#include "ppbox/avformat/mkv/MkvObjectType.h"
-#include "ppbox/avformat/Error.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/mkv/MkvAlgorithm.h"
+#include "just/avformat/mkv/MkvObjectType.h"
+#include "just/avformat/Error.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -78,4 +78,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

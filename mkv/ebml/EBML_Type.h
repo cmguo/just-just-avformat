@@ -1,7 +1,7 @@
 // EBML_Type.h
 
-#ifndef _PPBOX_AVFORMAT_MKV_EBML_EBML_TYPE_H_
-#define _PPBOX_AVFORMAT_MKV_EBML_EBML_TYPE_H_
+#ifndef _JUST_AVFORMAT_MKV_EBML_EBML_TYPE_H_
+#define _JUST_AVFORMAT_MKV_EBML_EBML_TYPE_H_
 
 #include <util/serialization/stl/vector.h>
 #include <util/serialization/SplitMember.h>
@@ -12,7 +12,7 @@
 
 #include <framework/system/VariableNumber.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -467,6 +467,6 @@ namespace ppbox
         typedef EBML_UnitType<std::vector<boost::uint8_t> > EBML_Binary;
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MKV_EBML_EBML_TYPE_H_
+#endif // _JUST_AVFORMAT_MKV_EBML_EBML_TYPE_H_

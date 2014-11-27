@@ -1,16 +1,16 @@
 // Mp4Format.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp4/Mp4Format.h"
-#include "ppbox/avformat/mp4/box/Mp4BoxEnum.h"
-#include "ppbox/avformat/Error.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp4/Mp4Format.h"
+#include "just/avformat/mp4/box/Mp4BoxEnum.h"
+#include "just/avformat/Error.h"
 
-#include <ppbox/avcodec/CodecType.h>
-using namespace ppbox::avcodec;
+#include <just/avcodec/CodecType.h>
+using namespace just::avcodec;
 
-#include <ppbox/avbase/TypeMap.h>
+#include <just/avbase/TypeMap.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -45,7 +45,7 @@ namespace ppbox
             boost::system::error_code & ec)
         {
             if (context && (intptr_t)context < 256) {
-                CodecInfo const * codec = ppbox::avbase::type_map_find(
+                CodecInfo const * codec = just::avbase::type_map_find(
                     codecs_, ncodec_, 
                     &CodecInfo::category, category, 
                     &CodecInfo::stream_type, stream_type, 
@@ -61,4 +61,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

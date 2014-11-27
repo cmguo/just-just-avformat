@@ -1,33 +1,33 @@
 // AviBoxHelper.h
 
-#ifndef _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_HELPER_H_
-#define _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_HELPER_H_
+#ifndef _JUST_AVFORMAT_AVI_BOX_AVI_BOX_HELPER_H_
+#define _JUST_AVFORMAT_AVI_BOX_AVI_BOX_HELPER_H_
 
-#include "ppbox/avformat/avi/box/AviBoxTraits.h"
+#include "just/avformat/avi/box/AviBoxTraits.h"
 
-#include <ppbox/avbase/object/ObjectHelper.h>
-#include <ppbox/avbase/FourCC.h>
+#include <just/avbase/object/ObjectHelper.h>
+#include <just/avbase/FourCC.h>
 
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
 #include <framework/logger/DataRecord.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
 
         class AviBoxDataHelper
-            : ppbox::avbase::ObjectDataHelper<AviBoxTraits>
+            : just::avbase::ObjectDataHelper<AviBoxTraits>
         {
         public:
             AviBoxDataHelper(
                 AviBoxTraits::helper_t & h)
-                : ppbox::avbase::ObjectDataHelper<AviBoxTraits>(h)
+                : just::avbase::ObjectDataHelper<AviBoxTraits>(h)
                 , ctx_((AviBoxContext *)h.context())
             {
                 ctx_->path.append(1, '/');
-                ctx_->path += ppbox::avbase::FourCC::to_string(h.header().id());
+                ctx_->path += just::avbase::FourCC::to_string(h.header().id());
                 ctx_->stack.push_back(&h.object());
                 ctx_->data_ends.push_back(h.data_end());
             }
@@ -45,13 +45,13 @@ namespace ppbox
             }
 
         private:
-            FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("ppbox.avformat.AviBoxDataHelper", framework::logger::Debug);
+            FRAMEWORK_LOGGER_DECLARE_MODULE_LEVEL("just.avformat.AviBoxDataHelper", framework::logger::Debug);
 
         private:
             AviBoxContext * ctx_;
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_HELPER_H_
+#endif // _JUST_AVFORMAT_AVI_BOX_AVI_BOX_HELPER_H_

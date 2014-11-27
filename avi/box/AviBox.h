@@ -1,21 +1,21 @@
 // AviBox.h
 
-#ifndef _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_H_
-#define _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_H_
+#ifndef _JUST_AVFORMAT_AVI_BOX_AVI_BOX_H_
+#define _JUST_AVFORMAT_AVI_BOX_AVI_BOX_H_
 
-#include "ppbox/avformat/avi/box/AviBoxHeader.h"
-#include "ppbox/avformat/avi/box/AviBoxTraits.h"
+#include "just/avformat/avi/box/AviBoxHeader.h"
+#include "just/avformat/avi/box/AviBoxTraits.h"
 
-#include <ppbox/avbase/object/Object.h>
+#include <just/avbase/object/Object.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
 
-        typedef ppbox::avbase::Object<AviBoxTraits> AviBox;
+        typedef just::avbase::Object<AviBoxTraits> AviBox;
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_H_
+#endif // _JUST_AVFORMAT_AVI_BOX_AVI_BOX_H_

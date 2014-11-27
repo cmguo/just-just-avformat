@@ -1,11 +1,11 @@
 // MkvCluster.h
 
-#ifndef _PPBOX_AVFORMAT_MKV_MKV_CLUSTER_H_
-#define _PPBOX_AVFORMAT_MKV_MKV_CLUSTER_H_
+#ifndef _JUST_AVFORMAT_MKV_MKV_CLUSTER_H_
+#define _JUST_AVFORMAT_MKV_MKV_CLUSTER_H_
 
-#include "ppbox/avformat/mkv/ebml/EBML_Vector.h"
+#include "just/avformat/mkv/ebml/EBML_Vector.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -215,6 +215,6 @@ namespace ppbox
         typedef EBML_Element<0xF43B675, MkvClusterData> MkvCluster;
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MKV_MKV_CLUSTER_H_
+#endif // _JUST_AVFORMAT_MKV_MKV_CLUSTER_H_

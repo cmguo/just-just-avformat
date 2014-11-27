@@ -1,13 +1,13 @@
 // FlvDataType.h
 
-#ifndef _PPBOX_AVFORMAT_FLV_FLV_DATA_TYPE_H_
-#define _PPBOX_AVFORMAT_FLV_FLV_DATA_TYPE_H_
+#ifndef _JUST_AVFORMAT_FLV_FLV_DATA_TYPE_H_
+#define _JUST_AVFORMAT_FLV_FLV_DATA_TYPE_H_
 
-#include "ppbox/avformat/flv/FlvArchive.h"
+#include "just/avformat/flv/FlvArchive.h"
 
 #include <util/protocol/rtmp/RtmpAmfType.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -25,6 +25,6 @@ namespace ppbox
         typedef util::protocol::RtmpAmfValue FlvDataValue;
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_FLV_FLV_DATA_TYPE_H_
+#endif // _JUST_AVFORMAT_FLV_FLV_DATA_TYPE_H_

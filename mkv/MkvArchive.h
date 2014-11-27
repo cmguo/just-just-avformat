@@ -1,12 +1,12 @@
 // MkvArchive.h
 
-#ifndef _PPBOX_AVFORMAT_MKV_MKV_ARCHIVE_H_
-#define _PPBOX_AVFORMAT_MKV_MKV_ARCHIVE_H_
+#ifndef _JUST_AVFORMAT_MKV_MKV_ARCHIVE_H_
+#define _JUST_AVFORMAT_MKV_MKV_ARCHIVE_H_
 
-#include "ppbox/avformat/mkv/ebml/EBML_Type.h"
-#include "ppbox/avformat/FormatBuffer.h"
+#include "just/avformat/mkv/ebml/EBML_Type.h"
+#include "just/avformat/FormatBuffer.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -16,6 +16,6 @@ namespace ppbox
         typedef EBML_IArchive MkvIArchive;
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MKV_MKV_ARCHIVE_H_
+#endif // _JUST_AVFORMAT_MKV_MKV_ARCHIVE_H_

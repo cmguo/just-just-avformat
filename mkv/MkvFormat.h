@@ -1,11 +1,11 @@
 // MkvFormat.h
 
-#ifndef _PPBOX_AVFORMAT_MKV_MKV_FORMAT_H_
-#define _PPBOX_AVFORMAT_MKV_MKV_FORMAT_H_
+#ifndef _JUST_AVFORMAT_MKV_MKV_FORMAT_H_
+#define _JUST_AVFORMAT_MKV_MKV_FORMAT_H_
 
-#include "ppbox/avformat/Format.h"
+#include "just/avformat/Format.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -28,10 +28,10 @@ namespace ppbox
             static char const * const type_strs[];
         };
 
-        PPBOX_REGISTER_FORMAT("mkv", MkvFormat);
+        JUST_REGISTER_FORMAT("mkv", MkvFormat);
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
 
-#endif // _PPBOX_AVFORMAT_MKV_MKV_FORMAT_H_
+#endif // _JUST_AVFORMAT_MKV_MKV_FORMAT_H_

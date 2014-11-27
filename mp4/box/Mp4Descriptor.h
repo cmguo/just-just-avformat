@@ -1,19 +1,19 @@
 // Mp4Descriptor.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_MP4_DESCRIPTOR_H_
-#define _PPBOX_AVFORMAT_MP4_MP4_DESCRIPTOR_H_
+#ifndef _JUST_AVFORMAT_MP4_MP4_DESCRIPTOR_H_
+#define _JUST_AVFORMAT_MP4_MP4_DESCRIPTOR_H_
 
-#include "ppbox/avformat/mp4/box/Mp4BoxTraits.h"
-#include "ppbox/avformat/mp4/box/Mp4Vector.h"
+#include "just/avformat/mp4/box/Mp4BoxTraits.h"
+#include "just/avformat/mp4/box/Mp4Vector.h"
 
-#include <ppbox/avbase/object/ObjectData.h>
+#include <just/avbase/object/ObjectData.h>
 
 #include <util/serialization/Serialization.h>
 #include <util/serialization/SplitMember.h>
 #include <util/serialization/NumberBits24.h>
 #include <util/serialization/stl/string.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -132,18 +132,18 @@ namespace ppbox
 
             static size_t const max_size = 64;
 
-            typedef ppbox::avbase::ObjectHelper<Mp4DescriptorTraits> helper_t;
+            typedef just::avbase::ObjectHelper<Mp4DescriptorTraits> helper_t;
 
             typedef Mp4DescriptorDataHelper data_helper_t;
         };
 
         class Mp4DescriptorDataHelper
-            : ppbox::avbase::ObjectDataHelper<Mp4DescriptorTraits>
+            : just::avbase::ObjectDataHelper<Mp4DescriptorTraits>
         {
         public:
             Mp4DescriptorDataHelper(
                 Mp4DescriptorTraits::helper_t & h)
-                : ppbox::avbase::ObjectDataHelper<Mp4DescriptorTraits>(h)
+                : just::avbase::ObjectDataHelper<Mp4DescriptorTraits>(h)
                 , ctx_((Mp4BoxContext *)h.context())
             {
                 static char const * const descriptor_str[] = {
@@ -173,14 +173,14 @@ namespace ppbox
             Mp4BoxContext * ctx_;
         };
 
-        typedef ppbox::avbase::Object<Mp4DescriptorTraits> Mp4Descriptor;
+        typedef just::avbase::Object<Mp4DescriptorTraits> Mp4Descriptor;
 
         template <
             typename T, 
             Mp4DescriptorHeader::id_type id
         >
         struct Mp4DescriptorData
-            : ppbox::avbase::ObjectData<Mp4DescriptorTraits, T, id>
+            : just::avbase::ObjectData<Mp4DescriptorTraits, T, id>
         {
         };
 
@@ -367,6 +367,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_MP4_DESCRIPTOR_H_
+#endif // _JUST_AVFORMAT_MP4_MP4_DESCRIPTOR_H_

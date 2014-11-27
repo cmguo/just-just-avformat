@@ -1,13 +1,13 @@
 // Mp4BoxHeader.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_HEADER_H_
-#define _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_HEADER_H_
+#ifndef _JUST_AVFORMAT_MP4_BOX_MP4_BOX_HEADER_H_
+#define _JUST_AVFORMAT_MP4_BOX_MP4_BOX_HEADER_H_
 
 #include <util/serialization/Serialization.h>
 #include <util/serialization/SplitMember.h>
 #include <util/serialization/Array.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -116,6 +116,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_HEADER_H_
+#endif // _JUST_AVFORMAT_MP4_BOX_MP4_BOX_HEADER_H_

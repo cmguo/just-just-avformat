@@ -1,13 +1,13 @@
 // Mp4SampleData.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp4/lib/Mp4SampleData.h"
-#include "ppbox/avformat/mp4/box/Mp4Box.hpp"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp4/lib/Mp4SampleData.h"
+#include "just/avformat/mp4/box/Mp4Box.hpp"
 
 #include <algorithm>
 #include <numeric>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -434,4 +434,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

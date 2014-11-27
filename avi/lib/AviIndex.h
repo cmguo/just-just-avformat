@@ -1,14 +1,14 @@
 // AviIndex.h
 
-#ifndef _PPBOX_AVFORMAT_AVI_LIB_AVI_INDEX_H_
-#define _PPBOX_AVFORMAT_AVI_LIB_AVI_INDEX_H_
+#ifndef _JUST_AVFORMAT_AVI_LIB_AVI_INDEX_H_
+#define _JUST_AVFORMAT_AVI_LIB_AVI_INDEX_H_
 
-#include "ppbox/avformat/avi/lib/AviBoxWrapper.h"
-#include "ppbox/avformat/avi/box/AviIndexBox.h"
+#include "just/avformat/avi/lib/AviBoxWrapper.h"
+#include "just/avformat/avi/box/AviIndexBox.h"
 
-#include <ppbox/avbase/Sample.h>
+#include <just/avbase/Sample.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -27,7 +27,7 @@ namespace ppbox
 
             bool put(
                 boost::uint32_t stream,
-                ppbox::avbase::Sample const & sample);
+                just::avbase::Sample const & sample);
 
         public:
             bool merge(
@@ -48,7 +48,7 @@ namespace ppbox
         public:
             void get(
                 boost::uint32_t index, 
-                ppbox::avbase::Sample & sample) const;
+                just::avbase::Sample & sample) const;
 
         public:
             std::vector<AviIndexBox::Entry> const & table() const
@@ -74,7 +74,7 @@ namespace ppbox
 
         public:
             bool put(
-                ppbox::avbase::Sample const & sample);
+                just::avbase::Sample const & sample);
 
         public:
             bool next();
@@ -90,7 +90,7 @@ namespace ppbox
 
         public:
             void get(
-                ppbox::avbase::Sample & sample) const;
+                just::avbase::Sample & sample) const;
 
         public:
             struct MapItem
@@ -108,6 +108,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_AVI_LIB_AVI_INDEX_H_
+#endif // _JUST_AVFORMAT_AVI_LIB_AVI_INDEX_H_

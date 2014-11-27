@@ -1,15 +1,15 @@
 // Mp4File.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp4/lib/Mp4File.h"
-#include "ppbox/avformat/mp4/box/Mp4FileBox.h"
-#include "ppbox/avformat/mp4/box/Mp4Box.hpp"
-#include "ppbox/avformat/mp4/box/Mp4BoxVector.hpp"
-#include "ppbox/avformat/Error.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp4/lib/Mp4File.h"
+#include "just/avformat/mp4/box/Mp4FileBox.h"
+#include "just/avformat/mp4/box/Mp4Box.hpp"
+#include "just/avformat/mp4/box/Mp4BoxVector.hpp"
+#include "just/avformat/Error.h"
 
 #include <util/buffers/NullBuffer.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -184,4 +184,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

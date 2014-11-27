@@ -1,19 +1,19 @@
 // Mp4SampleDescriptionBox.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_BOX_MP4_SAMPLE_DESCRIPTION_BOX_H_
-#define _PPBOX_AVFORMAT_MP4_BOX_MP4_SAMPLE_DESCRIPTION_BOX_H_
+#ifndef _JUST_AVFORMAT_MP4_BOX_MP4_SAMPLE_DESCRIPTION_BOX_H_
+#define _JUST_AVFORMAT_MP4_BOX_MP4_SAMPLE_DESCRIPTION_BOX_H_
 
-#include "ppbox/avformat/mp4/box/Mp4BoxEnum.h"
-#include "ppbox/avformat/mp4/box/Mp4FullBox.h"
-#include "ppbox/avformat/mp4/box/Mp4BoxVector.h"
+#include "just/avformat/mp4/box/Mp4BoxEnum.h"
+#include "just/avformat/mp4/box/Mp4FullBox.h"
+#include "just/avformat/mp4/box/Mp4BoxVector.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
 
         struct Mp4SampleEntryBoxBase
-            : ppbox::avbase::ObjectDataBase
+            : just::avbase::ObjectDataBase
             , Mp4BoxVector
         {
             boost::uint8_t reserved[6]; // = 0;
@@ -260,6 +260,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_BOX_MP4_SAMPLE_DESCRIPTION_BOX_H_
+#endif // _JUST_AVFORMAT_MP4_BOX_MP4_SAMPLE_DESCRIPTION_BOX_H_

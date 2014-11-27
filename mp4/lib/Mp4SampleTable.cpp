@@ -1,11 +1,11 @@
 // Mp4SampleTable.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp4/lib/Mp4SampleTable.h"
-#include "ppbox/avformat/mp4/box/Mp4Box.hpp"
-#include "ppbox/avformat/mp4/box/Mp4BoxVector.hpp"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp4/lib/Mp4SampleTable.h"
+#include "just/avformat/mp4/box/Mp4Box.hpp"
+#include "just/avformat/mp4/box/Mp4BoxVector.hpp"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -38,7 +38,7 @@ namespace ppbox
         }
 
         bool Mp4SampleTable::put(
-            ppbox::avbase::Sample const & sample)
+            just::avbase::Sample const & sample)
         {
             if (ctts_.null() && sample.cts_delta) {
                 ctts_.assign(create_item("/ctts"));
@@ -108,7 +108,7 @@ namespace ppbox
         }
 
         void Mp4SampleTable::get(
-            ppbox::avbase::Sample & sample) const
+            just::avbase::Sample & sample) const
         {
             sample.flags = stss_.is_sync() ? sample.f_sync : 0;
             sample.dts = stts_.dts();
@@ -186,4 +186,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

@@ -1,12 +1,12 @@
 // FlvMetadata.h
 
-#ifndef _PPBOX_AVFORMAT_FLV_FLV_META_DATA_H_
-#define _PPBOX_AVFORMAT_FLV_FLV_META_DATA_H_
+#ifndef _JUST_AVFORMAT_FLV_FLV_META_DATA_H_
+#define _JUST_AVFORMAT_FLV_FLV_META_DATA_H_
 
-#include "ppbox/avformat/flv/FlvDataType.h"
-#include "ppbox/avformat/SeekPoint.h"
+#include "just/avformat/flv/FlvDataType.h"
+#include "just/avformat/SeekPoint.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -53,6 +53,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_FLV_FLV_META_DATA_H_
+#endif // _JUST_AVFORMAT_FLV_FLV_META_DATA_H_

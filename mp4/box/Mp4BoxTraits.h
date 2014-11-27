@@ -1,13 +1,13 @@
 // Mp4BoxTraits.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_TRAITS_H_
-#define _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_TRAITS_H_
+#ifndef _JUST_AVFORMAT_MP4_BOX_MP4_BOX_TRAITS_H_
+#define _JUST_AVFORMAT_MP4_BOX_MP4_BOX_TRAITS_H_
 
-#include "ppbox/avformat/mp4/box/Mp4BoxArchive.h"
+#include "just/avformat/mp4/box/Mp4BoxArchive.h"
 
-#include <ppbox/avbase/object/ObjectHelper.h>
+#include <just/avbase/object/ObjectHelper.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -26,12 +26,12 @@ namespace ppbox
 
             static size_t const max_size = 128;
 
-            typedef ppbox::avbase::ObjectHelper<Mp4BoxTraits> helper_t;
+            typedef just::avbase::ObjectHelper<Mp4BoxTraits> helper_t;
 
             typedef Mp4BoxDataHelper data_helper_t;
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_TRAITS_H_
+#endif // _JUST_AVFORMAT_MP4_BOX_MP4_BOX_TRAITS_H_

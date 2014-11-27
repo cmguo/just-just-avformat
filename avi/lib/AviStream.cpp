@@ -1,12 +1,12 @@
 // AviStream.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/avi/lib/AviStream.h"
-#include "ppbox/avformat/avi/lib/AviIndex.h"
-#include "ppbox/avformat/avi/box/AviBox.hpp"
-#include "ppbox/avformat/avi/box/AviBoxVector.hpp"
+#include "just/avformat/Common.h"
+#include "just/avformat/avi/lib/AviStream.h"
+#include "just/avformat/avi/lib/AviIndex.h"
+#include "just/avformat/avi/box/AviBox.hpp"
+#include "just/avformat/avi/box/AviBoxVector.hpp"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -38,7 +38,7 @@ namespace ppbox
         }
 
         bool AviStream::put(
-            ppbox::avbase::Sample const & sample)
+            just::avbase::Sample const & sample)
         {
             return index_->put(sample);
         }
@@ -117,7 +117,7 @@ namespace ppbox
         }
 
         void AviStream::get(
-            ppbox::avbase::Sample & sample) const
+            just::avbase::Sample & sample) const
         {
             index_->get(sample);
             sample.dts = strh_->dwScale * sample.dts;
@@ -177,4 +177,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

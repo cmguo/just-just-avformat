@@ -1,12 +1,12 @@
 // Mp4BoxArchive.h
 
-#ifndef _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_ARCHIVE_H_
-#define _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_ARCHIVE_H_
+#ifndef _JUST_AVFORMAT_MP4_BOX_MP4_BOX_ARCHIVE_H_
+#define _JUST_AVFORMAT_MP4_BOX_MP4_BOX_ARCHIVE_H_
 
 #include <util/archive/BigEndianBinaryIArchive.h>
 #include <util/archive/BigEndianBinaryOArchive.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -16,6 +16,6 @@ namespace ppbox
         typedef util::archive::BigEndianBinaryIArchive<boost::uint8_t> Mp4BoxIArchive;
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_ARCHIVE_H_
+#endif // _JUST_AVFORMAT_MP4_BOX_MP4_BOX_ARCHIVE_H_

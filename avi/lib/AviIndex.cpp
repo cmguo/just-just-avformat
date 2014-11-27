@@ -1,11 +1,11 @@
 // AviIndex.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/avi/lib/AviIndex.h"
-#include "ppbox/avformat/avi/box/AviBox.hpp"
-#include "ppbox/avformat/avi/box/AviBoxVector.hpp"
+#include "just/avformat/Common.h"
+#include "just/avformat/avi/lib/AviIndex.h"
+#include "just/avformat/avi/box/AviBox.hpp"
+#include "just/avformat/avi/box/AviBoxVector.hpp"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -26,7 +26,7 @@ namespace ppbox
 
         bool AviIndex::put(
             boost::uint32_t stream, 
-            ppbox::avbase::Sample const & sample)
+            just::avbase::Sample const & sample)
         {
             AviIndexBox::Entry entry;
             entry.dwChunkId = stream;
@@ -86,7 +86,7 @@ namespace ppbox
 
         void AviIndex::get(
             boost::uint32_t index, 
-            ppbox::avbase::Sample & sample) const
+            just::avbase::Sample & sample) const
         {
             AviIndexBox::Entry const & entry(data_->table[index]);
             sample.flags = (entry.dwFlags & AviIndexFlags::KeyFrame) ? sample.f_sync : 0;
@@ -132,7 +132,7 @@ namespace ppbox
         }
 
         bool AviIndexStream::put(
-            ppbox::avbase::Sample const & sample)
+            just::avbase::Sample const & sample)
         {
             return avi_index_.put(index2_, sample);
         }
@@ -206,7 +206,7 @@ namespace ppbox
         }
 
         void AviIndexStream::get(
-            ppbox::avbase::Sample & sample) const
+            just::avbase::Sample & sample) const
         {
             avi_index_.get(index2_, sample);
             sample.dts = index1_;
@@ -217,4 +217,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

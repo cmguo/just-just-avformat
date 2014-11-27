@@ -1,11 +1,11 @@
 // Mp4BoxVector.hpp
 
-#ifndef _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_VECTOR_HPP_
-#define _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_VECTOR_HPP_
+#ifndef _JUST_AVFORMAT_MP4_BOX_MP4_BOX_VECTOR_HPP_
+#define _JUST_AVFORMAT_MP4_BOX_MP4_BOX_VECTOR_HPP_
 
-#include "ppbox/avformat/mp4/box/Mp4BoxVector.h"
+#include "just/avformat/mp4/box/Mp4BoxVector.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -118,6 +118,6 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_MP4_BOX_MP4_BOX_VECTOR_HPP_
+#endif // _JUST_AVFORMAT_MP4_BOX_MP4_BOX_VECTOR_HPP_

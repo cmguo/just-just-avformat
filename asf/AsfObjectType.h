@@ -1,10 +1,10 @@
 // AsfObjectType.h
 
-#ifndef _PPBOX_AVFORMAT_ASF_ASF_OBJECT_TYPE_H_
-#define _PPBOX_AVFORMAT_ASF_ASF_OBJECT_TYPE_H_
+#ifndef _JUST_AVFORMAT_ASF_ASF_OBJECT_TYPE_H_
+#define _JUST_AVFORMAT_ASF_ASF_OBJECT_TYPE_H_
 
-#include "ppbox/avformat/asf/AsfGuid.h"
-#include "ppbox/avformat/FormatBuffer.h"
+#include "just/avformat/asf/AsfGuid.h"
+#include "just/avformat/FormatBuffer.h"
 
 #include <util/archive/LittleEndianBinaryIArchive.h>
 #include <util/archive/LittleEndianBinaryOArchive.h>
@@ -48,7 +48,7 @@ namespace framework
     }
 }
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -861,7 +861,7 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_ASF_ASF_OBJECT_TYPE_H_
+#endif // _JUST_AVFORMAT_ASF_ASF_OBJECT_TYPE_H_
  

@@ -1,10 +1,10 @@
 // Mp4SampeMeta.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/mp4/lib/Mp4SampleMeta.h"
-#include "ppbox/avformat/mp4/box/Mp4Box.hpp"
+#include "just/avformat/Common.h"
+#include "just/avformat/mp4/lib/Mp4SampleMeta.h"
+#include "just/avformat/mp4/box/Mp4Box.hpp"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -349,4 +349,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

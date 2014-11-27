@@ -1,11 +1,11 @@
 // AviHeader.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/avi/lib/AviHeader.h"
-#include "ppbox/avformat/avi/box/AviBox.hpp"
-#include "ppbox/avformat/avi/box/AviBoxVector.hpp"
+#include "just/avformat/Common.h"
+#include "just/avformat/avi/lib/AviHeader.h"
+#include "just/avformat/avi/box/AviBox.hpp"
+#include "just/avformat/avi/box/AviBoxVector.hpp"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -29,4 +29,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

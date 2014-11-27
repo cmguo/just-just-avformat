@@ -1,9 +1,9 @@
 // EBML_Vector.h
 
-#ifndef _PPBOX_AVFORMAT_MKV_EBML_EBML_VECTOR_H_
-#define _PPBOX_AVFORMAT_MKV_EBML_EBML_VECTOR_H_
+#ifndef _JUST_AVFORMAT_MKV_EBML_EBML_VECTOR_H_
+#define _JUST_AVFORMAT_MKV_EBML_EBML_VECTOR_H_
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -52,7 +52,7 @@ namespace ppbox
 
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
 namespace util
 {
@@ -61,7 +61,7 @@ namespace util
         template <
             typename _Ty
         >
-        struct is_sigle_unit<ppbox::avformat::EBML_Vector<_Ty> >
+        struct is_sigle_unit<just::avformat::EBML_Vector<_Ty> >
             : boost::true_type
         {
         };
@@ -69,4 +69,4 @@ namespace util
     }
 }
 
-#endif // _PPBOX_AVFORMAT_MKV_EBML_EBML_VECTOR_H_
+#endif // _JUST_AVFORMAT_MKV_EBML_EBML_VECTOR_H_

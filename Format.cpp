@@ -1,26 +1,26 @@
 // Format.cpp
 
-#include "ppbox/avformat/Common.h"
-#include "ppbox/avformat/Format.h"
-#include "ppbox/avformat/Error.h"
+#include "just/avformat/Common.h"
+#include "just/avformat/Format.h"
+#include "just/avformat/Error.h"
 
 #include <util/tools/ClassRegister.h>
-#include "ppbox/avformat/mp4/Mp4Format.h"
-#include "ppbox/avformat/flv/FlvFormat.h"
-#include "ppbox/avformat/asf/AsfFormat.h"
-#include "ppbox/avformat/mp2/Mp2Format.h"
-#include "ppbox/avformat/mkv/MkvFormat.h"
-#include "ppbox/avformat/rtp/RtpFormat.h"
-#include "ppbox/avformat/avi/AviFormat.h"
-#ifndef PPBOX_DISABLE_FFMPEG
-#  include "ppbox/avformat/ffmpeg/FFMpegFormat.h"
+#include "just/avformat/mp4/Mp4Format.h"
+#include "just/avformat/flv/FlvFormat.h"
+#include "just/avformat/asf/AsfFormat.h"
+#include "just/avformat/mp2/Mp2Format.h"
+#include "just/avformat/mkv/MkvFormat.h"
+#include "just/avformat/rtp/RtpFormat.h"
+#include "just/avformat/avi/AviFormat.h"
+#ifndef JUST_DISABLE_FFMPEG
+#  include "just/avformat/ffmpeg/FFMpegFormat.h"
 #endif
 
-#include <ppbox/avcodec/Codec.h>
+#include <just/avcodec/Codec.h>
 
-#include <ppbox/avbase/TypeMap.h>
+#include <just/avbase/TypeMap.h>
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -70,7 +70,7 @@ namespace ppbox
             void const * context, 
             boost::system::error_code & ec)
         {
-            CodecInfo const * codec = ppbox::avbase::type_map_find(
+            CodecInfo const * codec = just::avbase::type_map_find(
                 codecs_, ncodec_, 
                 &CodecInfo::category, category, 
                 &CodecInfo::stream_type, stream_type);
@@ -88,7 +88,7 @@ namespace ppbox
             void const * context, 
             boost::system::error_code & ec)
         {
-            CodecInfo const * codec = ppbox::avbase::type_map_find(
+            CodecInfo const * codec = just::avbase::type_map_find(
                 codecs_, ncodec_, 
                 &CodecInfo::category, category, 
                 &CodecInfo::codec_type, codec_type);
@@ -117,7 +117,7 @@ namespace ppbox
         }
 
         bool Format::finish_from_stream(
-            ppbox::avbase::StreamInfo & info, 
+            just::avbase::StreamInfo & info, 
             boost::system::error_code & ec)
         {
             CodecInfo const * codec = codec_from_stream(info.type, info.sub_type, info.context, ec);
@@ -128,13 +128,13 @@ namespace ppbox
                 info.context = codec->context;
                 if (info.time_scale == 0 && codec->time_scale != 0)
                     info.time_scale = codec->time_scale;
-                return ppbox::avcodec::Codec::static_finish_stream_info(info, ec);
+                return just::avcodec::Codec::static_finish_stream_info(info, ec);
             }
             return false;
         }
 
         bool Format::finish_from_codec(
-            ppbox::avbase::StreamInfo & info, 
+            just::avbase::StreamInfo & info, 
             boost::system::error_code & ec)
         {
             CodecInfo const * codec = codec_from_codec(info.type, info.sub_type, info.context, ec);
@@ -152,7 +152,7 @@ namespace ppbox
         }
 
         bool Format::finish_from_stream(
-            ppbox::avbase::StreamInfo & info, 
+            just::avbase::StreamInfo & info, 
             std::string const & format_str, 
             boost::uint32_t stream_type, 
             boost::system::error_code & ec)
@@ -174,4 +174,4 @@ namespace ppbox
         }
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just

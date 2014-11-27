@@ -1,11 +1,11 @@
 // AviBoxContext.h
 
-#ifndef _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_CONTEXT_H_
-#define _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_CONTEXT_H_
+#ifndef _JUST_AVFORMAT_AVI_BOX_AVI_BOX_CONTEXT_H_
+#define _JUST_AVFORMAT_AVI_BOX_AVI_BOX_CONTEXT_H_
 
-#include "ppbox/avformat/avi/box/AviBox.h"
+#include "just/avformat/avi/box/AviBox.h"
 
-namespace ppbox
+namespace just
 {
     namespace avformat
     {
@@ -18,6 +18,6 @@ namespace ppbox
         };
 
     } // namespace avformat
-} // namespace ppbox
+} // namespace just
 
-#endif // _PPBOX_AVFORMAT_AVI_BOX_AVI_BOX_CONTEXT_H_
+#endif // _JUST_AVFORMAT_AVI_BOX_AVI_BOX_CONTEXT_H_
