@@ -27,7 +27,7 @@ namespace just
                 , ctx_((Mp4BoxContext *)h.context())
             {
                 ctx_->path.append(1, '/');
-                ctx_->path += just::avbase::FourCC::to_string(h.header().type);
+                ctx_->path.insert(ctx_->path.end(), (char const *)&h.header().type, (char const *)&h.header().type + 4);
                 LOG_TRACE("box type: " << ctx_->path << " size: " << h.header().byte_size());
                 ctx_->stack.push_back(&h.object());
                 ctx_->data_ends.push_back(h.data_end());

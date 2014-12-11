@@ -19,7 +19,7 @@ namespace just
             // {0x80,  0,      0},  // PCM_BLURAY
             {0x81,  0x81,   MAKE_FOURC_TYPE('A','C','-','3')},  // AC3
             {0x82,  0x8a,   MAKE_FOURC_TYPE('D','T','S','1')},  // DTS
-            // {0x83,  0,      0},  // TRUEHD
+            {0x83,  0x83,   0},  // AC3 TRUEHD
             {0x84,  0,      0},  // EAC3
             {0x85,  0,      MAKE_FOURC_TYPE('D','T','S','2')},  // DTS HD
             {0x86,  0,      MAKE_FOURC_TYPE('D','T','S','3')},  // DTS HD MASTER
@@ -41,11 +41,12 @@ namespace just
             {StreamType::AUDI,  Mp2StreamType::iso_13818_3_audio,  AudioType::MP2A, StreamFormatType::none,     Mp2::TIME_SCALE}, 
             {StreamType::AUDI,  0,  AudioType::AC3,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts}, 
             {StreamType::AUDI,  0,  AudioType::DTS,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 1}, 
-            {StreamType::AUDI,  0,  AudioType::EAC3, StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 2}, 
-            {StreamType::AUDI,  0,  AudioType::DTS,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 3}, 
+            {StreamType::AUDI,  0,  AudioType::AC3,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 2}, 
+            {StreamType::AUDI,  0,  AudioType::EAC3, StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 3}, 
             {StreamType::AUDI,  0,  AudioType::DTS,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 4}, 
-            {StreamType::AUDI,  0,  AudioType::EAC3, StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 5}, 
+            {StreamType::AUDI,  0,  AudioType::DTS,  StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 5}, 
             {StreamType::AUDI,  0,  AudioType::EAC3, StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 6}, 
+            {StreamType::AUDI,  0,  AudioType::EAC3, StreamFormatType::none, Mp2::TIME_SCALE,   ts_contexts + 7}, 
         };
 
         Mp2Format::Mp2Format()
