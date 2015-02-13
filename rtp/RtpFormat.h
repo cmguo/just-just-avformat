@@ -28,6 +28,7 @@ namespace just
         };
 
         JUST_REGISTER_FORMAT("rtp", RtpFormat);
+        JUST_REGISTER_FORMAT("rtp-raw", RtpFormat);
 
     } // namespace avformat
 } // namespace just
