@@ -73,7 +73,7 @@ namespace just
             boost::uint64_t offset, 
             boost::uint32_t & index) const
         {
-            AviIndexBox::Entry entry = {{0}, 0, offset, 0};
+            AviIndexBox::Entry entry = {{0}, 0, (boost::uint32_t)offset, 0};
             std::vector<AviIndexBox::Entry>::const_iterator iter = 
                 std::lower_bound(data_->table.begin(), data_->table.end(), entry, less_offset);
             if (iter == data_->table.end()) {

@@ -123,7 +123,7 @@ namespace just
                         MPEGLAYER3WAVEFORMAT f = {
                             1, // MPEGLAYER3_ID_MPEG.
                             0, 
-                            info.audio_format.sample_per_frame, 
+                            (boost::uint16_t)info.audio_format.sample_per_frame, 
                             1,
                             0};
                         info.format_data.resize(12);
