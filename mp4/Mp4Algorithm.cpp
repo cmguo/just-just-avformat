@@ -6,6 +6,8 @@
 
 #include <just/avbase/FourCC.h>
 
+#include <util/archive/Ctype.h>
+
 #include <framework/system/BytesOrder.h>
 
 namespace just

@@ -5,6 +5,8 @@
 #include "just/avformat/mkv/MkvObjectType.h"
 #include "just/avformat/Error.h"
 
+#include <util/archive/Ctype.h>
+
 namespace just
 {
     namespace avformat

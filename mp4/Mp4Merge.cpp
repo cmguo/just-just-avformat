@@ -4,6 +4,8 @@
 #include "just/avformat/mp4/Mp4Merge.h"
 #include "just/avformat/mp4/lib/Mp4Error.h"
 
+#include <util/archive/Ctype.h>
+
 #include <framework/logger/Logger.h>
 #include <framework/logger/StreamRecord.h>
 
