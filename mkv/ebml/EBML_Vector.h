@@ -59,9 +59,10 @@ namespace util
     namespace serialization
     {
         template <
+            typename _Ar, 
             typename _Ty
         >
-        struct is_sigle_unit<just::avformat::EBML_Vector<_Ty> >
+        struct is_sigle_unit<_Ar, just::avformat::EBML_Vector<_Ty> >
             : boost::true_type
         {
         };
