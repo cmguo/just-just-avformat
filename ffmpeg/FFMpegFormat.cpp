@@ -7,7 +7,9 @@
 using namespace just::avcodec;
 
 extern "C" {
-#define UINT64_C(c)   c ## ULL
+#ifndef UINT64_C
+#  define UINT64_C(c)   c ## ULL
+#endif
 #include <libavformat/avformat.h>
 }
 
