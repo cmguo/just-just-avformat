@@ -62,7 +62,7 @@ namespace util
             typename _Ar, 
             typename _Ty
         >
-        struct is_sigle_unit<_Ar, just::avformat::EBML_Vector<_Ty> >
+        struct is_single_unit<_Ar, just::avformat::EBML_Vector<_Ty> >
             : boost::true_type
         {
         };

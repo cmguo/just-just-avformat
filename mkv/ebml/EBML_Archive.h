@@ -237,7 +237,7 @@ namespace just
             void load(
                 _Ty & v)
             {
-                ar_.load(v);
+                ar_ >> (v);
             }
 
         public:
