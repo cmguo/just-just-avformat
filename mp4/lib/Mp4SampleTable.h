@@ -41,6 +41,8 @@ namespace just
                 boost::int64_t offset);
 
         public:
+            static boost::uint64_t const SEEK_TO_UPPER = 0x8000000000000000ULL;
+
             bool next(
                 boost::system::error_code & ec);
 

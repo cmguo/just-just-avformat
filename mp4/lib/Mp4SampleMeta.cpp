@@ -2,6 +2,7 @@
 
 #include "just/avformat/Common.h"
 #include "just/avformat/mp4/lib/Mp4SampleMeta.h"
+#include "just/avformat/mp4/lib/Mp4SampleTable.h"
 #include "just/avformat/mp4/box/Mp4Box.hpp"
 
 namespace just
@@ -92,6 +93,8 @@ namespace just
         {
             sample_index = 0;
             size_t table_index = 0;
+            boost::uint32_t flag = boost::uint32_t((sample_time & Mp4SampleTable::SEEK_TO_UPPER) >> 32);
+            sample_time &= ~Mp4SampleTable::SEEK_TO_UPPER;
             Mp4TimeToSampleBox::Entry entry = data_->table[table_index];
             while (entry.sample_count * entry.sample_delta <= sample_time) {
                 sample_time -= (boost::uint64_t)entry.sample_delta * entry_.sample_count;
@@ -102,8 +105,19 @@ namespace just
                     return false;
                 }
             }
-            if (sample_time)
-                sample_index += (boost::uint32_t)(sample_time / entry_.sample_delta);
+            if (sample_time) {
+                boost::uint32_t count = (boost::uint32_t)(sample_time / entry_.sample_delta);
+                if (flag && (sample_time % entry_.sample_delta)) {
+                    ++count;
+                    if (count == entry.sample_count) {
+                        ++table_index;
+                    }
+                }
+                sample_index += count;
+                sample_index |= flag;
+                return table_index < data_->table.size();
+            }
+            sample_index |= flag;
             return true;
         }
 
@@ -275,10 +289,10 @@ namespace just
             while (data_->table.size() < index_) {
                 data_->table.push_back((boost::uint32_t)data_->table.size() + 1);
             }
+            ++entry_;
             if (is_sync) {
                 data_->table.push_back(entry_);
             }
-            ++entry_;
             return true;
         }
 
@@ -315,15 +329,25 @@ namespace just
             return true;
         }
 
+        static boost::uint32_t const SEEK_TO_UPPER_32 = 0x80000000ULL;
+
         bool Mp4SyncSampleTable::sync(
-            boost::uint32_t & index) const
+            boost::uint32_t & sample_index) const
         {
             if (!data_)
                 return true;
+            boost::uint32_t flag = sample_index & SEEK_TO_UPPER_32;
+            sample_index &= ~SEEK_TO_UPPER_32;
             std::vector<boost::uint32_t>::const_iterator iter = 
-                std::upper_bound(data_->table.begin(), data_->table.end(), index + 1);
-            if (iter != data_->table.begin())
-                index =  *(--iter) - 1;
+                std::lower_bound(data_->table.begin(), data_->table.end(), sample_index + 1);
+            if (iter == data_->table.end())
+                return false;
+            if (flag && *iter != sample_index) {
+                ++iter;
+                if (iter == data_->table.end())
+                    return false;
+            }
+            sample_index = *iter - 1;
             return true;
         }
 
