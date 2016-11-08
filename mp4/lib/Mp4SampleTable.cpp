@@ -13,13 +13,13 @@ namespace just
         Mp4SampleTable::Mp4SampleTable(
             Mp4Box & box)
             : Mp4BoxWrapper2<Mp4SampleTableBox>(box)
-            , stsd_(find_item("/stsd"))
-            , stts_(find_item("/stts"))
-            , ctts_(find_item("/ctts"))
-            , stss_(find_item("/stss"))
-            , stco_(find_item("/stco"), find_item("/co64"))
-            , stsc_(find_item("/stsc"), &stco_)
-            , stsz_(find_item("/stsz"), &stco_)
+              , stsd_(find_item("/stsd"))
+              , stts_(find_item("/stts"))
+              , ctts_(find_item("/ctts"))
+              , stss_(find_item("/stss"))
+              , stco_(find_item("/stco"), find_item("/co64"))
+              , stsc_(find_item("/stsc"), &stco_)
+              , stsz_(find_item("/stsz"), &stco_)
         {
         }
 
@@ -27,13 +27,13 @@ namespace just
             Mp4Box & box, 
             create_new_t)
             : Mp4BoxWrapper2<Mp4SampleTableBox>(box)
-            , stsd_(create_item("/stsd"))
-            , stts_(create_item("/stts"))
-            , ctts_(NULL)
-            , stss_(NULL)
-            , stco_(create_item("/stco"), NULL)
-            , stsc_(create_item("/stsc"), &stco_)
-            , stsz_(create_item("/stsz"), &stco_)
+              , stsd_(create_item("/stsd"))
+              , stts_(create_item("/stts"))
+              , ctts_(NULL)
+              , stss_(NULL)
+              , stco_(create_item("/stco"), NULL)
+              , stsc_(create_item("/stsc"), &stco_)
+              , stsz_(create_item("/stsz"), &stco_)
         {
         }
 
@@ -163,6 +163,32 @@ namespace just
             return result;
         }
 
+        bool Mp4SampleTable::seek(
+            boost::uint64_t & time, // dts
+            bool lower,
+            boost::system::error_code & ec)
+        {
+            boost::uint32_t sample_index = 0;
+            boost::uint32_t sample_index2 = 0;
+            bool result = stts_.seek(time, sample_index)
+                && stss_.sync(sample_index, !lower);
+            if (sample_index == -1)
+                sample_index = stts_.count();
+            if (result) {
+                result = stts_.seek(sample_index)
+                    && ctts_.seek(sample_index)
+                    && stss_.seek(sample_index)
+                    && stsc_.seek(sample_index, sample_index2)
+                    && stsz_.seek(sample_index, sample_index2);
+            }
+            if (result) {
+                ec.clear();
+            } else {
+                ec = framework::system::logic_error::out_of_range;
+            }
+            return result;
+        }
+
         void Mp4SampleTable::rewind()
         {
             boost::uint32_t sample_index2 = 0;
@@ -183,6 +209,29 @@ namespace just
                 && stsc_.limit(offset, index)
                 && stsz_.limit(offset, index)
                 && stts_.seek(index.sample_description_index, time);
+        }
+
+
+        bool Mp4SampleTable::next_sync_sample(
+            boost::uint64_t & time, // dts
+            boost::system::error_code & ec)
+        {
+            boost::uint32_t sample_index = 0;
+			
+           // std::cout << "[next_sync_sample] step1 time = " << time 
+           //     << std::endl;
+            stts_.seek(time, sample_index);
+           // std::cout << "[next_sync_sample] step2 sample_index = " << sample_index 
+           //     << std::endl;
+            stss_.sync(sample_index, true);
+           // std::cout << "[next_sync_sample] step3 sync sample_index = " << sample_index 
+           //     << std::endl;
+            if (sample_index == -1)
+                sample_index = stts_.count();
+            stts_.seek(sample_index, time);
+           // std::cout << "[next_sync_sample] step4 sync time = " << time 
+           //     << std::endl;
+            return true;
         }
 
     } // namespace avformat

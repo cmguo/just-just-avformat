@@ -15,8 +15,8 @@ namespace just
         Mp4TimeToSampleTable::Mp4TimeToSampleTable(
             Mp4Box * box)
             : Mp4BoxWrapper<Mp4TimeToSampleBox>(box)
-            , index_(0)
-            , value_(0)
+              , index_(0)
+              , value_(0)
         {
             if (data_->table.empty()) {
                 entry_.sample_count = 0;
@@ -185,7 +185,7 @@ namespace just
         Mp4CompositionOffsetTable::Mp4CompositionOffsetTable(
             Mp4Box * box)
             : Mp4BoxWrapper<Mp4CompositionOffsetBox>(box)
-            , index_(0)
+              , index_(0)
         {
             Mp4CompositionOffsetBox::Entry entry = {0, 0};
             entry_ = (data_ && !data_->table.empty()) ? data_->table[index_] : entry;
@@ -273,7 +273,7 @@ namespace just
         Mp4SyncSampleTable::Mp4SyncSampleTable(
             Mp4Box * box)
             : Mp4BoxWrapper<Mp4SyncSampleBox>(box)
-            , index_(0)
+              , index_(0)
         {
             entry_ = data_ ? data_->table[index_] : 1;
         }
@@ -348,6 +348,29 @@ namespace just
                     return false;
             }
             sample_index = *iter - 1;
+            return true;
+        }
+
+        bool Mp4SyncSampleTable::sync(
+            boost::uint32_t & sample_index,
+            bool end) const
+        {
+            if (!data_)
+                return true;
+            std::vector<boost::uint32_t>::const_iterator iter;
+            if (end){
+                iter = std::lower_bound(data_->table.begin(), data_->table.end(), sample_index + 1);
+                if (iter != data_->table.end())
+                    sample_index =  *(iter) - 1;
+                else
+                    sample_index = -1;
+            }else{
+                iter = std::upper_bound(data_->table.begin(), data_->table.end(), sample_index + 1);
+                if (iter != data_->table.begin())
+                    sample_index =  *(--iter) - 1;
+                else 
+                    sample_index = 0;
+            }
             return true;
         }
 
