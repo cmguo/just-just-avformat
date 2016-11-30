@@ -182,6 +182,7 @@ namespace just
                     && stsz_.seek(sample_index, sample_index2);
             }
             if (result) {
+                stts_.seek(sample_index, time);
                 ec.clear();
             } else {
                 ec = framework::system::logic_error::out_of_range;

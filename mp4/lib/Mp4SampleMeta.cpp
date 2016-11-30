@@ -359,7 +359,7 @@ namespace just
                 return true;
             std::vector<boost::uint32_t>::const_iterator iter;
             if (end){
-                iter = std::lower_bound(data_->table.begin(), data_->table.end(), sample_index + 1);
+                iter = std::upper_bound(data_->table.begin(), data_->table.end(), sample_index + 1);
                 if (iter != data_->table.end())
                     sample_index =  *(iter) - 1;
                 else
