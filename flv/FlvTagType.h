@@ -200,7 +200,9 @@ namespace just
                 TimestampExtended = Timestamp >> 24;
                 ar & Timestamp;
                 ar & TimestampExtended;
-                Timestamp = Timestamp | (TimestampExtended << 24);
+		  //  for live play some channel 24 max or 32 max ,we only use low 24 bits
+		  //  framework::system::LimitNumber<24> to control overflow
+          //      Timestamp = Timestamp | (TimestampExtended << 24);
                 ar & StreamID;
             }
         };
