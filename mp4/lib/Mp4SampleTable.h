@@ -46,10 +46,6 @@ namespace just
             bool next(
                 boost::system::error_code & ec);
 
-            bool next_sync_sample(
-                boost::uint64_t & time,
-                boost::system::error_code & ec);
-
             bool seek(
                 boost::uint64_t & time, // dts
                 bool lower,

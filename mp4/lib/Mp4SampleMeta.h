@@ -122,10 +122,6 @@ namespace just
             bool sync(
                 boost::uint32_t & sample_index) const;
 
-            bool sync(
-                boost::uint32_t & sample_index,
-                bool end) const;
-
             bool seek(
                 boost::uint32_t sample_index);
 

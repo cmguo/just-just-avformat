@@ -334,43 +334,21 @@ namespace just
         bool Mp4SyncSampleTable::sync(
             boost::uint32_t & sample_index) const
         {
-            if (!data_)
-                return true;
             boost::uint32_t flag = sample_index & SEEK_TO_UPPER_32;
             sample_index &= ~SEEK_TO_UPPER_32;
-            std::vector<boost::uint32_t>::const_iterator iter = 
-                std::lower_bound(data_->table.begin(), data_->table.end(), sample_index + 1);
-            if (iter == data_->table.end())
-                return false;
-            if (flag && *iter != sample_index) {
-                ++iter;
+            if (!data_)
+                return true;
+            std::vector<boost::uint32_t>::const_iterator iter ;
+            if (!flag){
+                iter = std::upper_bound(data_->table.begin(), data_->table.end(), sample_index + 1);
+                if (iter != data_->table.begin())
+                    --iter;
+            }else{
+                iter = std::lower_bound(data_->table.begin(), data_->table.end(), sample_index + 1);
                 if (iter == data_->table.end())
                     return false;
             }
             sample_index = *iter - 1;
-            return true;
-        }
-
-        bool Mp4SyncSampleTable::sync(
-            boost::uint32_t & sample_index,
-            bool end) const
-        {
-            if (!data_)
-                return true;
-            std::vector<boost::uint32_t>::const_iterator iter;
-            if (end){
-                iter = std::upper_bound(data_->table.begin(), data_->table.end(), sample_index + 1);
-                if (iter != data_->table.end())
-                    sample_index =  *(iter) - 1;
-                else
-                    sample_index = -1;
-            }else{
-                iter = std::upper_bound(data_->table.begin(), data_->table.end(), sample_index + 1);
-                if (iter != data_->table.begin())
-                    sample_index =  *(--iter) - 1;
-                else 
-                    sample_index = 0;
-            }
             return true;
         }
 

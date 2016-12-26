@@ -170,10 +170,13 @@ namespace just
         {
             boost::uint32_t sample_index = 0;
             boost::uint32_t sample_index2 = 0;
-            bool result = stts_.seek(time, sample_index)
-                && stss_.sync(sample_index, !lower);
-            if (sample_index == -1)
-                sample_index = stts_.count();
+            if (!lower)
+                time |= Mp4SampleTable::SEEK_TO_UPPER;
+            bool result = stts_.seek(time, sample_index);
+            if (!lower){
+                time &= ~Mp4SampleTable::SEEK_TO_UPPER;
+            }
+            result = result&& stss_.sync(sample_index);
             if (result) {
                 result = stts_.seek(sample_index)
                     && ctts_.seek(sample_index)
@@ -210,29 +213,6 @@ namespace just
                 && stsc_.limit(offset, index)
                 && stsz_.limit(offset, index)
                 && stts_.seek(index.sample_description_index, time);
-        }
-
-
-        bool Mp4SampleTable::next_sync_sample(
-            boost::uint64_t & time, // dts
-            boost::system::error_code & ec)
-        {
-            boost::uint32_t sample_index = 0;
-			
-           // std::cout << "[next_sync_sample] step1 time = " << time 
-           //     << std::endl;
-            stts_.seek(time, sample_index);
-           // std::cout << "[next_sync_sample] step2 sample_index = " << sample_index 
-           //     << std::endl;
-            stss_.sync(sample_index, true);
-           // std::cout << "[next_sync_sample] step3 sync sample_index = " << sample_index 
-           //     << std::endl;
-            if (sample_index == -1)
-                sample_index = stts_.count();
-            stts_.seek(sample_index, time);
-           // std::cout << "[next_sync_sample] step4 sync time = " << time 
-           //     << std::endl;
-            return true;
         }
 
     } // namespace avformat
