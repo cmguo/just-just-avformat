@@ -96,7 +96,9 @@ namespace just
             boost::uint32_t flag = boost::uint32_t((sample_time & Mp4SampleTable::SEEK_TO_UPPER) >> 32);
             sample_time &= ~Mp4SampleTable::SEEK_TO_UPPER;
             Mp4TimeToSampleBox::Entry entry = data_->table[table_index];
-            while (entry.sample_count * entry.sample_delta <= sample_time) {
+            while (entry.sample_count > 0
+                && entry.sample_delta > 0
+                && entry.sample_count * entry.sample_delta <= sample_time) {
                 sample_time -= (boost::uint64_t)entry.sample_delta * entry_.sample_count;
                 sample_index += entry.sample_count;
                 if (++table_index < data_->table.size()) {
