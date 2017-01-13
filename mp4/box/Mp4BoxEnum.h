@@ -64,7 +64,9 @@ namespace just
                 mp4v = MAKE_FOURC_TYPE('m', 'p', '4', 'v'), 
                 mp4a = MAKE_FOURC_TYPE('m', 'p', '4', 'a'), 
                 ac_3 = MAKE_FOURC_TYPE('a', 'c', '-', '3'), 
-                ec_3 = MAKE_FOURC_TYPE('e', 'c', '-', '3'), 
+                ec_3 = MAKE_FOURC_TYPE('e', 'c', '-', '3'),
+                encv = MAKE_FOURC_TYPE('e', 'n', 'c', 'v'), //pptv drm
+                enca = MAKE_FOURC_TYPE('e', 'n', 'c', 'a'),
             };
         };
 

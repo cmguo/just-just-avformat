@@ -23,14 +23,16 @@ namespace just
             {StreamType::VIDE,  Mp4CodecType::avc3, VideoType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
             {StreamType::VIDE,  Mp4CodecType::avc4, VideoType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
             {StreamType::VIDE,  Mp4CodecType::mp4v, VideoType::MP4V, StreamFormatType::none, 0,  (void*)Mp4ObjectType::MPEG4_VISUAL}, 
+            {StreamType::VIDE,  Mp4CodecType::encv, VideoType::AVC,  AvcFormatType::packet,  0,  (void*)MAKE_FOURC_TYPE('a', 'v', 'c', 'C')}, 
             {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG4_AUDIO}, 
+            {StreamType::AUDI,	Mp4CodecType::enca, AudioType::AAC,  AacFormatType::raw,	 1,  (void*)Mp4ObjectType::MPEG4_AUDIO}, 
             {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_MAIN}, 
             {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_LC}, 
             {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::AAC,  AacFormatType::raw,     1,  (void*)Mp4ObjectType::MPEG2_AAC_AUDIO_SSRP}, 
             {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::MP2A, StreamFormatType::none, 1,  (void*)Mp4ObjectType::MPEG2_PART3_AUDIO}, 
             {StreamType::AUDI,  Mp4CodecType::mp4a, AudioType::MP1A, StreamFormatType::none, 1,  (void*)Mp4ObjectType::MPEG1_AUDIO}, 
             {StreamType::AUDI,  Mp4CodecType::ac_3, AudioType::AC3,  StreamFormatType::none, 1,  0}, 
-            {StreamType::AUDI,  Mp4CodecType::ec_3, AudioType::EAC3, StreamFormatType::none, 1,  (void*)MAKE_FOURC_TYPE('d',  'e', 'c', '3')}, 
+            {StreamType::AUDI,  Mp4CodecType::ec_3, AudioType::EAC3, StreamFormatType::none, 1,  (void*)MAKE_FOURC_TYPE('d',  'e', 'c', '3')},
         };
 
         Mp4Format::Mp4Format()

@@ -15,14 +15,16 @@ namespace just
             Mp4CodecType::avc3, 
             Mp4CodecType::avc4, 
             Mp4CodecType::hvc1, 
-            Mp4CodecType::hev1, 
+            Mp4CodecType::hev1,
+            Mp4CodecType::encv,
             0, 
         };
 
         Mp4Box::id_type const Mp4AudioSampleEntryBox::codings[] = {
             Mp4CodecType::mp4a, 
             Mp4CodecType::ac_3, 
-            Mp4CodecType::ec_3, 
+            Mp4CodecType::ec_3,
+            Mp4CodecType::enca,
             0, 
         };
 
