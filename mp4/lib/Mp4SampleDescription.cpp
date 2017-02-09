@@ -47,7 +47,6 @@ namespace just
             decoder_config_->sub_descriptors.push_back(Mp4DecoderSpecificInfoDescriptor());
             decoder_info_ = &decoder_config_->sub_descriptors[0].as<Mp4DecoderSpecificInfoDescriptor>();
         }
-
         // Mp4SampleEntry
 
         Mp4SampleEntry::Mp4SampleEntry(
@@ -55,7 +54,15 @@ namespace just
             : Mp4BoxVectorWrapper(box)
             , es_description_(NULL)
         {
-            Mp4Box * es_desc = find_item("/esds");
+            Mp4Box * es_desc = NULL;
+            Mp4Box * wave_box = NULL;
+            if ((wave_box = find_item("/wave"))) {
+                Mp4BoxWrapper2<Mp4WaveBox> wave(wave_box); 
+                es_desc = wave.find_item("/esds");
+            } 
+            if (!es_desc) {
+                es_desc = find_item("/esds");
+            }
             if (es_desc)
                 es_description_ = new Mp4EsDescription(es_desc);
         }

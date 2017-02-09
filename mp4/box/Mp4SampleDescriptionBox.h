@@ -188,21 +188,32 @@ namespace just
         struct Mp4AudioSampleEntryBox
             : Mp4SampleEntryBox<Mp4AudioSampleEntryBox>
         {
-            boost::uint32_t reserved[2]; // = 0;
+            boost::uint32_t version_rev;
+            boost::uint32_t vendor;
             boost::uint16_t channelcount; // = 2;
             boost::uint16_t samplesize; // = 16;
             boost::uint16_t pre_defined; // = 0;
             boost::uint16_t reserved2; // = 0 ;
             boost::uint32_t samplerate; // = { default samplerate of media}<<16;
-
+            /*total 20 bytes + 8 + 4*/
+            /*option*/
+            boost::uint32_t samples_per_packet;
+            boost::uint32_t bytes_per_packet;
+            boost::uint32_t bytes_per_frame;
+            boost::uint32_t bytes_per_sample;
             Mp4AudioSampleEntryBox()
-                : channelcount(0)
+                : version_rev(0)
+                , vendor(0)
+                , channelcount(0)
                 , samplesize(0)
                 , pre_defined(0)
                 , reserved2(0)
                 , samplerate(0)
+                , samples_per_packet(0)
+                , bytes_per_packet(0)
+                , bytes_per_frame(0)
+                , bytes_per_sample(0)
             {
-                reserved[0] = reserved[1] = 0;
             }
 
             template <typename Archive>
@@ -210,16 +221,64 @@ namespace just
                 Archive & ar)
             {
                 Mp4SampleEntryBoxBase::serialize(ar);
-                ar & make_array(reserved)
+                ar & version_rev
+                    & vendor
                     & channelcount
                     & samplesize
                     & pre_defined
                     & reserved2
                     & samplerate;
+                if (version_rev == 0x00010000){
+                    ar & samples_per_packet
+                        & bytes_per_packet
+                        & bytes_per_frame
+                        & bytes_per_sample;
+                }
                 Mp4BoxVector::serialize(ar);
             }
 
             static Mp4Box::id_type const codings[];
+        };
+
+        struct Mp4WaveBox
+            : Mp4BoxData<Mp4WaveBox, Mp4BoxType::wave>
+              , Mp4BoxContainer<Mp4WaveBox, Mp4BoxType::wave>
+        {
+
+            SERIALIZATION_SPLIT_MEMBER();
+
+            template <typename Archive>
+                void load(
+                    Archive & ar)
+                {
+                    Mp4BoxContext * ctx = (Mp4BoxContext *)ar.context();
+                    this->clear();
+                    std::streampos data_end = ctx->data_ends.back();
+                    while (ar.tellg() < data_end) {
+                        Mp4BoxHeader h;
+                        ar >> h;
+                        if (h.type == Mp4BoxType::esds){
+                            ar.seekg((std::streamoff)h.data_size()- h.size, std::ios::cur);
+                            Mp4Box * t = new Mp4Box;
+                            ar >> *t;
+                            if (ar) {
+                                push_back(t);
+                            }else {
+                                delete t;
+                                break;
+                            }
+                        }else{
+                            ar.seekg((std::streamoff)h.data_size(), std::ios::cur);
+                        }
+                    }
+                    assert(!ar || ar.tellg() == data_end);
+                }
+            template <typename Archive>
+                void save(
+                    Archive & ar) const
+                {
+                }
+
         };
 
         struct Mp4SampleDescriptionBox

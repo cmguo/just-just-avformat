@@ -38,7 +38,8 @@ namespace just
                 stco = MAKE_FOURC_TYPE('s', 't', 'c', 'o'), 
                 co64 = MAKE_FOURC_TYPE('c', 'o', '6', '4'), 
                 free = MAKE_FOURC_TYPE('f', 'r', 'e', 'e'), 
-                udat = MAKE_FOURC_TYPE('u', 'd', 'a', 't'), 
+                udat = MAKE_FOURC_TYPE('u', 'd', 'a', 't'),
+                wave = MAKE_FOURC_TYPE('w', 'a', 'v', 'e'),
             };
         };
 
