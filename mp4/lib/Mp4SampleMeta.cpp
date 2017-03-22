@@ -99,7 +99,7 @@ namespace just
             while (entry.sample_count > 0
                 && entry.sample_delta > 0
                 && entry.sample_count * entry.sample_delta <= sample_time) {
-                sample_time -= (boost::uint64_t)entry.sample_delta * entry_.sample_count;
+                sample_time -= (boost::uint64_t)entry.sample_delta * entry.sample_count;
                 sample_index += entry.sample_count;
                 if (++table_index < data_->table.size()) {
                     entry = data_->table[table_index];
@@ -108,8 +108,8 @@ namespace just
                 }
             }
             if (sample_time) {
-                boost::uint32_t count = (boost::uint32_t)(sample_time / entry_.sample_delta);
-                if (flag && (sample_time % entry_.sample_delta)) {
+                boost::uint32_t count = (boost::uint32_t)(sample_time / entry.sample_delta);
+                if (flag && (sample_time % entry.sample_delta)) {
                     ++count;
                     if (count == entry.sample_count) {
                         ++table_index;
